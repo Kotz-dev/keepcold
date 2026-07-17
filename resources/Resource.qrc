@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="imagen">
+    <file>images/logo_kep.png</file>
+    <file>images/logo_create.png</file>
+    <file>images/logo_open_cp.png</file>
+    <file>images/pw.png</file>
+    <file>images/pwoff.png</file>
+  </qresource>
+</RCC>
