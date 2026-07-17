@@ -1,0 +1,60 @@
+/*
+ * page_open_exist_cofre - Qt Style Sheet
+ * Created: 17/07/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+mainwindow {
+ background-color: rgb(26, 34, 64);
+}
+QLineEdit {
+         background-color: #2d3654;
+         border: 1px solid #3a4368;
+         border-radius: 8px;
+         padding: 10px 14px;
+         color: #e8eaf0;
+         font-size: 14px;
+     }
+QLineEdit:focus {
+         border: 1px solid #5865f2;
+         background-color: #313a5c;
+   }
+#btn_unlock_cofre {
+    background-color: #5865f2;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 20px;
+}
+
+
+#btn_unlock_cofre:hover {
+    background-color: #6873f5;
+}
+
+#btn_unlock_cofre:pressed {
+    background-color: #4a56d6;
+}
+
+#btn_unlock_cofre:disabled {
+    background-color: #3a4368;
+    color: #7b839e;
+}
+
+#back_open_cofre {
+   background-color: none;
+   border-radius: none;
+}
+#back_open_cofre:hover{
+   background-color: rgb(56, 67, 110);
+   border: none;
+       border-radius: 8px;
+}

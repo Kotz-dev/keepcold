@@ -1,9 +1,9 @@
 #include <QApplication>
-#include <mainwindow/mainwindow.h>
+#include <app/keepcold/mainwindow/mainwindow.h>
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    mainwindow *w = new mainwindow;
-    w->show();
+    mainwindow w;
+    w.show();
     return QApplication::exec();
 }

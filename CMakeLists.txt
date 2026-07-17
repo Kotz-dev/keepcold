@@ -15,17 +15,64 @@ find_package(Qt6 COMPONENTS
 
 add_executable(keepcold
         src/app/main.cpp
-        src/app/mainwindow/mainwindow.cpp
-        include/mainwindow/mainwindow.h
-        src/app/ui/mainwindow.ui
+        src/app/keepcold/mainwindow/mainwindow.cpp
+        src/include/app/keepcold/mainwindow/mainwindow.h
+        ui/mainwindow.ui
+        src/widgets/PasswordLineEdit.cpp
+        src/include/widgets/PasswordLineEdit.h
+        src/styles/UIStyle.cpp
+        src/include/styles/UIStyle.h
+        src/styles/RichText.cpp
+        src/include/styles/RichText.h
+        src/io/FileManger.cpp
+        src/include/io/FileManger.h
+        src/app/Animation/Animation.cpp
+        src/include/app/Animation/Animation.h
+        resources/Resource.qrc
+        src/app/Animation/ProgressBar.cpp
+        src/include/app/Animation/ProgressBar.h
+        src/core/third_party/zxcvbn/zxcvbn.c
+        src/core/third_party/zxcvbn/zxcvbn.h
+
 )
-target_include_directories(keepcold PRIVATE include)
-set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/app/ui")
+target_include_directories(keepcold PRIVATE src/include)
+set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/ui")
 target_link_libraries(keepcold
         Qt::Core
         Qt::Gui
         Qt::Widgets
 )
+
+target_include_directories(keepcold PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn
+        ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+# dict-generate.cpp has its own main() and only exists to turn the zxcvbn word
+# lists into the dict-src.h that zxcvbn.c includes, so it's built as a
+# separate host tool rather than linked into keepcold.
+add_executable(dict_generate src/core/third_party/zxcvbn/dict-generate.cpp)
+
+set(ZXCVBN_WORDLISTS
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-eng_wiki.txt
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-female.txt
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-male.txt
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-passwd.txt
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-surname.txt
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-tv_film.txt
+)
+set(ZXCVBN_DICT_SRC ${CMAKE_CURRENT_BINARY_DIR}/dict-src.h)
+
+add_custom_command(
+        OUTPUT ${ZXCVBN_DICT_SRC}
+        COMMAND dict_generate ${ZXCVBN_WORDLISTS} -o ${ZXCVBN_DICT_SRC}
+        DEPENDS dict_generate ${ZXCVBN_WORDLISTS}
+        COMMENT "Generating zxcvbn dictionary source (dict-src.h)"
+)
+add_custom_target(generate_zxcvbn_dict DEPENDS ${ZXCVBN_DICT_SRC})
+add_dependencies(keepcold generate_zxcvbn_dict)
+
 
 if (WIN32)
     set(DEBUG_SUFFIX)
