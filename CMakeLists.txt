@@ -16,26 +16,30 @@ find_package(Qt6 COMPONENTS
 add_executable(keepcold
         src/app/main.cpp
         src/app/keepcold/mainwindow/mainwindow.cpp
-        src/include/app/keepcold/mainwindow/mainwindow.h
+        include/app/keepcold/mainwindow/mainwindow.h
         ui/mainwindow.ui
-        src/widgets/PasswordLineEdit.cpp
-        src/include/widgets/PasswordLineEdit.h
         src/styles/UIStyle.cpp
-        src/include/styles/UIStyle.h
+        include/styles/UIStyle.h
         src/styles/RichText.cpp
-        src/include/styles/RichText.h
+        include/styles/RichText.h
         src/io/FileManger.cpp
-        src/include/io/FileManger.h
-        src/app/Animation/Animation.cpp
-        src/include/app/Animation/Animation.h
+        include/io/FileManger.h
+        include/app/Animation/Animation.h
         resources/Resource.qrc
-        src/app/Animation/ProgressBar.cpp
-        src/include/app/Animation/ProgressBar.h
         src/core/third_party/zxcvbn/zxcvbn.c
         src/core/third_party/zxcvbn/zxcvbn.h
+        src/core/PasswordStrength.cpp
+        src/core/PasswordStrength.h
+        src/styles/LinePassword.cpp
+        include/styles/LinePassword.h
+        src/widgets/WindowPage.cpp
+        include/widgets/WindowPage.h
+        include/memory/Memory.h
+        src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
+        src/qt-widgets-toolkit/QtWidgetStoolkit.h
 
 )
-target_include_directories(keepcold PRIVATE src/include)
+target_include_directories(keepcold PRIVATE include)
 set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/ui")
 target_link_libraries(keepcold
         Qt::Core

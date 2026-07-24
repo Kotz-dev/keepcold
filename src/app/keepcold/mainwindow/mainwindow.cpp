@@ -5,105 +5,178 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_mainwindow.h" resolved
 
 #include "app/keepcold/mainwindow/mainwindow.h"
-#include <widgets/PasswordLineEdit.h>
-#include <io/FileManger.h>
-#include <styles/UIStyle.h>
+
 #include "ui_mainwindow.h"
-#include <app/Animation/ProgressBar.h>
-#include "zxcvbn.h"
 
-
-void mainwindow::Page(StackPage page) {
-    ui->stackedWidget->setCurrentIndex(static_cast<int>(page));
-}
-
-void mainwindow::navigateTo(StackPage page, QWidget *frameToAnimate,
-                             const std::function<void()> &onShow) {
-    Page(page);
-    animateIn(frameToAnimate);
-
-    if (onShow) {
-        onShow();
-    }
-}
-
+#include <io/FileManger.h>
+#include <src/core/PasswordStrength.h>
+#include <styles/UIStyle.h>
+#include <QSplitter>
+#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
 
 void mainwindow::on_btn_create_cofre_clicked() {
-    navigateTo(StackPage::CreateVault, ui->frame_8, [this]() {
-        UIStyle::Page::PasswordField::show(ui->line_password_mestra, this, "page_create_new_cofre.qss");
-    });
+    ClearStrengthBar(ui->progressBar);
+    ui->pageCreateVault->setAttribute(Qt::WA_TranslucentBackground);
+    WindowPage::NavigetPage(StackPage::CreateVault);
 }
 
 void mainwindow::on_btn_back_clicked() {
-    navigateTo(StackPage::Welcome, ui->frame_3, [this]() {
-        UIStyle::Page::Welcome::show(ui, this);
-    });
+    ClearStrengthBar(ui->progressBar);
+    WindowPage::NavigetPage(StackPage::Welcome);
 }
 
 void mainwindow::on_btn_open_cofre_clicked() {
-    navigateTo(StackPage::OpenVault, ui->frame_10, [this]() {
-        UIStyle::Page::PasswordField::show(ui->line_passowrd_open_cofre, this, "page_open_exist_cofre.qss");
-    });
+    WindowPage::NavigetPage(StackPage::OpenVault);
 }
 
 void mainwindow::on_back_open_cofre_clicked() {
-    navigateTo(StackPage::Welcome, ui->frame_8, [this]() {
-        setStyleSheet(FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\page_welcome.qss",
-            PATCH_TYPE_::FILE_styles
-        ));
-    });
+    WindowPage::NavigetPage(StackPage::Welcome);
+
 }
 
-int teste(int value,QString & text);
-
-int teste (int value,QString & text) {
-    text = "";
-    if (value < 20) {text = "Muito fraca"; return 1;} // muito fraca
-    if (value < 36) {text = "Fraca"; return 2;} // fraca/regular
-    if (value < 60) {text = "Boa"; return 3;} // boa
-    if (value < 80) {text = "Forte"; return 4;} // forte
-     text = "Excelente";
-    return 5;
+void mainwindow::on_btn_create_cofre_cp_clicked()
+{
+    WindowPage::NavigetPage(StackPage::VaultMain);
 }
 
-void mainwindow::on_line_password_mestra_textEdited(const QString &arg1) {
+void mainwindow::showUI() {
     ui->frame_14->show();
+   // this->strengthBar->show();
     ui->progressBar->show();
+}
 
-    auto value = ZxcvbnMatch(arg1.toStdString().c_str(), nullptr, nullptr);
-    QString text;
-    strengthBar->setSegments(5);
-    strengthBar->setRange(0, 5);
-    strengthBar->setTextVisible(false);
-    strengthBar->setValue(teste(value,text));
-    strengthBar->setFixedHeight(7);
-
-
-    ui->label_forca_senha->setText(text);
-
-
-    QLayout *existingLayout = ui->progressBar->layout();
-    if (existingLayout == nullptr) {
-        existingLayout = new QVBoxLayout(ui->progressBar);
-        existingLayout->setContentsMargins(0, 0, 0, 0);
-    }
-    existingLayout->addWidget(strengthBar);
-    if (arg1.isEmpty()) {
-        strengthBar->setValue(0);
+void mainwindow::ClearStrengthBar(QProgressBar *widget) {
+    if (widget != nullptr) {
+        widget->setValue(0);
+        widget->hide();
+        ui->progressBar->hide();
         ui->frame_14->hide();
         ui->label_forca_senha->clear();
-        ui->progressBar->hide();
+        return;
+    }
+}
+
+void mainwindow::on_btn_max_window_clicked() {
+    toggleMaximize();
+}
+void mainwindow::on_btn_min_window_clicked() {
+    showMinimized();
+}
+void mainwindow::on_btn_close_window_clicked() {
+    close();
+}
+
+
+void mainwindow::on_btn_documento_clicked() {
+   ui->stackedWidget_2->setCurrentIndex(4);
+}
+
+
+// Desgin QProcesdar
+void mainwindow::setupStrengthBar(int value)
+{
+
+    if (ui->line_password_mestra->text().isEmpty())
+    {
+        ClearStrengthBar(ui->progressBar);
+    }
+    QtToolkit::ProgessBar::SegmentedProgressBar::render(value, ui->progressBar);
+}
+
+void mainwindow::on_line_cfr_passaword_mestra_textEdited(const QString& arg1)
+{
+    if (arg1.isEmpty() == true)
+    {
+        ui->label_erro_senha->hide();
+        ui->line_cfr_passaword_mestra->setStyleSheet("border: 1px solid #3a4368");
+        return;
+    }
+    if (!PasswordStrength::PassowrdIguais(arg1))
+    {
+        ui->label_erro_senha->setStyleSheet("color: rgb(239, 107, 107);");
+        ui->line_cfr_passaword_mestra->setStyleSheet("border: 1px solid #ef6b6b;");
+        ui->label_erro_senha->show();
+    }
+    else
+    {
+        ui->label_erro_senha->hide();
+    }
+}
+// Line Passowrd
+void mainwindow::on_line_password_mestra_textEdited(const QString& arg1)
+{
+    showUI();
+    QString text = arg1;
+    setupStrengthBar(PasswordStrength::evaluate(text));
+    ui->label_forca_senha->setText(text);
+}
+
+
+bool mainwindow::eventFilter(QObject *watched, QEvent *event) {
+    if (watched == ui->barra_titule_) {
+        if (event->type() == QEvent::MouseButtonPress) {
+            auto *mouseEvent = static_cast<QMouseEvent*>(event);
+            if (mouseEvent->button() == Qt::LeftButton) {
+                m_dragging = true;
+                // guarda a diferença entre onde clicou e a posição da janela
+                m_dragStartPosition = mouseEvent->globalPosition().toPoint() - frameGeometry().topLeft();
+                return true;
+            }
+        }
+        else if (event->type() == QEvent::MouseMove) {
+            auto *mouseEvent = static_cast<QMouseEvent*>(event);
+            if (m_dragging && (mouseEvent->buttons() & Qt::LeftButton)) {
+                move(mouseEvent->globalPosition().toPoint() - m_dragStartPosition);
+                return true;
+            }
+        }
+        else if (event->type() == QEvent::MouseButtonRelease) {
+            m_dragging = false;
+            return true;
+        }
+    }
+    return QMainWindow::eventFilter(watched, event);
+
+}
+mainwindow::mainwindow(QWidget* parent)
+    : QMainWindow(parent),
+      ui(new Ui::mainwindow)
+{
+    ui->setupUi(this);
+    WindowPage::__init__(ui, this);
+    ui->stackedWidget->setCurrentIndex(2);
+      setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    ui->barra_titule_->installEventFilter(this);
+}
+void mainwindow::toggleMaximize() {
+    auto *anim = new QPropertyAnimation(this, "geometry");
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+
+    if (!m_isMaximized) {
+        m_normalGeometry = geometry();
+        QRect screenGeometry = screen()->availableGeometry();
+        anim->setStartValue(geometry());
+        anim->setEndValue(screenGeometry);
+        m_isMaximized = true;
+    } else {
+        anim->setStartValue(geometry());
+        anim->setEndValue(m_normalGeometry);
+        m_isMaximized = false;
     }
 
 
+     ui->pageWelcome->setUpdatesEnabled(false);
+    ui->frame_9->setUpdatesEnabled(false);
+    connect(anim, &QPropertyAnimation::finished, this, [this]() {
+         ui->pageWelcome->setUpdatesEnabled(true);
+        ui->frame_9->setUpdatesEnabled(true);
+        ui->pageWelcome->update();
+    });
+
+    anim->start(QAbstractAnimation::DeleteWhenStopped);
 
 }
 
-mainwindow::mainwindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::mainwindow) {
-    ui->setupUi(this);
-     UIStyle::Page::Welcome::show(ui,this);
-    ui->frame_14->hide();
-}
 
 mainwindow::~mainwindow() { delete ui; }

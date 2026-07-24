@@ -1,0 +1,54 @@
+/*
+ * barra_titule - Qt Style Sheet
+ * Created: 18/07/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+
+QFrame#barra_titule_{
+  background-color: rgb(35, 44, 77);
+  border-bottom: 2px solid rgba(255,255,255,0.08)
+}
+
+
+#Logo_Kep {
+background-image: url(:/images/16x16/logo_keepcold_.png);
+background-position: center;
+background-repeat: repeat;
+}
+
+QFrame {
+  background: none;
+  border-radius: none;
+}
+
+
+#btn_close_window:hover {
+  background: rgb(56, 67, 110);
+  background-image: url(:/images/46x35/close_window.png);
+  background-position: center;
+}
+
+#btn_close_window {
+   background-image: url(:/images/46x35/close_window.png);
+   background-position: center;
+   background-color: none;
+   border-radius: none;
+}
+#btn_max_window {
+   background-image: url(:/images/46x35/max_window.png);
+   background-position: center;
+   background-color: none;
+   border-radius: none;
+}
+#btn_min_window {
+   background-image: url(:/images/46x35/min_window.png);
+   background-position: center;
+   background-color: none;
+   border-radius: none;
+}

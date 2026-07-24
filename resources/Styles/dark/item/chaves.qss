@@ -1,0 +1,51 @@
+/*
+ * item/chaves - Qt Style Sheet
+ * Created: 24/07/2026
+ *
+ * Estilo do item de lista da categoria "Chaves".
+ * Usa :/images/56x56/ly_chave.png, o mesmo icone ja usado em #btn_teste
+ * (page_value_main.qss) pra representar uma chave/senha guardada.
+ */
+
+QFrame#frame_chaves_item {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+QPushButton#btn_chaves_item_icon {
+    background-color: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/56x56/ly_chave.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QLabel#label_chaves_titulo {
+    font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #e8eaf0;
+}
+
+QLabel#label_chaves_subtitulo {
+    color: rgb(166, 176, 208);
+    font-size: 12px;
+}
+
+QPushButton#btn_favorito_chaves_item {
+    background-image: url(:/images/icons/normal/logo_favorite.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+}
+QPushButton#btn_favorito_chaves_item:hover {
+    background-color: rgba(107, 140, 255, 0.14);
+}
+
+QPushButton#btn_remover_chaves_item {
+    background-color: transparent;
+    border-radius: 20px;
+}
+QPushButton#btn_remover_chaves_item:hover {
+    background-color: rgba(239, 107, 107, 0.14);
+}

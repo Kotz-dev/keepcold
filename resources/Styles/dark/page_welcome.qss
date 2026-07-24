@@ -9,14 +9,17 @@
  */
 
 /* Add your QSS styles here */
-mainwindow {
- background-color: rgb(26, 34, 64);
-}
+
+#centralwidget {
+      background-color: #1a2138;
+     border-radius: 12px;
+    }
+
 
 QPushButton#btn_create_cofre {
  outline: none;
    background-color: #2d3654;
-       background-image: url(:/imagen/images/logo_create.png);
+       background-image: url(:/images/36x36/logo_create.png);
        background-repeat: no-repeat;
        background-position: top left;
        background-origin: content;
@@ -33,7 +36,7 @@ QPushButton#btn_create_cofre {
 QPushButton#btn_open_cofre{
  outline: none;
 background-color: #2d3654;
-       background-image: url(:/imagen/images/logo_open_cp.png);
+       background-image: url(:/images/36x36/logo_open_cp.png);
        background-repeat: no-repeat;
        background-position: top left;
        background-origin: content;
