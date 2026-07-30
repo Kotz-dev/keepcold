@@ -1,5 +1,5 @@
 /*
- * item/cartao - Qt Style Sheet
+ * itens/cartao - Qt Style Sheet
  * Created: 24/07/2026
  *
  * Estilo do item de lista da categoria "Cartoes".
@@ -31,19 +31,9 @@ QLabel#label_cartao_subtitulo {
 }
 
 QPushButton#btn_favorito_cartao_item {
-    background-image: url(:/images/icons/normal/logo_favorite.png);
-    background-repeat: no-repeat;
-    background-position: center;
     border-radius: 20px;
 }
-QPushButton#btn_favorito_cartao_item:hover {
-    background-color: rgba(107, 140, 255, 0.14);
-}
-
 QPushButton#btn_remover_cartao_item {
     background-color: transparent;
     border-radius: 20px;
-}
-QPushButton#btn_remover_cartao_item:hover {
-    background-color: rgba(239, 107, 107, 0.14);
 }

@@ -10,32 +10,12 @@
 
 /* Add your QSS styles here */
 
-#label_login {
-   background: rgb(56, 67, 110);
-   color: rgb(166, 176, 208);
-   border-radius: 10px;
-   background-position: center;
-   font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-}
-
 QPushButton {
-    background-image: url(:/images/icons/normal/logo_favorite.png);
     background-position: center;
     background-repeat: no-repeat;
     background: rgb(69, 81, 131);
     border-radius: 20px;
 }
-
-#btn_teste {
-  background-image: url(:/images/56x56/ly_chave.png);
- background-color: rgba(107,140,255,0.14);
- border-radius: 10px;
-}
-
-#btn_favorito_login_item {
-
-}
-
 QLineEdit#line_search {
     background-image: url(:/images/16x16/logo_search.png);
     background-position: left center;
@@ -59,7 +39,9 @@ QStackedWidget#stackedWidget_2 {
 }
 
 #btn_search {
-   background-image: url(:/images/36x36/logo_add.png);
+  background: rgb(56, 67, 110);
+   background-image: url(:/images/18x18/logo_adicionar.png);
+   border: 1px solid rgba(255,255,255,0.08);
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 20px;
@@ -69,249 +51,7 @@ QFrame#frame_19 {
  background-color: #232c4d;
  border-bottom: 2px solid rgba(255,255,255,0.08)
 }
-QFrame#frame_15{
+QFrame#Frame_item{
 background: rgb(35, 44, 77);
 border-right: 2px solid rgba(255,255,255,0.08)
-}
-
-QPushButton#btn_cartao {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_cartao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_cartao:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_cartao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_cartao:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_cartao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_configuracao {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_configuracao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_configuracao:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_configuracao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_configuracao:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_configuracao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_documento {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_documento.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_documento:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_documento.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_documento:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_documento.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_favorite {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_favorite.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_favorite:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_favorite.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_favorite:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_favorite.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_file {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_file.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_file:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_file.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_file:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_file.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_idadente {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_idadente.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_idadente:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_idadente.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_idadente:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_idadente.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_login {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_login.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_login:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_login.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_login:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_login.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_menu {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_menu.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_menu:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_menu.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_menu:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_menu.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_recuperacao {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_recuperacao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_recuperacao:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_recuperacao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_recuperacao:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_recuperacao.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_terminal {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_terminal.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_terminal:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_terminal.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_terminal:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_terminal.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-
-QPushButton#btn_wifi {
-    background: rgb(35, 44, 77);
-    background-image: url(:/images/icons/normal/logo_wifi.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: none;
-}
-QPushButton#btn_wifi:hover {
-    background: rgba(107, 140, 255, 0.14);
-    background-image: url(:/images/icons/normal/logo_wifi.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
-}
-QPushButton#btn_wifi:pressed {
-    background: rgba(107, 140, 255, 0.24);
-    background-image: url(:/images/icons/pressed/logo_wifi.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 10px;
 }

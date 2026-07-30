@@ -1,0 +1,35 @@
+/*
+ * itens/chaves - Qt Style Sheet
+ * Created: 24/07/2026
+ *
+ * Estilo do item de lista da categoria "Chaves".
+ * Usa :/images/56x56/ly_chave.png, o mesmo icone ja usado em #btn_teste
+ * (page_value_main.qss) pra representar uma chave/senha guardada.
+ */
+
+
+#btn_icone_key {
+   background-color: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/28x28/logo_terminal.png);
+     background-position: center;
+     background-repeat: no-repeat;
+}
+QTextEdit {
+    background-color: rgb(56, 67, 110);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding-left: 10px;
+}
+
+#label_key {
+font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: rgb(56, 67, 110);
+    border-radius: 10px;
+    color: rgb(166, 176, 208);
+}
+
+QTextEdit,QLineEdit:hover {
+ border: 1px solid #6b8cff;
+}

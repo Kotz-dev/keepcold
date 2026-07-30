@@ -1,0 +1,30 @@
+/*
+ * cofre_form - Qt Style Sheet
+ * Created: 29/07/2026
+ *
+ * Controles de formulario reaproveitados entre as paginas de
+ * criar/abrir cofre e a pagina principal (QLineEdit, QProgressBar).
+ */
+
+mainwindow {
+    background-color: rgb(26, 34, 64);
+}
+
+QLineEdit {
+    background-color: #2d3654;
+    border: 1px solid #3a4368;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #e8eaf0;
+    font-size: 14px;
+}
+QLineEdit:focus {
+    border: 1px solid #5865f2;
+    background-color: #313a5c;
+}
+
+QProgressBar {
+    border: none;
+    background: transparent;
+    background-color: transparent;
+}

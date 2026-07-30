@@ -16,57 +16,39 @@
     }
 
 
+QPushButton#btn_create_cofre,
+QPushButton#btn_open_cofre {
+    outline: none;
+    background-color: #2d3654;
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-origin: content;
+    padding-top: 20px;              /* empurra o texto pra baixo, abrindo espaço pro ícone */
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    border: 1px solid #3a4368;
+    border-radius: 12px;
+    text-align: left;
+    font-size: 13px;
+    color: #e8eaf0;
+}
 QPushButton#btn_create_cofre {
- outline: none;
-   background-color: #2d3654;
-       background-image: url(:/images/36x36/logo_create.png);
-       background-repeat: no-repeat;
-       background-position: top left;
-       background-origin: content;
-       padding-top: 20px;              /* empurra o texto pra baixo, abrindo espaço pro ícone */
-       padding-left: 16px;
-       padding-right: 16px;
-       padding-bottom: 16px;
-       border: 1px solid #3a4368;
-       border-radius: 12px;
-       text-align: left;
-       font-size: 13px;
-       color: #e8eaf0;
+    background-image: url(:/images/36x36/logo_create.png);
 }
-QPushButton#btn_open_cofre{
- outline: none;
-background-color: #2d3654;
-       background-image: url(:/images/36x36/logo_open_cp.png);
-       background-repeat: no-repeat;
-       background-position: top left;
-       background-origin: content;
-       padding-top: 20px;              /* empurra o texto pra baixo, abrindo espaço pro ícone */
-       padding-left: 16px;
-       padding-right: 16px;
-       padding-bottom: 16px;
-       border: 1px solid #3a4368;
-       border-radius: 12px;
-       text-align: left;
-       font-size: 13px;
-       color: #e8eaf0;
+QPushButton#btn_open_cofre {
+    background-image: url(:/images/36x36/logo_open_cp.png);
 }
 
-QPushButton#btn_create_cofre:hover {
- outline: none;
-    background-color: #343e60;      /* leve destaque ao passar mouse */
-    border: 1px solid #5865f2;
-}
+QPushButton#btn_create_cofre:hover,
 QPushButton#btn_open_cofre:hover {
- outline: none;
+    outline: none;
     background-color: #343e60;      /* leve destaque ao passar mouse */
     border: 1px solid #5865f2;
 }
 
-QPushButton#btn_create_cofre:pressed {
- outline: none;
-    background-color: #28304a;
-}
+QPushButton#btn_create_cofre:pressed,
 QPushButton#btn_open_cofre:pressed {
- outline: none;
+    outline: none;
     background-color: #28304a;
 }

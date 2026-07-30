@@ -6,7 +6,6 @@
 #define KEEPCOLD_MAINWINDOW_H
 
 #include <QMainWindow>
-#include <app/Animation/Animation.h>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QEvent>

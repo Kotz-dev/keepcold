@@ -68,7 +68,7 @@ void mainwindow::on_btn_close_window_clicked() {
 
 
 void mainwindow::on_btn_documento_clicked() {
-   ui->stackedWidget_2->setCurrentIndex(4);
+   ui->stackedWidget_2->setCurrentIndex(3);
 }
 
 
@@ -144,8 +144,9 @@ mainwindow::mainwindow(QWidget* parent)
 {
     ui->setupUi(this);
     WindowPage::__init__(ui, this);
-    ui->stackedWidget->setCurrentIndex(2);
-      setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    ui->stackedWidget_2->setCurrentIndex(5);
+    //ui->stackedWidget->setCurrentIndex(2);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     ui->barra_titule_->installEventFilter(this);
 }
 void mainwindow::toggleMaximize() {

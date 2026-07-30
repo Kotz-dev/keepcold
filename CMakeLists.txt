@@ -24,7 +24,6 @@ add_executable(keepcold
         include/styles/RichText.h
         src/io/FileManger.cpp
         include/io/FileManger.h
-        include/app/Animation/Animation.h
         resources/Resource.qrc
         src/core/third_party/zxcvbn/zxcvbn.c
         src/core/third_party/zxcvbn/zxcvbn.h

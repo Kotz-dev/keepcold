@@ -1,0 +1,14 @@
+/*
+ * itens/login - Qt Style Sheet
+ * Created: 24/07/2026
+ *
+ * Estilo do item de lista da categoria "Logins" (segue o mesmo padrao
+ * de nomes de widget usado na pagina "logins" do ui/mainwindow.ui).
+ */
+
+#btn_icone_login {
+     background-color: rgba(107, 140, 255, 0.14);
+     background-image: url(:/images/28x28/logo_login.png);
+     background-position: center;
+     background-repeat: no-repeat;
+}

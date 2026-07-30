@@ -1,0 +1,20 @@
+/*
+ * line_search - Qt Style Sheet
+ * Created: 29/07/2026
+ *
+ * Campo de busca (page_value_main).
+ */
+
+QLineEdit#line_search {
+    background-image: url(:/images/16x16/logo_search.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-color: rgb(56, 67, 110);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding-left: 30px;
+}
+
+QLineEdit#line_search:focus{
+  border: 1px solid #6b8cff;
+}

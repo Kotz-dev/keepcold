@@ -8,6 +8,10 @@
 QString PasswordStrength::Password;
 
 int PasswordStrength::evaluate(QString & text) {
+    if (text.isEmpty())
+    {
+        return 0;
+    }
     Password = text;
     auto value = ZxcvbnMatch(text.toStdString().c_str(), nullptr, nullptr);
     if (value < 20) {text = "Muito fraca"; return 1;}
