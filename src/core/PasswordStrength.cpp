@@ -2,7 +2,7 @@
 // Created by KoTz on 17/07/2026.
 //
 
-#include "PasswordStrength.h"
+#include "core/PasswordStrength.h"
 #include <QDebug>
 
 QString PasswordStrength::Password;

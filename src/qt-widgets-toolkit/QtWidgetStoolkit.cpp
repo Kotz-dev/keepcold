@@ -4,15 +4,148 @@
 
 #include "QtWidgetStoolkit.h"
 
-//
-// Created by KoTz on 17/07/2026.
-//
-#include <QPainter>
-#include <QVBoxLayout>
-
-
-
 QtToolkit::ProgessBar::SegmentedProgressBar *QtToolkit::ProgessBar::SegmentedProgressBar::s_instance = nullptr;
+QWidget *QtToolkit::Window::Dragger::s_target = nullptr;
+QtToolkit::Window::Dragger *QtToolkit::Window::Dragger::s_instance = nullptr;
+bool QtToolkit::Window::Maximizer::m_isMaximized = false;
+QRect QtToolkit::Window::Maximizer::m_normalGeometry;
+QWidget *QtToolkit::Window::Maximizer::oldWidget;
+QScreen *QtToolkit::Window::Maximizer::oldScreen;
+bool QtToolkit::Frame::ClickHelper::m_enabled;
+
+
+
+bool QtToolkit::Window::Dragger::eventFilter(QObject* watched, QEvent* event)
+{
+    if (s_target != nullptr)
+    {
+        if (watched == s_target) {
+            if (event->type() == QEvent::MouseButtonPress) {
+                auto *mouseEvent = static_cast<QMouseEvent*>(event);
+                if (mouseEvent->button() == Qt::LeftButton) {
+                    m_dragging = true;
+                    m_dragStartPosition = mouseEvent->globalPosition().toPoint() - s_target->frameGeometry().topLeft();
+                    return true;
+                }
+            }
+            else if (event->type() == QEvent::MouseMove) {
+                auto *mouseEvent = static_cast<QMouseEvent*>(event);
+                if (m_dragging && (mouseEvent->buttons() & Qt::LeftButton)) {
+                    s_target->move(mouseEvent->globalPosition().toPoint() - m_dragStartPosition);
+                    return true;
+                }
+            }
+            else if (event->type() == QEvent::MouseButtonRelease) {
+                m_dragging = false;
+                return true;
+            }
+            else if (event->type() == QEvent::WindowStateChange) {
+                if (!(s_target->windowState() & Qt::WindowMinimized)) {
+                    Maximizer::resync(s_target);
+                }
+            }
+        }
+
+
+        return QObject::eventFilter(watched, event);
+    }
+    return false;
+}
+
+void QtToolkit::Window::Dragger::attach(QWidget* widget)
+{
+    if (widget != nullptr)
+    {
+        s_target = widget;
+        if (s_instance == nullptr)
+        {
+            s_instance = new Dragger();
+        }
+        widget->installEventFilter(s_instance);
+    }
+}
+
+QLabel *QtToolkit::Blur::render(QWidget* parent,qreal blurRadius)
+{
+    if (parent == nullptr || blurRadius <= 0.0) {
+        return nullptr;
+    }
+
+    QPixmap original = parent->grab();
+    if (original.isNull()) {
+        return nullptr;
+    }
+
+    QGraphicsScene scene;
+    QGraphicsPixmapItem item(original);
+
+    std::unique_ptr<QGraphicsBlurEffect> blur = std::make_unique<QGraphicsBlurEffect>();
+    blur->setBlurRadius(blurRadius);
+    item.setGraphicsEffect(blur.release());
+
+    scene.addItem(&item);
+
+    QPixmap blurred(original.size());
+    blurred.fill(Qt::transparent);
+
+    QPainter painter(&blurred);
+    scene.render(
+        &painter,
+        QRectF(0, 0, blurred.width(), blurred.height()),
+        QRectF(0, 0, original.width(), original.height()));
+    painter.end();
+
+    if (blurred.isNull()) {
+        return nullptr;
+    }
+
+       QLabel *label = new QLabel(parent);
+        label->setPixmap(blurred);
+        label->setGeometry(parent->rect());
+        label->show();
+        label->raise();
+
+    return label;
+}
+
+
+void QtToolkit::Window::Maximizer::toggle(QWidget* widget,int msec)
+{
+    if (widget != nullptr && msec > 0)
+    {
+        auto *anim = new QPropertyAnimation(widget, "geometry");
+        anim->setDuration(msec);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+            if (!m_isMaximized) {
+                m_normalGeometry = widget->geometry();
+                QRect screenGeometry = widget->screen()->availableGeometry();
+                anim->setStartValue( widget->geometry());;
+                anim->setEndValue(screenGeometry);
+                m_isMaximized = true;
+            } else {
+                anim->setStartValue(widget->geometry());
+                anim->setEndValue(m_normalGeometry);
+                m_isMaximized = false;
+        }
+        // m_parent->setUpdatesEnabled(false);
+        // connect(anim, &QPropertyAnimation::finished, widget, []() {
+        //          m_parent->setUpdatesEnabled(true);
+        //         m_parent->update();
+        //     });
+
+        anim->start(QAbstractAnimation::DeleteWhenStopped);
+    }
+}
+
+void QtToolkit::Window::Maximizer::resync(QWidget* widget)
+{
+    if (widget == nullptr || widget->screen() == nullptr)
+    {
+        return;
+    }
+
+    m_isMaximized = (widget->geometry() == widget->screen()->availableGeometry());
+}
 
 QtToolkit::ProgessBar::SegmentedProgressBar::SegmentedProgressBar(QWidget *parent)
     : QProgressBar(parent)
@@ -159,7 +292,7 @@ void QtToolkit::Splitter::setupSplitter(
 
 }
 
-void QtToolkitAnimation::fadeSlideIn(QWidget* widget) {
+void QtToolkit::Animation::fadeSlideIn(QWidget* widget,int OpDuration,int posDuration ) {
 
     if (widget != nullptr)
     {
@@ -176,13 +309,13 @@ void QtToolkitAnimation::fadeSlideIn(QWidget* widget) {
             QPointF(1.0, 1.0)
         );
         auto *fade = new QPropertyAnimation(effect, "opacity");
-        fade->setDuration(750);
+        fade->setDuration(OpDuration);
         fade->setStartValue(0.0);
         fade->setEndValue(1.0);
         fade->setEasingCurve(customCurve);
 
         auto *slide = new QPropertyAnimation(widget, "pos");
-        slide->setDuration(740);
+        slide->setDuration(posDuration);
         slide->setEndValue(endPos);
         slide->setEasingCurve(customCurve);
 
@@ -191,4 +324,13 @@ void QtToolkitAnimation::fadeSlideIn(QWidget* widget) {
         group->addAnimation(slide);
         group->start(QAbstractAnimation::DeleteWhenStopped);
     }
+}
+
+void QtToolkit::Frame::makeClickable(QFrame* frame, std::function<void()> onClick) {
+    if (frame == nullptr) {
+        return;
+    }
+    frame->setCursor(Qt::PointingHandCursor);
+    new ClickHelper(frame, onClick);
+
 }

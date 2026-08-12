@@ -1,0 +1,34 @@
+/*
+ * remover - Qt Style Sheet
+ * Created: 29/07/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+
+#btn_remover_login_item,
+#btn_remover_note_,
+#btn_remover_wifi_item,
+#btn_remover_recuperacao,
+#btn_remover_key_item,
+#btn_remover_identidade_item,
+#btn_remover_cartao_item {
+    background-image: url(:/images/16x16/x.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#btn_remover_login_item:hover,
+#btn_remover_note_:hover,
+#btn_remover_wifi_item:hover,
+#btn_remover_recuperacao:hover,
+#btn_remover_key_item:hover,
+#btn_remover_file_item:hover,
+#btn_remover_identidade_item:hover,
+#btn_remover_cartao_item:hover {
+    background-color: rgba(239, 107, 107, 0.14);
+}

@@ -4,7 +4,7 @@
 
 #include "../include/widgets/WindowPage.h"
 #include "../include/styles/UIStyle.h"
-#include <io/FileManger.h>
+#include <io/FileManager.h>
 
 Ui::mainwindow *WindowPage::ui_mainwindow = nullptr;
 QWidget *WindowPage::parent = nullptr;
@@ -28,8 +28,8 @@ void WindowPage::__init__(Ui::mainwindow* ui,QWidget *ptn)
         ui->label_erro_senha->hide();
         NavigetPage(StackPage::Welcome);
         ui->barra_titule_->setStyleSheet(
-            FileManger::loadStyleSheet(
-                "keepcold\\resources\\Styles\\dark\\barra_titule.qss", PATCH_TYPE_::FILE_styles));
+            FileManager::loadStyleSheet(
+                "keepcold\\resources\\Styles\\mainwindow\\dark\\barra_titule.qss", PATCH_TYPE_::FILE_styles));
     }
 }
 

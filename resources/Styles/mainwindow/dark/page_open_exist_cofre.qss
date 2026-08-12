@@ -1,0 +1,17 @@
+/*
+ * page_open_exist_cofre - Qt Style Sheet
+ * Created: 17/07/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+
+
+#centralwidget {
+      background-color: #1a2138;
+     border-radius: 12px;
+    }

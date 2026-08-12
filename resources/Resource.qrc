@@ -27,6 +27,15 @@
     <file>images/28x28/logo_terminal.png</file>
     <file>images/28x28/logo_wifi.png</file>
     <file>images/16x16/x.png</file>
+    <file>images/36x36/logo_cartao_badge.png</file>
+    <file>images/36x36/logo_documento_badge.png</file>
+    <file>images/36x36/logo_file_badge.png</file>
+    <file>images/36x36/logo_idadente_badge.png</file>
+    <file>images/36x36/logo_login_badge.png</file>
+    <file>images/36x36/logo_recuperacao_badge.png</file>
+    <file>images/36x36/logo_terminal_badge.png</file>
+    <file>images/36x36/logo_wifi_badge.png</file>
+    <file>images/20x20/logo_upload.png</file>
     <file>images/icons/normal/logo_cartao.png</file>
     <file>images/icons/normal/logo_configuracao.png</file>
     <file>images/icons/normal/logo_documento.png</file>

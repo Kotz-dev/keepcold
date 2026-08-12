@@ -9,7 +9,7 @@
 #include <QPushButton>
 
 #include "UIStyle.h"
-#include "src/core/PasswordStrength.h"
+#include "core/PasswordStrength.h"
 
 #include <styles/LinePassword.h>
 #include <ui_mainwindow.h>

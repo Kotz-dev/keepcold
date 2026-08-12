@@ -1,0 +1,23 @@
+/*
+ * copy_text - Qt Style Sheet
+ * Created: 29/07/2026
+ *
+ * Botao de "copiar" reaproveitado entre os itens de lista.
+ */
+
+#btn_copy_text_wifi,
+#btn_copy_text_wifi_2,
+#btn_copy_text_key,
+#btn_copy_text_login,
+#btn_copy_text_login_2,
+#btn_copy_text_login_3,
+#btn_copy_text_login_4,
+#btn_copy_text_identidade,
+#btn_copy_text_identidade_2,
+#btn_copy_text_identidade_3,
+#btn_copy_text_cartao,
+#btn_copy_text_cartao_2 {
+    background-image: url(:/images/15x15/logo_copiar.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}

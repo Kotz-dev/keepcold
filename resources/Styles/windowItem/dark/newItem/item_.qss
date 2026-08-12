@@ -1,0 +1,148 @@
+/*
+ * item_ - Qt Style Sheet
+ * Created: 03/08/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+
+QLabel {
+  color: rgba(122, 133, 168, 0.9);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+#btn_save_item_logins,
+#btn_save_item_note,
+#btn_save_item_key,
+#btn_save_item_recuperacao,
+#btn_save_item_cartao,
+#btn_save_item_identidade,
+#btn_save_item_wifi,
+#btn_save_item_file{
+  background-color: #5865f2;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      min-height: 20px;
+}
+
+#btn_save_item_logins:disabled,
+#btn_save_item_note:disabled,
+#btn_save_item_key:disabled,
+#btn_save_item_recuperacao:disabled,
+#btn_save_item_cartao:disabled,
+#btn_save_item_identidade:disabled,
+#btn_save_item_wifi:disabled,
+#btn_save_item_file:disabled {
+    background: #3b4270;
+    color: #7d86ab;
+}
+
+#btn_save_item_logins:hover,
+#btn_save_item_note:hover,
+#btn_save_item_key:hover,
+#btn_save_item_recuperacao:hover,
+#btn_save_item_cartao:hover,
+#btn_save_item_identidade:hover,
+#btn_save_item_wifi:hover,
+#btn_save_item_file:hover {
+    background: #4a6aff;
+}
+
+QTextEdit{
+    background-color: rgb(56, 67, 110);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding-left: 10px;
+}
+QTextEdit:hover {
+ border: 1px solid #6b8cff;
+}
+
+QLineEdit {
+  background: rgb(56, 67, 110);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+  color: rgb(232, 236, 247);
+  padding: 10px 12px;
+  font-size: 14px;
+}
+QLineEdit:hover {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+QLineEdit:focus {
+  border: 1px solid rgb(107, 140, 255);
+  background: rgb(44, 55, 96);
+}
+
+QProgressBar {
+    border: none;
+    background: transparent;
+    background-color: transparent;
+}
+
+#btn_cancelar,#btn_cancelar_note,#btn_cancelar_key,#btn_cancelar_recuperacao,#btn_cancelar_cartao,#btn_cancelar_identidade,#btn_cancelar_wifi,#btn_cancelar_file {
+  background: rgb(44, 55, 96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+  color: rgb(232, 236, 247);
+  padding: 9px 16px;
+  font-weight: 500;
+}
+#btn_cancelar:hover,#btn_cancelar_note:hover,#btn_cancelar_key:hover,#btn_cancelar_recuperacao:hover,#btn_cancelar_cartao:hover,#btn_cancelar_identidade:hover,#btn_cancelar_wifi:hover,#btn_cancelar_file:hover {
+  background: rgb(56, 67, 110);
+}
+#btn_trocar_type_logins,#btn_trocar_type_note,#btn_trocar_type_key,#btn_trocar_type_recuperacao,#btn_trocar_type_cartao,#btn_trocar_type_identidade,#btn_trocar_type_wifi,#btn_trocar_type_file,#btn_trocar_file {
+  background: transparent;
+  border: none;
+  color: rgb(166, 176, 208);
+  padding: 9px 16px;
+  font-weight: 500;
+}
+#btn_trocar_type_logins:hover,#btn_trocar_type_note:hover,#btn_trocar_type_key:hover,#btn_trocar_type_recuperacao:hover,#btn_trocar_type_cartao:hover,#btn_trocar_type_identidade:hover,#btn_trocar_type_wifi:hover,#btn_trocar_type_file:hover,#btn_trocar_file:hover {
+  background: rgb(44, 55, 96);
+  color: rgb(232, 236, 247);
+}
+
+
+
+QFrame#btn_file_upload {
+    border: 2px dashed rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    padding: 20px;
+    background: transparent;
+    color: #a6b0d0;
+}
+QFrame#btn_file_upload:hover {
+    border: 2px dashed #6b8cff;
+}
+
+
+#logo_file_ {
+   background-image: url(:/images/36x36/logo_file_badge.png);
+   background-repeat: no-repeat;
+   background-position: center;
+}
+#btn_download_file {
+      background-image: url(:/images/20x20/logo_upload.png);
+      background-color: transparent;
+      background-repeat: no-repeat;
+      background-position: center;
+      border: transparent;
+}
+#btn_download_file:hover {
+       background: rgb(44, 55, 96);
+       color: rgb(232, 236, 247);
+       background-image: url(:/images/20x20/logo_upload.png);
+       background-repeat: no-repeat;
+       background-position: center;
+}
+

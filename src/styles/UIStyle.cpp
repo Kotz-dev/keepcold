@@ -13,7 +13,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include <io/FileManger.h>
+#include <io/FileManager.h>
 #include <memory/Memory.h>
 #include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
 #include <styles/RichText.h>
@@ -61,11 +61,11 @@ void UIStyle::Styles_Page::WELCOME::apply(QString fileName) {
     UIStyle::CardButton::apply(mainwindow->btn_open_cofre, text);
 
     parent->setStyleSheet(
-        FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\" + fileName.toStdString(),
+        FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\" + fileName.toStdString(),
             PATCH_TYPE_::FILE_styles));
 
-    QtToolkitAnimation::fadeSlideIn(mainwindow->pageWelcome);
+    QtToolkit::Animation::fadeSlideIn(mainwindow->pageWelcome);
 
 }
 
@@ -78,18 +78,18 @@ void UIStyle::Styles_Page::CREATE_NEW_COFRE::apply()
 
     Pw = new LinePassword(mainwindow->line_password_mestra);
 
-   auto style = FileManger::loadStyleSheet(
-         "keepcold\\resources\\Styles\\dark\\page_create_new_cofre.qss", PATCH_TYPE_::FILE_styles)
-       + FileManger::loadStyleSheet(
-         "keepcold\\resources\\Styles\\dark\\shared\\cofre_form.qss", PATCH_TYPE_::FILE_styles)
-       + FileManger::loadStyleSheet(
-         "keepcold\\resources\\Styles\\dark\\shared\\back_button.qss", PATCH_TYPE_::FILE_styles)
-       + FileManger::loadStyleSheet(
-         "keepcold\\resources\\Styles\\dark\\shared\\cta_button.qss", PATCH_TYPE_::FILE_styles);
+   auto style = FileManager::loadStyleSheet(
+         "keepcold\\resources\\Styles\\mainwindow\\dark\\page_create_new_cofre.qss", PATCH_TYPE_::FILE_styles)
+       + FileManager::loadStyleSheet(
+         "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\cofre_form.qss", PATCH_TYPE_::FILE_styles)
+       + FileManager::loadStyleSheet(
+         "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\back_button.qss", PATCH_TYPE_::FILE_styles)
+       + FileManager::loadStyleSheet(
+         "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\cta_button.qss", PATCH_TYPE_::FILE_styles);
 
      Pw->setupPasswordVisibilityToggle();
      parent->setStyleSheet(style);
-     QtToolkitAnimation::fadeSlideIn(mainwindow->frame_8);
+     QtToolkit::Animation::fadeSlideIn(mainwindow->frame_8);
 }
 
 void UIStyle::Styles_Page::OPEN_COFRE::apply()
@@ -103,20 +103,20 @@ void UIStyle::Styles_Page::OPEN_COFRE::apply()
     Pw->setupPasswordVisibilityToggle();
 
     parent->setStyleSheet(
-        FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\page_open_exist_cofre.qss",
+        FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\page_open_exist_cofre.qss",
             PATCH_TYPE_::FILE_styles)
-        + FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\shared\\cofre_form.qss",
+        + FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\cofre_form.qss",
             PATCH_TYPE_::FILE_styles)
-        + FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\shared\\back_button.qss",
+        + FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\back_button.qss",
             PATCH_TYPE_::FILE_styles)
-        + FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\shared\\cta_button.qss",
+        + FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\cta_button.qss",
             PATCH_TYPE_::FILE_styles));
 
-    QtToolkitAnimation::fadeSlideIn(mainwindow->frame_13);
+    QtToolkit::Animation::fadeSlideIn(mainwindow->frame_13);
 }
 
 void applyItemStyles(Ui_mainwindow *mainwindow);
@@ -126,28 +126,30 @@ void applyItemStyles(Ui_mainwindow *mainwindow)
     {
         std::map<QWidget*, QString> styles =
         {
-            {mainwindow->logins,     "keepcold\\resources\\Styles\\dark\\itens\\login.qss"},
-            {mainwindow->notas,      "keepcold\\resources\\Styles\\dark\\itens\\notas.qss"},
-            {mainwindow->Wifi,       "keepcold\\resources\\Styles\\dark\\itens\\wifi.qss"},
-            {mainwindow->chaves,     "keepcold\\resources\\Styles\\dark\\itens\\chaves.qss"},
-            {mainwindow->recuperacao,"keepcold\\resources\\Styles\\dark\\itens\\recuperacao.qss"}
+            {mainwindow->logins,     "keepcold\\resources\\Styles\\mainwindow\\dark\\itens\\login.qss"},
+            {mainwindow->notas,      "keepcold\\resources\\Styles\\mainwindow\\dark\\itens\\notas.qss"},
+            {mainwindow->Wifi,       "keepcold\\resources\\Styles\\mainwindow\\dark\\itens\\wifi.qss"},
+            {mainwindow->chaves,     "keepcold\\resources\\Styles\\mainwindow\\dark\\itens\\chaves.qss"},
+            {mainwindow->recuperacao,"keepcold\\resources\\Styles\\mainwindow\\dark\\itens\\recuperacao.qss"},
+            {mainwindow->identidade, "keepcold\\resources\\Styles\\mainwindow\\dark\\itens\\idadente.qss"},
+            {mainwindow->cartoes,    "keepcold\\resources\\Styles\\mainwindow\\dark\\itens\\cartao.qss"}
         };
 
-        QString favoritoStyle = FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\shared\\favorito.qss", PATCH_TYPE_::FILE_styles);
-        QString removerStyle = FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\shared\\remover.qss", PATCH_TYPE_::FILE_styles);
-        QString copyTextStyle = FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\shared\\copy_text.qss", PATCH_TYPE_::FILE_styles);
-        QString togglePasswordStyle = FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\shared\\toggle_password.qss", PATCH_TYPE_::FILE_styles);
+        QString favoritoStyle = FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\favorito.qss", PATCH_TYPE_::FILE_styles);
+        QString removerStyle = FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\remover.qss", PATCH_TYPE_::FILE_styles);
+        QString copyTextStyle = FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\copy_text.qss", PATCH_TYPE_::FILE_styles);
+        QString togglePasswordStyle = FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\toggle_password.qss", PATCH_TYPE_::FILE_styles);
 
         for (auto style : styles)
         {
             if (style.first != nullptr)
             {
                 style.first->setStyleSheet(
-                    FileManger::loadStyleSheet(style.second.toStdString(), PATCH_TYPE_::FILE_styles)
+                    FileManager::loadStyleSheet(style.second.toStdString(), PATCH_TYPE_::FILE_styles)
                     + favoritoStyle + removerStyle + copyTextStyle + togglePasswordStyle);
             }
         }
@@ -160,27 +162,27 @@ void UIStyle::Styles_Page::VALUE_MAIN::apply()
     auto parent = WindowPage::getParent();
 
     mainwindow->stackedWidget_2->setStyleSheet(
-        FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\page_value_main\\stackwidget.qss",
+        FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\page_value_main\\stackwidget.qss",
             PATCH_TYPE_::FILE_styles)
-        + FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\shared\\cofre_form.qss",
+        + FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\cofre_form.qss",
             PATCH_TYPE_::FILE_styles));
 
     parent->setStyleSheet(
-        FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\page_value_main.qss",
+        FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\page_value_main.qss",
             PATCH_TYPE_::FILE_styles)
-        + FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\page_value_main\\categoria.qss",
+        + FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\page_value_main\\categoria.qss",
             PATCH_TYPE_::FILE_styles)
-        + FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\page_value_main\\line_search.qss",
+        + FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\mainwindow\\dark\\page_value_main\\line_search.qss",
             PATCH_TYPE_::FILE_styles));
 
 
       applyItemStyles(mainwindow);
 
-    QtToolkitAnimation::fadeSlideIn(mainwindow->pageVaultMain);
+    QtToolkit::Animation::fadeSlideIn(mainwindow->pageVaultMain);
     QtToolkit::ProgessBar::SegmentedProgressBar::render(4,mainwindow->progressBar_2);
 }

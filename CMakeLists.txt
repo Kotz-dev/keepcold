@@ -11,24 +11,25 @@ find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
+        Test
         REQUIRED)
 
 add_executable(keepcold
         src/app/main.cpp
         src/app/keepcold/mainwindow/mainwindow.cpp
         include/app/keepcold/mainwindow/mainwindow.h
-        ui/mainwindow.ui
+        src/app/keepcold/mainwindow/mainwindow.ui
         src/styles/UIStyle.cpp
         include/styles/UIStyle.h
         src/styles/RichText.cpp
         include/styles/RichText.h
-        src/io/FileManger.cpp
-        include/io/FileManger.h
+        src/io/FileManager.cpp
+        include/io/FileManager.h
         resources/Resource.qrc
         src/core/third_party/zxcvbn/zxcvbn.c
         src/core/third_party/zxcvbn/zxcvbn.h
         src/core/PasswordStrength.cpp
-        src/core/PasswordStrength.h
+        include/core/PasswordStrength.h
         src/styles/LinePassword.cpp
         include/styles/LinePassword.h
         src/widgets/WindowPage.cpp
@@ -36,10 +37,13 @@ add_executable(keepcold
         include/memory/Memory.h
         src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
         src/qt-widgets-toolkit/QtWidgetStoolkit.h
+        src/app/keepcold/mainwindow/windowitem.cpp
+        include/app/keepcold/mainwindow/windowitem.h
+        src/app/keepcold/mainwindow/windowitem.ui
 
 )
 target_include_directories(keepcold PRIVATE include)
-set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/ui")
+set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/app/keepcold/mainwindow")
 target_link_libraries(keepcold
         Qt::Core
         Qt::Gui
@@ -75,6 +79,22 @@ add_custom_command(
 )
 add_custom_target(generate_zxcvbn_dict DEPENDS ${ZXCVBN_DICT_SRC})
 add_dependencies(keepcold generate_zxcvbn_dict)
+
+enable_testing()
+
+add_executable(test_blur
+        tests/test_widgets/test_blur.cpp
+        src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
+        src/qt-widgets-toolkit/QtWidgetStoolkit.h
+)
+target_include_directories(test_blur PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_blur PRIVATE
+        Qt::Core
+        Qt::Gui
+        Qt::Widgets
+        Qt::Test
+)
+add_test(NAME test_blur COMMAND test_blur)
 
 
 if (WIN32)

@@ -6,12 +6,10 @@
 
 #include "app/keepcold/mainwindow/mainwindow.h"
 
+#include "app/keepcold/mainwindow/windowitem.h"
 #include "ui_mainwindow.h"
 
-#include <io/FileManger.h>
-#include <src/core/PasswordStrength.h>
-#include <styles/UIStyle.h>
-#include <QSplitter>
+#include <core/PasswordStrength.h>
 #include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
 
 void mainwindow::on_btn_create_cofre_clicked() {
@@ -41,7 +39,6 @@ void mainwindow::on_btn_create_cofre_cp_clicked()
 
 void mainwindow::showUI() {
     ui->frame_14->show();
-   // this->strengthBar->show();
     ui->progressBar->show();
 }
 
@@ -57,7 +54,8 @@ void mainwindow::ClearStrengthBar(QProgressBar *widget) {
 }
 
 void mainwindow::on_btn_max_window_clicked() {
-    toggleMaximize();
+    QtToolkit::Window::Maximizer obj;
+    obj.toggle(this);
 }
 void mainwindow::on_btn_min_window_clicked() {
     showMinimized();
@@ -111,31 +109,17 @@ void mainwindow::on_line_password_mestra_textEdited(const QString& arg1)
     ui->label_forca_senha->setText(text);
 }
 
-
-bool mainwindow::eventFilter(QObject *watched, QEvent *event) {
-    if (watched == ui->barra_titule_) {
-        if (event->type() == QEvent::MouseButtonPress) {
-            auto *mouseEvent = static_cast<QMouseEvent*>(event);
-            if (mouseEvent->button() == Qt::LeftButton) {
-                m_dragging = true;
-                // guarda a diferença entre onde clicou e a posição da janela
-                m_dragStartPosition = mouseEvent->globalPosition().toPoint() - frameGeometry().topLeft();
-                return true;
-            }
-        }
-        else if (event->type() == QEvent::MouseMove) {
-            auto *mouseEvent = static_cast<QMouseEvent*>(event);
-            if (m_dragging && (mouseEvent->buttons() & Qt::LeftButton)) {
-                move(mouseEvent->globalPosition().toPoint() - m_dragStartPosition);
-                return true;
-            }
-        }
-        else if (event->type() == QEvent::MouseButtonRelease) {
-            m_dragging = false;
-            return true;
-        }
+void mainwindow::on_btn_add_item_clicked()
+{
+    windowItem *WindowItem = new windowItem(this);
+    auto blur =  QtToolkit::Blur::render(this,4);
+    WindowItem->move(this->geometry().center() - QPoint(WindowItem->width() / 2, WindowItem->height() / 2));
+    WindowItem->exec();
+    if (blur != nullptr && WindowItem->isVisible() == false)
+    {
+        delete WindowItem;
+        delete blur;
     }
-    return QMainWindow::eventFilter(watched, event);
 
 }
 mainwindow::mainwindow(QWidget* parent)
@@ -144,40 +128,9 @@ mainwindow::mainwindow(QWidget* parent)
 {
     ui->setupUi(this);
     WindowPage::__init__(ui, this);
-    ui->stackedWidget_2->setCurrentIndex(5);
-    //ui->stackedWidget->setCurrentIndex(2);
-    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    ui->barra_titule_->installEventFilter(this);
+   // ui->stackedWidget_2->setCurrentIndex(6);
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+    QtToolkit::Window::Dragger::attach(this);
 }
-void mainwindow::toggleMaximize() {
-    auto *anim = new QPropertyAnimation(this, "geometry");
-    anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-
-    if (!m_isMaximized) {
-        m_normalGeometry = geometry();
-        QRect screenGeometry = screen()->availableGeometry();
-        anim->setStartValue(geometry());
-        anim->setEndValue(screenGeometry);
-        m_isMaximized = true;
-    } else {
-        anim->setStartValue(geometry());
-        anim->setEndValue(m_normalGeometry);
-        m_isMaximized = false;
-    }
-
-
-     ui->pageWelcome->setUpdatesEnabled(false);
-    ui->frame_9->setUpdatesEnabled(false);
-    connect(anim, &QPropertyAnimation::finished, this, [this]() {
-         ui->pageWelcome->setUpdatesEnabled(true);
-        ui->frame_9->setUpdatesEnabled(true);
-        ui->pageWelcome->update();
-    });
-
-    anim->start(QAbstractAnimation::DeleteWhenStopped);
-
-}
-
-
 mainwindow::~mainwindow() { delete ui; }
