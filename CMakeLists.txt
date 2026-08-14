@@ -14,6 +14,8 @@ find_package(Qt6 COMPONENTS
         Test
         REQUIRED)
 
+find_package(Boost REQUIRED COMPONENTS filesystem)
+
 add_executable(keepcold
         src/app/main.cpp
         src/app/keepcold/mainwindow/mainwindow.cpp
@@ -39,7 +41,7 @@ add_executable(keepcold
         src/qt-widgets-toolkit/QtWidgetStoolkit.h
         src/app/keepcold/mainwindow/windowitem.cpp
         include/app/keepcold/mainwindow/windowitem.h
-        src/app/keepcold/mainwindow/windowitem.ui
+        src/app/keepcold/mainwindow/windowItem.ui
 
 )
 target_include_directories(keepcold PRIVATE include)
@@ -48,6 +50,7 @@ target_link_libraries(keepcold
         Qt::Core
         Qt::Gui
         Qt::Widgets
+        Boost::filesystem
 )
 
 target_include_directories(keepcold PUBLIC

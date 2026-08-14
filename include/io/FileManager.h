@@ -7,6 +7,7 @@
 
 #include <QFile>
 #include <filesystem>
+#include <QUrl>
 
 enum PATCH_TYPE_ {
     FILE_styles = 0,
@@ -16,7 +17,8 @@ enum PATCH_TYPE_ {
 class FileManager {
 
 public :
-   static QString loadStyleSheet(std::string name, PATCH_TYPE_ type);
+    static QString loadStyleSheet(std::string name, PATCH_TYPE_ type);
+    static QString SizeMemory(QUrl patch);
 };
 
 

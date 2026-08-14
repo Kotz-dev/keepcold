@@ -77,6 +77,9 @@ private slots:
 
     void btn_upload_clicked();
 
+    void on_btn_download_file_clicked();
+
+    void getfile(QUrl file);
 public:
     QSize janela = QSize(542,467);
 

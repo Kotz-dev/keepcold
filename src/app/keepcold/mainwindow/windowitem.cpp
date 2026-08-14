@@ -129,11 +129,26 @@ windowItem::windowItem(QWidget* parent)
     init_();
 }
 
+void windowItem::getfile(QUrl file)
+{
+    if (file.isEmpty() == false)
+    {
+        ui->file_name_label->setText(file.fileName());
+        ui->file_memory_label->setText(FileManager::SizeMemory(file));
+    }
+}
+void windowItem::on_btn_download_file_clicked()
+{
+    ///qDebug () << QFileDialog::getSaveFileUrl(this,"teste",QUrl("/home/kotz/Área de trabalho/data.vx"));
+}
+
 void windowItem::btn_upload_clicked()
 {
     QtToolkit::Frame::makeClickable(ui->btn_file_upload, [this]() {
-         QFileDialog::getOpenFileUrl(this, tr("Selecionar arquivo"), QUrl(), tr("Todos os arquivos (*)"));
-           ui->stack_file->setCurrentIndex(1);
+        auto file =  QFileDialog::getOpenFileUrl(this, tr("Selecionar arquivo"), QUrl(), tr("Todos os arquivos (*)"));
+          getfile(file);
+
+            ui->stack_file->setCurrentIndex(1);
            QtToolkit::Frame::ClickHelper::setEnabled(false);
     });
 }
