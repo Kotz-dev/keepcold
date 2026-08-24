@@ -113,7 +113,7 @@ void mainwindow::on_btn_add_item_clicked()
 {
     windowItem *WindowItem = new windowItem(this);
     auto blur =  QtToolkit::Blur::render(this,4);
-    WindowItem->move(this->geometry().center() - QPoint(WindowItem->width() / 2, WindowItem->height() / 2));
+    WindowItem->move(QtToolkit::geometry::centeredPosition(this,WindowItem));
     WindowItem->exec();
     if (blur != nullptr && WindowItem->isVisible() == false)
     {

@@ -29,6 +29,12 @@
 namespace QtToolkit
 {
 
+namespace geometry
+{
+   QPoint centeredPosition(QWidget * parent, QWidget * child, int centerDivisor = 2);
+}
+
+
 namespace Frame {
 
 class ClickHelper : public QObject {
