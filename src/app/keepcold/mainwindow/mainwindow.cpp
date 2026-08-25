@@ -6,11 +6,13 @@
 
 #include "app/keepcold/mainwindow/mainwindow.h"
 
+#include "app/keepcold/mainwindow/windowconfig.h"
 #include "app/keepcold/mainwindow/windowitem.h"
 #include "ui_mainwindow.h"
 
+#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
 #include <core/PasswordStrength.h>
-#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
+#include <ui_windowConfig.h>
 
 void mainwindow::on_btn_create_cofre_clicked() {
     ClearStrengthBar(ui->progressBar);
@@ -79,6 +81,19 @@ void mainwindow::setupStrengthBar(int value)
         ClearStrengthBar(ui->progressBar);
     }
     QtToolkit::ProgessBar::SegmentedProgressBar::render(value, ui->progressBar);
+}
+
+void mainwindow::on_btn_configuracao_clicked()
+{
+   windowConfig *janela = new windowConfig(this);
+    auto blur =  QtToolkit::Blur::render(this,4);
+    janela->move(this->geometry().center() - QPoint(janela->width() / 2, janela->height() / 2));
+    janela->exec();
+    if (blur != nullptr && janela->isVisible() == false)
+    {
+        delete janela;
+        delete blur;
+    }
 }
 
 void mainwindow::on_line_cfr_passaword_mestra_textEdited(const QString& arg1)

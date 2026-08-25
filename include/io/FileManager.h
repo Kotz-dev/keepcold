@@ -18,7 +18,7 @@ class FileManager {
 
 public :
     static QString loadStyleSheet(std::string name, PATCH_TYPE_ type);
-    static QString SizeMemory(QUrl patch);
+    static QString formattedFileSize(const QUrl &fileUrl);
 };
 
 

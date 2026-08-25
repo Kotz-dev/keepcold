@@ -15,7 +15,7 @@
 
 #include <io/FileManager.h>
 #include <memory/Memory.h>
-#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
+#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
 #include <styles/RichText.h>
 #include <widgets/WindowPage.h>
 

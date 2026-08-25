@@ -33,6 +33,8 @@ private slots:
 
     void on_btn_add_item_clicked();
 
+    void on_btn_configuracao_clicked();
+
 
 
 private :

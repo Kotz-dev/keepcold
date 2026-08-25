@@ -14,8 +14,6 @@ find_package(Qt6 COMPONENTS
         Test
         REQUIRED)
 
-find_package(Boost REQUIRED COMPONENTS filesystem)
-
 add_executable(keepcold
         src/app/main.cpp
         src/app/keepcold/mainwindow/mainwindow.cpp
@@ -37,20 +35,24 @@ add_executable(keepcold
         src/widgets/WindowPage.cpp
         include/widgets/WindowPage.h
         include/memory/Memory.h
-        src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
-        src/qt-widgets-toolkit/QtWidgetStoolkit.h
         src/app/keepcold/mainwindow/windowitem.cpp
         include/app/keepcold/mainwindow/windowitem.h
-        src/app/keepcold/mainwindow/windowItem.ui
+        src/app/keepcold/mainwindow/windowitem.ui
+        src/app/keepcold/mainwindow/windowconfig.cpp
+        include/app/keepcold/mainwindow/windowconfig.h
+        src/app/keepcold/mainwindow/windowconfig.ui
 
 )
 target_include_directories(keepcold PRIVATE include)
 set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/app/keepcold/mainwindow")
+
+add_subdirectory("$ENV{USERPROFILE}/Documents/GitHub/qt-widgets-toolkit" qt-widgets-toolkit)
+
 target_link_libraries(keepcold
         Qt::Core
         Qt::Gui
         Qt::Widgets
-        Boost::filesystem
+        QtWidgetStoolkit
 )
 
 target_include_directories(keepcold PUBLIC
@@ -87,8 +89,6 @@ enable_testing()
 
 add_executable(test_blur
         tests/test_widgets/test_blur.cpp
-        src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
-        src/qt-widgets-toolkit/QtWidgetStoolkit.h
 )
 target_include_directories(test_blur PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(test_blur PRIVATE
@@ -96,6 +96,7 @@ target_link_libraries(test_blur PRIVATE
         Qt::Gui
         Qt::Widgets
         Qt::Test
+        QtWidgetStoolkit
 )
 add_test(NAME test_blur COMMAND test_blur)
 

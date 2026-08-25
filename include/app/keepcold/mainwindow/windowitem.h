@@ -80,6 +80,10 @@ private slots:
     void on_btn_download_file_clicked();
 
     void getfile(QUrl file);
+
+    void on_btn_trocar_file_clicked();
+
+
 public:
     QSize janela = QSize(542,467);
 

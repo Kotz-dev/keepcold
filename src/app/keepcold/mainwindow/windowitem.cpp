@@ -11,13 +11,22 @@
 #include <QVBoxLayout>
 #include <vector>
 
-#include "src/qt-widgets-toolkit/QtWidgetStoolkit.h"
+#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
 #include "ui_windowItem.h"
 
 #include <io/FileManager.h>
 #include <QLineEdit>
 
 #include <QFileDialog>
+
+
+QUrl loadFile();
+QUrl loadFile()
+{
+    return QFileDialog::getOpenFileUrl(
+         nullptr, ("Selecionar arquivo"), QUrl(), ("Todos os arquivos (*)"));
+}
+
 
 
 void windowItem::buildItemGroups()
@@ -129,14 +138,22 @@ windowItem::windowItem(QWidget* parent)
     init_();
 }
 
+void windowItem::on_btn_trocar_file_clicked()
+{
+    getfile(loadFile());
+    ui->stack_file->setCurrentIndex(1);
+    QtToolkit::Frame::ClickHelper::setEnabled(false);
+}
+
 void windowItem::getfile(QUrl file)
 {
     if (file.isEmpty() == false)
     {
         ui->file_name_label->setText(file.fileName());
-        ui->file_memory_label->setText(FileManager::SizeMemory(file));
+        ui->file_memory_label->setText(FileManager::formattedFileSize(file));
     }
 }
+
 void windowItem::on_btn_download_file_clicked()
 {
     ///qDebug () << QFileDialog::getSaveFileUrl(this,"teste",QUrl("/home/kotz/Área de trabalho/data.vx"));
@@ -145,8 +162,7 @@ void windowItem::on_btn_download_file_clicked()
 void windowItem::btn_upload_clicked()
 {
     QtToolkit::Frame::makeClickable(ui->btn_file_upload, [this]() {
-        auto file =  QFileDialog::getOpenFileUrl(this, tr("Selecionar arquivo"), QUrl(), tr("Todos os arquivos (*)"));
-          getfile(file);
+          getfile(loadFile());
 
             ui->stack_file->setCurrentIndex(1);
            QtToolkit::Frame::ClickHelper::setEnabled(false);

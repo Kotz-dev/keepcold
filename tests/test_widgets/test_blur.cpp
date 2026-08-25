@@ -2,7 +2,7 @@
 #include <QTest>
 #include <QWidget>
 
-#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
+#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
 
 class TestBlur : public QObject
 {
