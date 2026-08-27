@@ -1,0 +1,1983 @@
+Index: src/app/keepcold/mainwindow/windowitem.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by KoTz on 30/07/2026.\r\n//\r\n\r\n// You may need to build the project (run Qt uic code generator) to get \"ui_windowItem.h\" resolved\r\n\r\n#include \"../../../../include/app/keepcold/mainwindow/windowitem.h\"\r\n\r\n#include <QHBoxLayout>\r\n#include <QLabel>\r\n#include <QVBoxLayout>\r\n#include <vector>\r\n\r\n#include \"src/qt-widgets-toolkit/QtWidgetStoolkit.h\"\r\n#include \"ui_windowItem.h\"\r\n\r\n#include <io/FileManager.h>\r\n#include <QLineEdit>\r\n\r\n#include <QFileDialog>\r\n\r\n\r\nvoid windowItem::buildItemGroups()\r\n{\r\n    itemGroups_ = {\r\n        {ui->btn_logins,      ui->btn_cancelar,             ui->btn_trocar_type_logins,      ui->btn_save_item_logins,      LOGINS,      QSize(0, 0), \"Novo logins\",      \":/images/36x36/logo_login_badge.png\",       \"Email, senha, 2FA e URL\",           ItemGroup{ui->line_nome_item_logins}},\r\n        {ui->btn_note,        ui->btn_cancelar_note,        ui->btn_trocar_type_note,        ui->btn_save_item_note,        NOTE,        QSize(0, 0), \"Novo notas\",       \":/images/36x36/logo_documento_badge.png\",   \"Texto livre criptografado\",         ItemGroup{ui->line_nome_item_note}},\r\n        {ui->btn_key,         ui->btn_cancelar_key,         ui->btn_trocar_type_key,         ui->btn_save_item_key,         KEYS,        QSize(0, 0), \"Novo chaves\",      \":/images/36x36/logo_terminal_badge.png\",    \"Token, API key, chave SSH\",         ItemGroup{ui->line_nome_item_key}},\r\n        {ui->btn_cartoes,     ui->btn_cancelar_cartao,      ui->btn_trocar_type_cartao,      ui->btn_save_item_cartao,      CARTAO,      QSize(0, 0), \"Novo cartão\",      \":/images/36x36/logo_cartao_badge.png\",      \"Cartão de crédito ou débito\",       ItemGroup{ui->line_nome_item_cartao}},\r\n        {ui->btn_identidade,  ui->btn_cancelar_identidade,  ui->btn_trocar_type_identidade,  ui->btn_save_item_identidade,  IDENTIDADE,  QSize(0, 0), \"Novo identidade\",  \":/images/36x36/logo_idadente_badge.png\",    \"CPF, RG, CNH e dados pessoais\",     ItemGroup{ui->line_nome_item_identidade}},\r\n        {ui->btn_wifi,        ui->btn_cancelar_wifi,        ui->btn_trocar_type_wifi,        ui->btn_save_item_wifi,        WIFI,        QSize(0, 0), \"Novo WI-FI\",       \":/images/36x36/logo_wifi_badge.png\",        \"Rede e senha de Wi-Fi\",             ItemGroup{ui->line_nome_item_wifi}},\r\n        {ui->btn_recuperacao, ui->btn_cancelar_recuperacao, ui->btn_trocar_type_recuperacao, ui->btn_save_item_recuperacao, RECUPERACAO, QSize(0, 0), \"Novo recuperação\", \":/images/36x36/logo_recuperacao_badge.png\", \"Backup codes de 2FA\",               ItemGroup{ui->line_nome_item_recuperacao}},\r\n        {ui->btn_file,        ui->btn_cancelar_file,        ui->btn_trocar_type_file,        ui->btn_save_item_file,        FILE_PAGE,   QSize(0, 0), \"Novo arquivos\",    \":/images/36x36/logo_file_badge.png\",        \"Anexar arquivo criptografado\",      ItemGroup{ui->line_nome_item_file}},\r\n    };\r\n}\r\n\r\nvoid windowItem::setupButtonCards()\r\n{\r\n    for (const auto& group : itemGroups_)\r\n    {\r\n        QPushButton* button = group.btnCard;\r\n        if (button == nullptr)\r\n            continue;\r\n\r\n        const QString title = button->text();\r\n        button->setText(\"\");\r\n\r\n        auto* icon = new QLabel(button);\r\n        icon->setPixmap(QPixmap(group.icone).scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation));\r\n        icon->setFixedSize(32, 32);\r\n        icon->setAttribute(Qt::WA_TransparentForMouseEvents);\r\n\r\n        auto* titleLabel = new QLabel(title, button);\r\n        titleLabel->setStyleSheet(\"font-weight: bold; font-size: 13px;\");\r\n        titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);\r\n\r\n        auto* descLabel = new QLabel(group.descricao, button);\r\n        descLabel->setStyleSheet(\"color: rgb(122, 133, 168); font-size: 11px;\");\r\n        descLabel->setAttribute(Qt::WA_TransparentForMouseEvents);\r\n        descLabel->setWordWrap(true);\r\n\r\n        auto* textLayout = new QVBoxLayout();\r\n        textLayout->setContentsMargins(0, 5, 4, 4);\r\n        textLayout->setSpacing(0);\r\n        textLayout->addWidget(titleLabel);\r\n        textLayout->addWidget(descLabel);\r\n\r\n        auto* layout = new QHBoxLayout(button);\r\n        layout->setContentsMargins(14, 0, 14, 0);\r\n        layout->setSpacing(12);\r\n        layout->addWidget(icon, 0, Qt::AlignVCenter);\r\n        layout->addLayout(textLayout, 0);\r\n        layout->addStretch(1);\r\n    }\r\n}\r\n\r\nvoid windowItem::init_()\r\n{\r\n    for (const auto& group : itemGroups_)\r\n    {\r\n        group.btnSalvar->setEnabled(false);\r\n        group.btnSalvar->setCheckable(false);\r\n        for (QPushButton* btn : {group.btnCard, group.btnCancelar, group.btnTrocarType, group.btnSalvar})\r\n        {\r\n            if (btn != nullptr)\r\n                connect(btn, &QPushButton::clicked, this, &windowItem::onMenuButtonClicked);\r\n        }\r\n\r\n        connect(group.obj.lineName, &QLineEdit::textChanged, this, &windowItem::teste);\r\n    }\r\n\r\n}\r\n\r\nvoid windowItem::teste()\r\n{\r\n    auto* line = QtToolkit::Signal::getObjet<QLineEdit>(sender());\r\n    if (line == nullptr)\r\n        return;\r\n\r\n    for (const auto& group : itemGroups_)\r\n    {\r\n        if (group.obj.lineName != line)\r\n            continue;\r\n\r\n        const bool hasText = !line->text().isEmpty();\r\n        group.btnSalvar->setEnabled(hasText);\r\n        group.btnSalvar->setCheckable(hasText);\r\n        return;\r\n    }\r\n}\r\n\r\nwindowItem::windowItem(QWidget* parent)\r\n    : QDialog(parent),\r\n      ui(new Ui::windowItem)\r\n{\r\n    ui->setupUi(this);\r\n    buildItemGroups();\r\n    applyItemStyle();\r\n    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);\r\n    QtToolkit::Animation::fadeSlideIn(ui->page_itens,100,50);\r\n    setStyleSheet(FileManager::loadStyleSheet(\"keepcold\\\\resources\\\\Styles\\\\windowItem\\\\dark\\\\windowItem.qss\", PATCH_TYPE_::FILE_styles));\r\n    setAttribute(Qt::WA_TranslucentBackground);\r\n    setupButtonCards();\r\n    ui->logo_item->hide();\r\n    setFixedSize(janela);\r\n    ui->stackedWidget->setCurrentIndex(MENU);\r\n    ui->progressBar->hide();\r\n    btn_upload_clicked();\r\n    init_();\r\n}\r\n\r\nvoid windowItem::getfile(QUrl file)\r\n{\r\n    if (file.isEmpty() == false)\r\n    {\r\n        ui->file_name_label->setText(file.fileName());\r\n        ui->file_memory_label->setText(FileManager::SizeMemory(file));\r\n    }\r\n}\r\nvoid windowItem::on_btn_download_file_clicked()\r\n{\r\n    ///qDebug () << QFileDialog::getSaveFileUrl(this,\"teste\",QUrl(\"/home/kotz/Área de trabalho/data.vx\"));\r\n}\r\n\r\nvoid windowItem::btn_upload_clicked()\r\n{\r\n    QtToolkit::Frame::makeClickable(ui->btn_file_upload, [this]() {\r\n        auto file =  QFileDialog::getOpenFileUrl(this, tr(\"Selecionar arquivo\"), QUrl(), tr(\"Todos os arquivos (*)\"));\r\n          getfile(file);\r\n\r\n            ui->stack_file->setCurrentIndex(1);\r\n           QtToolkit::Frame::ClickHelper::setEnabled(false);\r\n    });\r\n}\r\n\r\nvoid windowItem::applyItemStyle()\r\n{\r\n    const std::vector<QWidget*> pages = {\r\n        ui->page_note,\r\n        ui->page_keys,\r\n        ui->page_item_logins,\r\n        ui->page_cartao,\r\n        ui->page_identidade,\r\n        ui->page_wifi,\r\n        ui->page_file,\r\n        ui->page_recuperacao,\r\n    };\r\n\r\n    for (auto* p : pages)\r\n    {\r\n        if (p == nullptr)\r\n            continue;\r\n\r\n        p->setStyleSheet(\"\");\r\n        p->setStyleSheet(FileManager::loadStyleSheet(\"keepcold\\\\resources\\\\Styles\\\\windowItem\\\\dark\\\\newItem\\\\item_.qss\", PATCH_TYPE_::FILE_styles));\r\n    }\r\n}\r\n\r\nvoid windowItem::on_btn_close_clicked()\r\n{\r\n    close();\r\n}\r\n\r\nvoid windowItem::onMenuButtonClicked()\r\n{\r\n    auto* btn = QtToolkit::Signal::getObjet<QPushButton>(sender());\r\n    if (btn == nullptr)\r\n        return;\r\n\r\n    for (const auto& group : itemGroups_)\r\n    {\r\n        if (btn == group.btnCancelar)\r\n        {\r\n            close();\r\n            return;\r\n        }\r\n\r\n        if (btn == group.btnTrocarType)\r\n        {\r\n            setFixedSize(janela);\r\n            ui->page_itens->setStyleSheet(\"\");\r\n            ui->stackedWidget->setCurrentIndex(MENU);\r\n            ui->label->setText(\"Novo Item\");\r\n            ui->logo_item->hide();\r\n            if (group.obj.lineName != nullptr)\r\n            {\r\n                const QString nome = group.obj.lineName->text();\r\n                for (auto& i : itemGroups_)\r\n                {\r\n                    if (i.obj.lineName != nullptr)\r\n                        i.obj.lineName->setText(nome);\r\n                }\r\n            }\r\n            return;\r\n        }\r\n\r\n        if (btn == group.btnSalvar)\r\n        {\r\n            return;\r\n        }\r\n\r\n        if (btn == group.btnCard)\r\n        {\r\n            ui->logo_item->setPixmap(QPixmap(group.icone));\r\n            ui->logo_item->show();\r\n            ui->label->setText(group.titulo);\r\n            setFixedSize(group.size);\r\n            ui->stackedWidget->setCurrentIndex(group.pageIndex);\r\n            return;\r\n        }\r\n    }\r\n}\r\n\r\nwindowItem::~windowItem()\r\n{\r\n    delete ui;\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/keepcold/mainwindow/windowitem.cpp b/src/app/keepcold/mainwindow/windowitem.cpp
+--- a/src/app/keepcold/mainwindow/windowitem.cpp	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/src/app/keepcold/mainwindow/windowitem.cpp	(date 1787084785583)
+@@ -11,7 +11,7 @@
+ #include <QVBoxLayout>
+ #include <vector>
+ 
+-#include "src/qt-widgets-toolkit/QtWidgetStoolkit.h"
++#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
+ #include "ui_windowItem.h"
+ 
+ #include <io/FileManager.h>
+@@ -20,6 +20,15 @@
+ #include <QFileDialog>
+ 
+ 
++QUrl loadFile();
++QUrl loadFile()
++{
++    return QFileDialog::getOpenFileUrl(
++         nullptr, ("Selecionar arquivo"), QUrl(), ("Todos os arquivos (*)"));
++}
++
++
++
+ void windowItem::buildItemGroups()
+ {
+     itemGroups_ = {
+@@ -129,14 +138,22 @@
+     init_();
+ }
+ 
++void windowItem::on_btn_trocar_file_clicked()
++{
++    getfile(loadFile());
++    ui->stack_file->setCurrentIndex(1);
++    QtToolkit::Frame::ClickHelper::setEnabled(false);
++}
++
+ void windowItem::getfile(QUrl file)
+ {
+     if (file.isEmpty() == false)
+     {
+         ui->file_name_label->setText(file.fileName());
+-        ui->file_memory_label->setText(FileManager::SizeMemory(file));
++        ui->file_memory_label->setText(FileManager::formattedFileSize(file));
+     }
+ }
++
+ void windowItem::on_btn_download_file_clicked()
+ {
+     ///qDebug () << QFileDialog::getSaveFileUrl(this,"teste",QUrl("/home/kotz/Área de trabalho/data.vx"));
+@@ -145,8 +162,7 @@
+ void windowItem::btn_upload_clicked()
+ {
+     QtToolkit::Frame::makeClickable(ui->btn_file_upload, [this]() {
+-        auto file =  QFileDialog::getOpenFileUrl(this, tr("Selecionar arquivo"), QUrl(), tr("Todos os arquivos (*)"));
+-          getfile(file);
++          getfile(loadFile());
+ 
+             ui->stack_file->setCurrentIndex(1);
+            QtToolkit::Frame::ClickHelper::setEnabled(false);
+Index: include/app/keepcold/mainwindow/windowitem.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by KoTz on 30/07/2026.\r\n//\r\n\r\n#ifndef KEEPCOLD_WINDOWITEM_H\r\n#define KEEPCOLD_WINDOWITEM_H\r\n\r\n#include <QDialog>\r\n#include <QLineEdit>\r\n#include <QSize>\r\n#include <QString>\r\n#include <vector>\r\n\r\nQT_BEGIN_NAMESPACE\r\nclass QPushButton;\r\n\r\nenum class StackedPage : int\r\n   {\r\n       Menu = 0,\r\n       Logins = 1,\r\n       Note = 2,\r\n       Keys = 3,\r\n       Recuperacao = 4,\r\n       Cartao = 5,\r\n       Identidade = 6,\r\n       Wifi = 7,\r\n       File = 8,\r\n   };\r\nconstexpr int MENU        = static_cast<int>(StackedPage::Menu);\r\nconstexpr int LOGINS      = static_cast<int>(StackedPage::Logins);\r\nconstexpr int NOTE        = static_cast<int>(StackedPage::Note);\r\nconstexpr int KEYS        = static_cast<int>(StackedPage::Keys);\r\nconstexpr int RECUPERACAO = static_cast<int>(StackedPage::Recuperacao);\r\nconstexpr int CARTAO      = static_cast<int>(StackedPage::Cartao);\r\nconstexpr int IDENTIDADE  = static_cast<int>(StackedPage::Identidade);\r\nconstexpr int WIFI        = static_cast<int>(StackedPage::Wifi);\r\nconstexpr int FILE_PAGE   = static_cast<int>(StackedPage::File);\r\n\r\n\r\nnamespace Ui\r\n{\r\nclass windowItem;\r\n}\r\n\r\nQT_END_NAMESPACE\r\n\r\n\r\nstruct ItemGroup\r\n{\r\n    QLineEdit* lineName = nullptr;\r\n};\r\n\r\nstruct ItemButtonGroup\r\n{\r\n    QPushButton* btnCard        = nullptr;\r\n    QPushButton* btnCancelar    = nullptr;\r\n    QPushButton* btnTrocarType  = nullptr;\r\n    QPushButton* btnSalvar      = nullptr;\r\n    int pageIndex               = 0;\r\n    QSize size                  = QSize(0, 0);\r\n    QString titulo;\r\n    QString icone;\r\n    QString descricao;\r\n    ItemGroup obj;\r\n};\r\n\r\nclass windowItem : public QDialog\r\n{\r\n    Q_OBJECT\r\nprivate slots:\r\n    void onMenuButtonClicked();\r\n    void on_btn_close_clicked();\r\n\r\n    void init_ ();\r\n\r\n    void teste();\r\n\r\n    void btn_upload_clicked();\r\n\r\n    void on_btn_download_file_clicked();\r\n\r\n    void getfile(QUrl file);\r\npublic:\r\n    QSize janela = QSize(542,467);\r\n\r\n    explicit windowItem(QWidget* parent = nullptr);\r\n    void setupButtonCards();\r\n    ~windowItem() override;\r\n\r\nprivate:\r\n    Ui::windowItem* ui;\r\n    std::vector<ItemButtonGroup> itemGroups_;\r\n\r\n    void applyItemStyle();\r\n    void buildItemGroups();\r\n};\r\n\r\n#endif  // KEEPCOLD_WINDOWITEM_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/app/keepcold/mainwindow/windowitem.h b/include/app/keepcold/mainwindow/windowitem.h
+--- a/include/app/keepcold/mainwindow/windowitem.h	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/include/app/keepcold/mainwindow/windowitem.h	(date 1787084436939)
+@@ -80,6 +80,10 @@
+     void on_btn_download_file_clicked();
+ 
+     void getfile(QUrl file);
++
++    void on_btn_trocar_file_clicked();
++
++
+ public:
+     QSize janela = QSize(542,467);
+ 
+Index: src/styles/UIStyle.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by KoTz on 15/07/2026.\r\n//\r\n\r\n#include \"styles/UIStyle.h\"\r\n\r\n#include <QDir>\r\n#include <QLabel>\r\n#include <QObject>\r\n#include <QPushButton>\r\n#include <QSizeGrip>\r\n#include <QStyle>\r\n#include <QVBoxLayout>\r\n#include <QWidget>\r\n\r\n#include <io/FileManager.h>\r\n#include <memory/Memory.h>\r\n#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>\r\n#include <styles/RichText.h>\r\n#include <widgets/WindowPage.h>\r\n\r\nvoid UIStyle::CardButton::apply(QPushButton* button, const QString& title)\r\n{\r\n    if (button == nullptr || button->layout() != nullptr)\r\n    {\r\n        return;\r\n    }\r\n    QLabel* content = new QLabel(button);\r\n    content->setText(title);\r\n\r\n    content->setWordWrap(true);\r\n\r\n    content->setAttribute(Qt::WA_TransparentForMouseEvents);\r\n\r\n    QVBoxLayout* layout = new QVBoxLayout(button);\r\n    layout->setContentsMargins(20, 20, 20, 20);\r\n    layout->setSpacing(12);\r\n    layout->setAlignment(Qt::AlignTop);\r\n\r\n    QLabel* icon = new QLabel(button);\r\n    icon->setFixedSize(36, 36);\r\n\r\n    content->setAlignment(Qt::AlignTop | Qt::AlignLeft);\r\n\r\n    layout->addWidget(icon);\r\n    layout->addWidget(content);\r\n}\r\nvoid UIStyle::Styles_Page::WELCOME::apply(QString fileName) {\r\n    if (WindowPage::getParent() == nullptr && WindowPage::getMainWindow() == nullptr) {\r\n        return;\r\n    }\r\n    auto mainwindow =      WindowPage::getMainWindow();\r\n    auto parent = WindowPage::getParent();\r\n\r\n    QString text = \"\";\r\n    text = RichText::cardDescription(\r\n        \"Criar novo cofre\", \"Defina uma senha mestra e escolha onde salvar seu arquivo.\");\r\n    UIStyle::CardButton::apply(mainwindow->btn_create_cofre, text);\r\n    text = RichText::cardDescription(\r\n        \"Abrir cofre existente\", \"Selecione um arquivo\\t\\t .vault e digite a senha.\");\r\n    UIStyle::CardButton::apply(mainwindow->btn_open_cofre, text);\r\n\r\n    parent->setStyleSheet(\r\n        FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\\" + fileName.toStdString(),\r\n            PATCH_TYPE_::FILE_styles));\r\n\r\n    QtToolkit::Animation::fadeSlideIn(mainwindow->pageWelcome);\r\n\r\n}\r\n\r\nvoid UIStyle::Styles_Page::CREATE_NEW_COFRE::apply()\r\n{\r\n    safeDelete(Pw);\r\n\r\n    auto mainwindow = WindowPage::getMainWindow();\r\n    auto parent = WindowPage::getParent();\r\n\r\n    Pw = new LinePassword(mainwindow->line_password_mestra);\r\n\r\n   auto style = FileManager::loadStyleSheet(\r\n         \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\page_create_new_cofre.qss\", PATCH_TYPE_::FILE_styles)\r\n       + FileManager::loadStyleSheet(\r\n         \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\cofre_form.qss\", PATCH_TYPE_::FILE_styles)\r\n       + FileManager::loadStyleSheet(\r\n         \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\back_button.qss\", PATCH_TYPE_::FILE_styles)\r\n       + FileManager::loadStyleSheet(\r\n         \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\cta_button.qss\", PATCH_TYPE_::FILE_styles);\r\n\r\n     Pw->setupPasswordVisibilityToggle();\r\n     parent->setStyleSheet(style);\r\n     QtToolkit::Animation::fadeSlideIn(mainwindow->frame_8);\r\n}\r\n\r\nvoid UIStyle::Styles_Page::OPEN_COFRE::apply()\r\n{\r\n    safeDelete(Pw);\r\n\r\n    auto mainwindow = WindowPage::getMainWindow();\r\n    auto parent = WindowPage::getParent();\r\n\r\n    Pw = new LinePassword(mainwindow->line_passowrd_open_cofre);\r\n    Pw->setupPasswordVisibilityToggle();\r\n\r\n    parent->setStyleSheet(\r\n        FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\page_open_exist_cofre.qss\",\r\n            PATCH_TYPE_::FILE_styles)\r\n        + FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\cofre_form.qss\",\r\n            PATCH_TYPE_::FILE_styles)\r\n        + FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\back_button.qss\",\r\n            PATCH_TYPE_::FILE_styles)\r\n        + FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\cta_button.qss\",\r\n            PATCH_TYPE_::FILE_styles));\r\n\r\n    QtToolkit::Animation::fadeSlideIn(mainwindow->frame_13);\r\n}\r\n\r\nvoid applyItemStyles(Ui_mainwindow *mainwindow);\r\nvoid applyItemStyles(Ui_mainwindow *mainwindow)\r\n{\r\n    if (mainwindow != nullptr)\r\n    {\r\n        std::map<QWidget*, QString> styles =\r\n        {\r\n            {mainwindow->logins,     \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\itens\\\\login.qss\"},\r\n            {mainwindow->notas,      \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\itens\\\\notas.qss\"},\r\n            {mainwindow->Wifi,       \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\itens\\\\wifi.qss\"},\r\n            {mainwindow->chaves,     \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\itens\\\\chaves.qss\"},\r\n            {mainwindow->recuperacao,\"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\itens\\\\recuperacao.qss\"},\r\n            {mainwindow->identidade, \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\itens\\\\idadente.qss\"},\r\n            {mainwindow->cartoes,    \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\itens\\\\cartao.qss\"}\r\n        };\r\n\r\n        QString favoritoStyle = FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\favorito.qss\", PATCH_TYPE_::FILE_styles);\r\n        QString removerStyle = FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\remover.qss\", PATCH_TYPE_::FILE_styles);\r\n        QString copyTextStyle = FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\copy_text.qss\", PATCH_TYPE_::FILE_styles);\r\n        QString togglePasswordStyle = FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\toggle_password.qss\", PATCH_TYPE_::FILE_styles);\r\n\r\n        for (auto style : styles)\r\n        {\r\n            if (style.first != nullptr)\r\n            {\r\n                style.first->setStyleSheet(\r\n                    FileManager::loadStyleSheet(style.second.toStdString(), PATCH_TYPE_::FILE_styles)\r\n                    + favoritoStyle + removerStyle + copyTextStyle + togglePasswordStyle);\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\nvoid UIStyle::Styles_Page::VALUE_MAIN::apply()\r\n{\r\n    auto mainwindow = WindowPage::getMainWindow();\r\n    auto parent = WindowPage::getParent();\r\n\r\n    mainwindow->stackedWidget_2->setStyleSheet(\r\n        FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\page_value_main\\\\stackwidget.qss\",\r\n            PATCH_TYPE_::FILE_styles)\r\n        + FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\shared\\\\cofre_form.qss\",\r\n            PATCH_TYPE_::FILE_styles));\r\n\r\n    parent->setStyleSheet(\r\n        FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\page_value_main.qss\",\r\n            PATCH_TYPE_::FILE_styles)\r\n        + FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\page_value_main\\\\categoria.qss\",\r\n            PATCH_TYPE_::FILE_styles)\r\n        + FileManager::loadStyleSheet(\r\n            \"keepcold\\\\resources\\\\Styles\\\\mainwindow\\\\dark\\\\page_value_main\\\\line_search.qss\",\r\n            PATCH_TYPE_::FILE_styles));\r\n\r\n\r\n      applyItemStyles(mainwindow);\r\n\r\n    QtToolkit::Animation::fadeSlideIn(mainwindow->pageVaultMain);\r\n    QtToolkit::ProgessBar::SegmentedProgressBar::render(4,mainwindow->progressBar_2);\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/styles/UIStyle.cpp b/src/styles/UIStyle.cpp
+--- a/src/styles/UIStyle.cpp	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/src/styles/UIStyle.cpp	(date 1786739780840)
+@@ -15,7 +15,7 @@
+ 
+ #include <io/FileManager.h>
+ #include <memory/Memory.h>
+-#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
++#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
+ #include <styles/RichText.h>
+ #include <widgets/WindowPage.h>
+ 
+Index: src/app/keepcold/mainwindow/mainwindow.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by KoTz on 14/07/2026.\r\n//\r\n\r\n// You may need to build the project (run Qt uic code generator) to get \"ui_mainwindow.h\" resolved\r\n\r\n#include \"app/keepcold/mainwindow/mainwindow.h\"\r\n\r\n#include \"app/keepcold/mainwindow/windowitem.h\"\r\n#include \"ui_mainwindow.h\"\r\n\r\n#include <core/PasswordStrength.h>\r\n#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>\r\n\r\nvoid mainwindow::on_btn_create_cofre_clicked() {\r\n    ClearStrengthBar(ui->progressBar);\r\n    ui->pageCreateVault->setAttribute(Qt::WA_TranslucentBackground);\r\n    WindowPage::NavigetPage(StackPage::CreateVault);\r\n}\r\n\r\nvoid mainwindow::on_btn_back_clicked() {\r\n    ClearStrengthBar(ui->progressBar);\r\n    WindowPage::NavigetPage(StackPage::Welcome);\r\n}\r\n\r\nvoid mainwindow::on_btn_open_cofre_clicked() {\r\n    WindowPage::NavigetPage(StackPage::OpenVault);\r\n}\r\n\r\nvoid mainwindow::on_back_open_cofre_clicked() {\r\n    WindowPage::NavigetPage(StackPage::Welcome);\r\n\r\n}\r\n\r\nvoid mainwindow::on_btn_create_cofre_cp_clicked()\r\n{\r\n    WindowPage::NavigetPage(StackPage::VaultMain);\r\n}\r\n\r\nvoid mainwindow::showUI() {\r\n    ui->frame_14->show();\r\n    ui->progressBar->show();\r\n}\r\n\r\nvoid mainwindow::ClearStrengthBar(QProgressBar *widget) {\r\n    if (widget != nullptr) {\r\n        widget->setValue(0);\r\n        widget->hide();\r\n        ui->progressBar->hide();\r\n        ui->frame_14->hide();\r\n        ui->label_forca_senha->clear();\r\n        return;\r\n    }\r\n}\r\n\r\nvoid mainwindow::on_btn_max_window_clicked() {\r\n    QtToolkit::Window::Maximizer obj;\r\n    obj.toggle(this);\r\n}\r\nvoid mainwindow::on_btn_min_window_clicked() {\r\n    showMinimized();\r\n}\r\nvoid mainwindow::on_btn_close_window_clicked() {\r\n    close();\r\n}\r\n\r\n\r\nvoid mainwindow::on_btn_documento_clicked() {\r\n   ui->stackedWidget_2->setCurrentIndex(3);\r\n}\r\n\r\n\r\n// Desgin QProcesdar\r\nvoid mainwindow::setupStrengthBar(int value)\r\n{\r\n\r\n    if (ui->line_password_mestra->text().isEmpty())\r\n    {\r\n        ClearStrengthBar(ui->progressBar);\r\n    }\r\n    QtToolkit::ProgessBar::SegmentedProgressBar::render(value, ui->progressBar);\r\n}\r\n\r\nvoid mainwindow::on_line_cfr_passaword_mestra_textEdited(const QString& arg1)\r\n{\r\n    if (arg1.isEmpty() == true)\r\n    {\r\n        ui->label_erro_senha->hide();\r\n        ui->line_cfr_passaword_mestra->setStyleSheet(\"border: 1px solid #3a4368\");\r\n        return;\r\n    }\r\n    if (!PasswordStrength::PassowrdIguais(arg1))\r\n    {\r\n        ui->label_erro_senha->setStyleSheet(\"color: rgb(239, 107, 107);\");\r\n        ui->line_cfr_passaword_mestra->setStyleSheet(\"border: 1px solid #ef6b6b;\");\r\n        ui->label_erro_senha->show();\r\n    }\r\n    else\r\n    {\r\n        ui->label_erro_senha->hide();\r\n    }\r\n}\r\n// Line Passowrd\r\nvoid mainwindow::on_line_password_mestra_textEdited(const QString& arg1)\r\n{\r\n    showUI();\r\n    QString text = arg1;\r\n    setupStrengthBar(PasswordStrength::evaluate(text));\r\n    ui->label_forca_senha->setText(text);\r\n}\r\n\r\nvoid mainwindow::on_btn_add_item_clicked()\r\n{\r\n    windowItem *WindowItem = new windowItem(this);\r\n    auto blur =  QtToolkit::Blur::render(this,4);\r\n    WindowItem->move(this->geometry().center() - QPoint(WindowItem->width() / 2, WindowItem->height() / 2));\r\n    WindowItem->exec();\r\n    if (blur != nullptr && WindowItem->isVisible() == false)\r\n    {\r\n        delete WindowItem;\r\n        delete blur;\r\n    }\r\n\r\n}\r\nmainwindow::mainwindow(QWidget* parent)\r\n    : QMainWindow(parent),\r\n      ui(new Ui::mainwindow)\r\n{\r\n    ui->setupUi(this);\r\n    WindowPage::__init__(ui, this);\r\n   // ui->stackedWidget_2->setCurrentIndex(6);\r\n    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);\r\n    setAttribute(Qt::WA_TranslucentBackground);\r\n    QtToolkit::Window::Dragger::attach(this);\r\n}\r\nmainwindow::~mainwindow() { delete ui; }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/keepcold/mainwindow/mainwindow.cpp b/src/app/keepcold/mainwindow/mainwindow.cpp
+--- a/src/app/keepcold/mainwindow/mainwindow.cpp	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/src/app/keepcold/mainwindow/mainwindow.cpp	(date 1787157043884)
+@@ -6,11 +6,13 @@
+ 
+ #include "app/keepcold/mainwindow/mainwindow.h"
+ 
++#include "app/keepcold/mainwindow/windowconfig.h"
+ #include "app/keepcold/mainwindow/windowitem.h"
+ #include "ui_mainwindow.h"
+ 
++#include <QtWidgetStoolkit/QtWidgetStoolkit.h>]
+ #include <core/PasswordStrength.h>
+-#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
++#include <ui_windowConfig.h>
+ 
+ void mainwindow::on_btn_create_cofre_clicked() {
+     ClearStrengthBar(ui->progressBar);
+@@ -81,6 +83,19 @@
+     QtToolkit::ProgessBar::SegmentedProgressBar::render(value, ui->progressBar);
+ }
+ 
++void mainwindow::on_btn_configuracao_clicked()
++{
++   windowConfig *janela = new windowConfig(this);
++    auto blur =  QtToolkit::Blur::render(this,4);
++    janela->move(this->geometry().center() - QPoint(janela->width() / 2, janela->height() / 2));
++    janela->exec();
++    if (blur != nullptr && janela->isVisible() == false)
++    {
++        delete janela;
++        delete blur;
++    }
++}
++
+ void mainwindow::on_line_cfr_passaword_mestra_textEdited(const QString& arg1)
+ {
+     if (arg1.isEmpty() == true)
+Index: include/app/keepcold/mainwindow/mainwindow.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by KoTz on 14/07/2026.\r\n//\r\n\r\n#ifndef KEEPCOLD_MAINWINDOW_H\r\n#define KEEPCOLD_MAINWINDOW_H\r\n\r\n#include <QMainWindow>\r\n#include <widgets/WindowPage.h>\r\n\r\nQT_BEGIN_NAMESPACE\r\nnamespace Ui {\r\n    class mainwindow;\r\n}\r\nQT_END_NAMESPACE\r\n\r\nclass mainwindow : public QMainWindow {\r\n    Q_OBJECT\r\nprivate slots:\r\n    void on_btn_create_cofre_clicked();\r\n    void on_btn_create_cofre_cp_clicked();\r\n    void on_btn_back_clicked();\r\n    void on_btn_open_cofre_clicked();\r\n    void on_back_open_cofre_clicked();\r\n    void on_line_password_mestra_textEdited(const QString &arg1);\r\n    void on_line_cfr_passaword_mestra_textEdited(const QString &arg1);\r\n\r\n    void on_btn_max_window_clicked();\r\n    void on_btn_min_window_clicked();\r\n    void on_btn_close_window_clicked();\r\n\r\n    void on_btn_documento_clicked();\r\n\r\n    void on_btn_add_item_clicked();\r\n\r\n\r\n\r\nprivate :\r\n    void ClearStrengthBar(QProgressBar *widget);\r\n     void setupStrengthBar(int value);\r\n    void showUI();\r\npublic:\r\n    explicit mainwindow(QWidget *parent = nullptr);\r\n    ~mainwindow() override;\r\n\r\nprivate:\r\n    Ui::mainwindow *ui;\r\n};\r\n\r\n\r\n#endif // KEEPCOLD_MAINWINDOW_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/app/keepcold/mainwindow/mainwindow.h b/include/app/keepcold/mainwindow/mainwindow.h
+--- a/include/app/keepcold/mainwindow/mainwindow.h	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/include/app/keepcold/mainwindow/mainwindow.h	(date 1787086773828)
+@@ -33,6 +33,8 @@
+ 
+     void on_btn_add_item_clicked();
+ 
++    void on_btn_configuracao_clicked();
++
+ 
+ 
+ private :
+Index: src/io/FileManager.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by KoTz on 15/07/2026.\r\n//\r\n\r\n#include \"io/FileManager.h\"\r\n#include <QDebug>\r\n#include <QFile>\r\n#include <boost/filesystem.hpp>\r\n#include <QFileInfo>\r\n\r\nQString FileManager::SizeMemory(QUrl patch)\r\n{\r\n    if (patch.isEmpty() == false)\r\n    {\r\n        auto bytes = boost::filesystem::file_size(patch.path().toStdString());\r\n        if (bytes > 0){\r\n            QString size;\r\n            if (bytes < 1024)\r\n               return size = QString::number(bytes) + \" Bytes\";\r\n            else if (bytes < 1024 * 1024)\r\n               return size = QString::number(bytes / 1024.0, 'f', 1) + \" KB\";\r\n            else if (bytes < 1024 * 1024 * 1024)\r\n               return size = QString::number(bytes / (1024.0 * 1024), 'f', 1) + \" MB\";\r\n            else\r\n               return size = QString::number(bytes / (1024.0 * 1024 * 1024), 'f', 2) + \" GB\";\r\n        }\r\n    }\r\n}\r\n\r\nQString FileManager::loadStyleSheet(std::string name, PATCH_TYPE_ type)\r\n{\r\n    QString styleSheet = \"\";\r\n    std::string Path = \"\";\r\n\r\n    if (name.empty())\r\n        return \"\";\r\n\r\n    if (type == FILE_styles)\r\n    {\r\n        std::replace(name.begin(), name.end(), '\\\\', '/');\r\n        auto get = std::filesystem::current_path().remove_filename();\r\n        for (auto& i : std::filesystem::recursive_directory_iterator(get))\r\n        {\r\n            if (i.path().generic_string().find(name) != std::string::npos)\r\n            {\r\n                QFile f(QString::fromStdString(i.path().string()));\r\n                f.open(QFile::ReadOnly);\r\n                styleSheet = f.readAll();\r\n                break;\r\n            }\r\n        }\r\n        return styleSheet;\r\n    }\r\n    if (type == FILE_IMAGE)\r\n    {\r\n        auto c = std::filesystem::current_path().remove_filename() / Path / name;\r\n        return QString::fromStdString(c.string());\r\n    }\r\n    return \"\";\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/io/FileManager.cpp b/src/io/FileManager.cpp
+--- a/src/io/FileManager.cpp	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/src/io/FileManager.cpp	(date 1786741594133)
+@@ -5,26 +5,20 @@
+ #include "io/FileManager.h"
+ #include <QDebug>
+ #include <QFile>
+-#include <boost/filesystem.hpp>
++#include <QLocale>
++#include <filesystem>
+ #include <QFileInfo>
+ 
+-QString FileManager::SizeMemory(QUrl patch)
++QString FileManager::formattedFileSize(const QUrl &fileUrl)
+ {
+-    if (patch.isEmpty() == false)
+-    {
+-        auto bytes = boost::filesystem::file_size(patch.path().toStdString());
+-        if (bytes > 0){
+-            QString size;
+-            if (bytes < 1024)
+-               return size = QString::number(bytes) + " Bytes";
+-            else if (bytes < 1024 * 1024)
+-               return size = QString::number(bytes / 1024.0, 'f', 1) + " KB";
+-            else if (bytes < 1024 * 1024 * 1024)
+-               return size = QString::number(bytes / (1024.0 * 1024), 'f', 1) + " MB";
+-            else
+-               return size = QString::number(bytes / (1024.0 * 1024 * 1024), 'f', 2) + " GB";
+-        }
+-    }
++    if (fileUrl.isEmpty())
++        return QString();
++
++    const QFileInfo info(fileUrl.toLocalFile());
++    if (!info.exists())
++        return QString();
++
++    return QLocale::system().formattedDataSize(info.size());
+ }
+ 
+ QString FileManager::loadStyleSheet(std::string name, PATCH_TYPE_ type)
+Index: include/io/FileManager.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by KoTz on 15/07/2026.\r\n//\r\n\r\n#ifndef KEEPCOLD_FILEMANAGER_H\r\n#define KEEPCOLD_FILEMANAGER_H\r\n\r\n#include <QFile>\r\n#include <filesystem>\r\n#include <QUrl>\r\n\r\nenum PATCH_TYPE_ {\r\n    FILE_styles = 0,\r\n    FILE_IMAGE = 1\r\n};\r\n\r\nclass FileManager {\r\n\r\npublic :\r\n    static QString loadStyleSheet(std::string name, PATCH_TYPE_ type);\r\n    static QString SizeMemory(QUrl patch);\r\n};\r\n\r\n\r\n#endif // KEEPCOLD_FILEMANAGER_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/io/FileManager.h b/include/io/FileManager.h
+--- a/include/io/FileManager.h	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/include/io/FileManager.h	(date 1786741584598)
+@@ -18,7 +18,7 @@
+ 
+ public :
+     static QString loadStyleSheet(std::string name, PATCH_TYPE_ type);
+-    static QString SizeMemory(QUrl patch);
++    static QString formattedFileSize(const QUrl &fileUrl);
+ };
+ 
+ 
+Index: src/qt-widgets-toolkit/QtWidgetStoolkit.h
+===================================================================
+diff --git a/src/qt-widgets-toolkit/QtWidgetStoolkit.h b/src/qt-widgets-toolkit/QtWidgetStoolkit.h
+deleted file mode 100644
+--- a/src/qt-widgets-toolkit/QtWidgetStoolkit.h	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ /dev/null	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
+@@ -1,171 +0,0 @@
+-//
+-// Created by KoTz on 23/07/2026.
+-//
+-
+-#ifndef KEEPCOLD_QTWIDGETSTOOLKIT_H
+-#define KEEPCOLD_QTWIDGETSTOOLKIT_H
+-
+-#include <QEvent>
+-#include <QFrame>
+-#include <QGraphicsBlurEffect>
+-#include <QGraphicsOpacityEffect>
+-#include <QGraphicsPixmapItem>
+-#include <QGraphicsScene>
+-#include <QLabel>
+-#include <QLayout>
+-#include <QMouseEvent>
+-#include <QPainter>
+-#include <QParallelAnimationGroup>
+-#include <QProgressBar>
+-#include <QPropertyAnimation>
+-#include <QSplitter>
+-#include <QString>
+-#include <QVBoxLayout>
+-#include <QWidget>
+-#include <QScreen>
+-#include <QObject>
+-#include <qwindow.h>
+-
+-namespace QtToolkit
+-{
+-
+-namespace Frame {
+-
+-class ClickHelper : public QObject {
+-public:
+-    ClickHelper(QFrame *target, std::function<void()> callback)
+-        : QObject(target), m_callback(callback) {
+-        target->installEventFilter(this);
+-        m_enabled = true;
+-    }
+-    static void setEnabled(bool enable) {
+-        m_enabled = enable;
+-    }
+-protected:
+-    bool eventFilter(QObject *watched, QEvent *event) override {
+-        if (!m_enabled) {
+-            return false;
+-        }
+-        if (event->type() == QEvent::MouseButtonPress) {
+-            if (m_callback) {
+-                m_callback();
+-            }
+-            return true;
+-        }
+-        return QObject::eventFilter(watched, event);
+-
+-    }
+-private:
+-
+-    static bool m_enabled;
+-    std::function<void()> m_callback;
+-};
+-
+-void makeClickable(QFrame* frame, std::function<void()> onClick);
+-
+-}
+-
+-
+-
+-namespace Signal
+-{
+-    template <typename T>
+-    T* getObjet(QObject* get = QObject::sender())
+-    {
+-        if (get != nullptr)
+-        return qobject_cast<T*>(get);
+-    }
+-}
+-
+-namespace Animation
+-{
+-void fadeSlideIn(QWidget* widget,int OpDuration = 750,int posDuration = 740);
+-}
+-
+-namespace Window
+-{
+-class Maximizer : public QWidget
+-{
+-private:
+-    static bool m_isMaximized;
+-    static QRect m_normalGeometry;
+-
+-public :
+-    static QScreen* oldScreen;
+-    static QWidget* oldWidget;
+-
+-public:
+-    void toggle(QWidget* widget, int msec = 500);
+-    static void resync(QWidget* widget);
+-};
+-
+-class Dragger : public QObject
+-{
+-    bool m_dragging = false;
+-    QPoint m_dragStartPosition;
+-    static QWidget* s_target;
+-    static Dragger* s_instance;
+-
+-private:
+-    bool eventFilter(QObject* watched, QEvent* event) override;
+-
+-public:
+-    static void attach(QWidget* widget);
+-};
+-}  // namespace Window
+-
+-namespace Blur
+-{
+-QLabel* render(QWidget* parent, qreal blurRadius = 3);
+-}
+-
+-namespace ProgessBar
+-{
+-class SegmentedProgressBar : public QProgressBar
+-{
+-    Q_OBJECT
+-    Q_PROPERTY(QColor animatedColor READ animatedColor WRITE setAnimatedColor)
+-
+-public:
+-    explicit SegmentedProgressBar(QWidget* parent = nullptr);
+-    ~SegmentedProgressBar();
+-    void setSegments(int count);
+-
+-    QColor animatedColor() const
+-    {
+-        return m_animatedColor;
+-    }
+-
+-    void setAnimatedColor(const QColor& color);
+-
+-    static void render(int value, QWidget* ProgressBar);
+-
+-protected:
+-    void paintEvent(QPaintEvent* event) override;
+-
+-private:
+-    int m_segments = 5;
+-    QColor m_animatedColor;
+-    QPropertyAnimation* m_colorAnimation;
+-
+-    static SegmentedProgressBar* s_instance;
+-
+-    QColor colorForLevel(int filledCount) const;
+-    void onValueChanged(int value);
+-};
+-}  // namespace ProgessBar
+-
+-namespace Splitter
+-{
+-// Remove firstChild e secondChild do layout de parent e os recoloca lado a lado dentro de um
+-// QSplitter.
+-void setupSplitter(
+-    QWidget* parent,
+-    QWidget* firstChild,
+-    QWidget* secondChild,
+-    QFrame::Shape shape = QFrame::NoFrame,
+-    QString styleSheet = "");
+-}  // namespace Splitter
+-
+-}  // namespace QtToolkit
+-#endif  // KEEPCOLD_QTWIDGETSTOOLKIT_H
+Index: src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
+===================================================================
+diff --git a/src/qt-widgets-toolkit/QtWidgetStoolkit.cpp b/src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
+deleted file mode 100644
+--- a/src/qt-widgets-toolkit/QtWidgetStoolkit.cpp	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ /dev/null	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
+@@ -1,336 +0,0 @@
+-//
+-// Created by KoTz on 23/07/2026.
+-//
+-
+-#include "QtWidgetStoolkit.h"
+-
+-QtToolkit::ProgessBar::SegmentedProgressBar *QtToolkit::ProgessBar::SegmentedProgressBar::s_instance = nullptr;
+-QWidget *QtToolkit::Window::Dragger::s_target = nullptr;
+-QtToolkit::Window::Dragger *QtToolkit::Window::Dragger::s_instance = nullptr;
+-bool QtToolkit::Window::Maximizer::m_isMaximized = false;
+-QRect QtToolkit::Window::Maximizer::m_normalGeometry;
+-QWidget *QtToolkit::Window::Maximizer::oldWidget;
+-QScreen *QtToolkit::Window::Maximizer::oldScreen;
+-bool QtToolkit::Frame::ClickHelper::m_enabled;
+-
+-
+-
+-bool QtToolkit::Window::Dragger::eventFilter(QObject* watched, QEvent* event)
+-{
+-    if (s_target != nullptr)
+-    {
+-        if (watched == s_target) {
+-            if (event->type() == QEvent::MouseButtonPress) {
+-                auto *mouseEvent = static_cast<QMouseEvent*>(event);
+-                if (mouseEvent->button() == Qt::LeftButton) {
+-                    m_dragging = true;
+-                    m_dragStartPosition = mouseEvent->globalPosition().toPoint() - s_target->frameGeometry().topLeft();
+-                    return true;
+-                }
+-            }
+-            else if (event->type() == QEvent::MouseMove) {
+-                auto *mouseEvent = static_cast<QMouseEvent*>(event);
+-                if (m_dragging && (mouseEvent->buttons() & Qt::LeftButton)) {
+-                    s_target->move(mouseEvent->globalPosition().toPoint() - m_dragStartPosition);
+-                    return true;
+-                }
+-            }
+-            else if (event->type() == QEvent::MouseButtonRelease) {
+-                m_dragging = false;
+-                return true;
+-            }
+-            else if (event->type() == QEvent::WindowStateChange) {
+-                if (!(s_target->windowState() & Qt::WindowMinimized)) {
+-                    Maximizer::resync(s_target);
+-                }
+-            }
+-        }
+-
+-
+-        return QObject::eventFilter(watched, event);
+-    }
+-    return false;
+-}
+-
+-void QtToolkit::Window::Dragger::attach(QWidget* widget)
+-{
+-    if (widget != nullptr)
+-    {
+-        s_target = widget;
+-        if (s_instance == nullptr)
+-        {
+-            s_instance = new Dragger();
+-        }
+-        widget->installEventFilter(s_instance);
+-    }
+-}
+-
+-QLabel *QtToolkit::Blur::render(QWidget* parent,qreal blurRadius)
+-{
+-    if (parent == nullptr || blurRadius <= 0.0) {
+-        return nullptr;
+-    }
+-
+-    QPixmap original = parent->grab();
+-    if (original.isNull()) {
+-        return nullptr;
+-    }
+-
+-    QGraphicsScene scene;
+-    QGraphicsPixmapItem item(original);
+-
+-    std::unique_ptr<QGraphicsBlurEffect> blur = std::make_unique<QGraphicsBlurEffect>();
+-    blur->setBlurRadius(blurRadius);
+-    item.setGraphicsEffect(blur.release());
+-
+-    scene.addItem(&item);
+-
+-    QPixmap blurred(original.size());
+-    blurred.fill(Qt::transparent);
+-
+-    QPainter painter(&blurred);
+-    scene.render(
+-        &painter,
+-        QRectF(0, 0, blurred.width(), blurred.height()),
+-        QRectF(0, 0, original.width(), original.height()));
+-    painter.end();
+-
+-    if (blurred.isNull()) {
+-        return nullptr;
+-    }
+-
+-       QLabel *label = new QLabel(parent);
+-        label->setPixmap(blurred);
+-        label->setGeometry(parent->rect());
+-        label->show();
+-        label->raise();
+-
+-    return label;
+-}
+-
+-
+-void QtToolkit::Window::Maximizer::toggle(QWidget* widget,int msec)
+-{
+-    if (widget != nullptr && msec > 0)
+-    {
+-        auto *anim = new QPropertyAnimation(widget, "geometry");
+-        anim->setDuration(msec);
+-        anim->setEasingCurve(QEasingCurve::OutCubic);
+-            if (!m_isMaximized) {
+-                m_normalGeometry = widget->geometry();
+-                QRect screenGeometry = widget->screen()->availableGeometry();
+-                anim->setStartValue( widget->geometry());;
+-                anim->setEndValue(screenGeometry);
+-                m_isMaximized = true;
+-            } else {
+-                anim->setStartValue(widget->geometry());
+-                anim->setEndValue(m_normalGeometry);
+-                m_isMaximized = false;
+-        }
+-        // m_parent->setUpdatesEnabled(false);
+-        // connect(anim, &QPropertyAnimation::finished, widget, []() {
+-        //          m_parent->setUpdatesEnabled(true);
+-        //         m_parent->update();
+-        //     });
+-
+-        anim->start(QAbstractAnimation::DeleteWhenStopped);
+-    }
+-}
+-
+-void QtToolkit::Window::Maximizer::resync(QWidget* widget)
+-{
+-    if (widget == nullptr || widget->screen() == nullptr)
+-    {
+-        return;
+-    }
+-
+-    m_isMaximized = (widget->geometry() == widget->screen()->availableGeometry());
+-}
+-
+-QtToolkit::ProgessBar::SegmentedProgressBar::SegmentedProgressBar(QWidget *parent)
+-    : QProgressBar(parent)
+-{
+-    m_animatedColor = colorForLevel(0);
+-
+-    m_colorAnimation = new QPropertyAnimation(this, "animatedColor", this);
+-    m_colorAnimation->setDuration(700);
+-    m_colorAnimation->setEasingCurve(QEasingCurve::InCurve);
+-
+-    connect(this, &QProgressBar::valueChanged, this, &SegmentedProgressBar::onValueChanged);
+-}
+-
+-QtToolkit::ProgessBar::SegmentedProgressBar::~SegmentedProgressBar()
+-{
+-    if (s_instance == this)
+-    {
+-        s_instance = nullptr;
+-    }
+-}
+-
+-void QtToolkit::ProgessBar::SegmentedProgressBar::render(int value, QWidget* ProgressBar)
+-{
+-    if (ProgressBar != nullptr)
+-    {
+-        if (s_instance == nullptr)
+-        {
+-            s_instance = new SegmentedProgressBar(ProgressBar);
+-        }
+-        s_instance->setSegments(5);
+-        s_instance->setRange(0, 5);
+-        s_instance->setTextVisible(false);
+-        s_instance->setValue(value);
+-        s_instance->setFixedHeight(7);
+-        QLayout* existingLayout = ProgressBar->layout();
+-        if (existingLayout == nullptr)
+-        {
+-            existingLayout = new QVBoxLayout(ProgressBar);
+-            existingLayout->setContentsMargins(0, 0, 0, 0);
+-        }
+-        existingLayout->addWidget(s_instance);
+-    }
+-}
+-
+-
+-void QtToolkit::ProgessBar::SegmentedProgressBar::setSegments(int count) {
+-    m_segments = count;
+-    update();
+-}
+-
+-void QtToolkit::ProgessBar::SegmentedProgressBar::setAnimatedColor(const QColor &color) {
+-    if (m_animatedColor == color) {
+-        return;
+-    }
+-    m_animatedColor = color;
+-    update();
+-}
+-
+-void QtToolkit::ProgessBar::SegmentedProgressBar::onValueChanged(int value) {
+-    Q_UNUSED(value);
+-
+-    int filledCount = m_segments > 0
+-        ? (this->value() * m_segments) / qMax(1, maximum())
+-        : 0;
+-
+-    QColor target = colorForLevel(filledCount);
+-    if (target == m_animatedColor) {
+-        return;
+-    }
+-
+-    m_colorAnimation->stop();
+-    m_colorAnimation->setStartValue(m_animatedColor);
+-    m_colorAnimation->setEndValue(target);
+-    m_colorAnimation->start();
+-}
+-
+-QColor QtToolkit::ProgessBar::SegmentedProgressBar::colorForLevel(int filledCount) const {
+-    switch (filledCount) {
+-        case 0: return QColor("#3a4368");
+-        case 1: return QColor("#ef4444");
+-        case 2: return QColor("#f97316");
+-        case 3: return QColor("#3b82f6");
+-        case 4: return QColor("#22c55e");
+-        case 5: return QColor("#22c55e");
+-        default: return QColor("#22c55e");
+-    }
+-}
+-
+-void QtToolkit::ProgessBar::SegmentedProgressBar::paintEvent(QPaintEvent *event) {
+-    Q_UNUSED(event);
+-
+-    QPainter painter(this);
+-    painter.setRenderHint(QPainter::Antialiasing);
+-
+-    int spacing = 4;
+-    int totalSpacing = spacing * (m_segments - 1);
+-    int segmentWidth = (width() - totalSpacing) / m_segments;
+-
+-    int filledCount = m_segments > 0
+-        ? (value() * m_segments) / qMax(1, maximum())
+-        : 0;
+-
+-    for (int i = 0; i < m_segments; i++) {
+-        int x = i * (segmentWidth + spacing);
+-        QRect rect(x, 0, segmentWidth, height());
+-
+-        QColor color = (i < filledCount) ? m_animatedColor : QColor("#3a4368");
+-
+-        painter.setBrush(color);
+-        painter.setPen(Qt::NoPen);
+-        painter.drawRoundedRect(rect, 2, 2);
+-    }
+-}
+-
+-void QtToolkit::Splitter::setupSplitter(
+-        QWidget* parent,
+-        QWidget* firstChild,
+-        QWidget* secondChild,
+-        QFrame::Shape shape,
+-        QString styleSheet)
+-{
+-    if (parent != nullptr && firstChild != nullptr && secondChild != nullptr)
+-    {
+-        QLayout *mainLayout = parent->layout();
+-
+-        mainLayout->removeWidget(firstChild);
+-        mainLayout->removeWidget(secondChild);
+-
+-        QSplitter *splitter = new QSplitter(Qt::Horizontal, parent);
+-        splitter->addWidget(firstChild);
+-        splitter->addWidget(secondChild);
+-        splitter->setHandleWidth(4);
+-        splitter->setStretchFactor(0, 1);
+-        splitter->setStretchFactor(1, 3);
+-
+-        mainLayout->addWidget(splitter);
+-
+-        if (styleSheet.isEmpty() == false)
+-        {
+-            splitter->setStyleSheet(styleSheet);
+-        }
+-        splitter->setFrameShape(QFrame::NoFrame);
+-    }
+-
+-}
+-
+-void QtToolkit::Animation::fadeSlideIn(QWidget* widget,int OpDuration,int posDuration ) {
+-
+-    if (widget != nullptr)
+-    {
+-        QPoint endPos = widget->pos();
+-        widget->move(endPos.x(), endPos.y() + 20);
+-
+-        auto *effect = new QGraphicsOpacityEffect(widget);
+-        widget->setGraphicsEffect(effect);
+-
+-        QEasingCurve customCurve(QEasingCurve::BezierSpline);
+-        customCurve.addCubicBezierSegment(
+-            QPointF(0.34, -0.04),
+-            QPointF(0.49, 0.93),
+-            QPointF(1.0, 1.0)
+-        );
+-        auto *fade = new QPropertyAnimation(effect, "opacity");
+-        fade->setDuration(OpDuration);
+-        fade->setStartValue(0.0);
+-        fade->setEndValue(1.0);
+-        fade->setEasingCurve(customCurve);
+-
+-        auto *slide = new QPropertyAnimation(widget, "pos");
+-        slide->setDuration(posDuration);
+-        slide->setEndValue(endPos);
+-        slide->setEasingCurve(customCurve);
+-
+-        auto *group = new QParallelAnimationGroup(widget);
+-        group->addAnimation(fade);
+-        group->addAnimation(slide);
+-        group->start(QAbstractAnimation::DeleteWhenStopped);
+-    }
+-}
+-
+-void QtToolkit::Frame::makeClickable(QFrame* frame, std::function<void()> onClick) {
+-    if (frame == nullptr) {
+-        return;
+-    }
+-    frame->setCursor(Qt::PointingHandCursor);
+-    new ClickHelper(frame, onClick);
+-
+-}
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"VcsDirectoryMappings\">\r\n    <mapping directory=\"$PROJECT_DIR$\" vcs=\"Git\" />\r\n    <mapping directory=\"$PROJECT_DIR$/dotfiles\" vcs=\"Git\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+--- a/.idea/vcs.xml	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/.idea/vcs.xml	(date 1786739780955)
+@@ -3,5 +3,6 @@
+   <component name="VcsDirectoryMappings">
+     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+     <mapping directory="$PROJECT_DIR$/dotfiles" vcs="Git" />
++    <mapping directory="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit" vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: tests/test_widgets/test_blur.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include <QLabel>\r\n#include <QTest>\r\n#include <QWidget>\r\n\r\n#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>\r\n\r\nclass TestBlur : public QObject\r\n{\r\n    Q_OBJECT\r\n\r\nprivate slots:\r\n    void nullParent_returnsNull();\r\n    void nonPositiveRadius_returnsNull();\r\n    void validCall_returnsLabelCoveringParent();\r\n    void validCall_pixmapFillsOriginalSizeWithoutShrinking();\r\n    void callerOwnsLabel_deletingItLeavesNoChildBehind();\r\n};\r\n\r\nvoid TestBlur::nullParent_returnsNull()\r\n{\r\n    QCOMPARE(QtToolkit::Blur::render(nullptr, 5.0), nullptr);\r\n}\r\n\r\nvoid TestBlur::nonPositiveRadius_returnsNull()\r\n{\r\n    QWidget widget;\r\n    widget.setFixedSize(100, 100);\r\n\r\n    QCOMPARE(QtToolkit::Blur::render(&widget, 0.0), nullptr);\r\n    QCOMPARE(QtToolkit::Blur::render(&widget, -1.0), nullptr);\r\n    QCOMPARE(widget.findChildren<QLabel*>().size(), 0);\r\n}\r\n\r\nvoid TestBlur::validCall_returnsLabelCoveringParent()\r\n{\r\n    QWidget widget;\r\n    widget.setFixedSize(100, 100);\r\n\r\n    QLabel* label = QtToolkit::Blur::render(&widget, 5.0);\r\n\r\n    QVERIFY(label != nullptr);\r\n    QCOMPARE(label->parentWidget(), &widget);\r\n    QCOMPARE(label->geometry(), widget.rect());\r\n    QVERIFY(label->pixmap().isNull() == false);\r\n\r\n    delete label;\r\n}\r\n\r\n// Regressao para o bug de resize: QGraphicsBlurEffect cresce o bounding rect do\r\n// item pelo raio do blur, entao sem fixar source/target no scene.render() a\r\n// imagem final saia encolhida (KeepAspectRatio) com bordas transparentes em vez\r\n// de preencher o pixmap do tamanho original.\r\nvoid TestBlur::validCall_pixmapFillsOriginalSizeWithoutShrinking()\r\n{\r\n    QWidget widget;\r\n    widget.setFixedSize(100, 100);\r\n\r\n    QLabel* label = QtToolkit::Blur::render(&widget, 5.0);\r\n    QVERIFY(label != nullptr);\r\n\r\n    QCOMPARE(label->pixmap().size(), widget.size());\r\n\r\n    delete label;\r\n}\r\n\r\n// render() devolve a posse do QLabel pra quem chamou; nao ha mais acumulo interno\r\n// de labels a cada chamada, desde que quem chama delete o retorno.\r\nvoid TestBlur::callerOwnsLabel_deletingItLeavesNoChildBehind()\r\n{\r\n    QWidget widget;\r\n    widget.setFixedSize(100, 100);\r\n\r\n    delete QtToolkit::Blur::render(&widget, 5.0);\r\n    delete QtToolkit::Blur::render(&widget, 5.0);\r\n    delete QtToolkit::Blur::render(&widget, 5.0);\r\n\r\n    QCOMPARE(widget.findChildren<QLabel*>().size(), 0);\r\n}\r\n\r\nQTEST_MAIN(TestBlur)\r\n#include \"test_blur.moc\"
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tests/test_widgets/test_blur.cpp b/tests/test_widgets/test_blur.cpp
+--- a/tests/test_widgets/test_blur.cpp	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/tests/test_widgets/test_blur.cpp	(date 1786739804925)
+@@ -2,7 +2,7 @@
+ #include <QTest>
+ #include <QWidget>
+ 
+-#include <src/qt-widgets-toolkit/QtWidgetStoolkit.h>
++#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
+ 
+ class TestBlur : public QObject
+ {
+Index: src/app/keepcold/mainwindow/windowconfig.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/keepcold/mainwindow/windowconfig.cpp b/src/app/keepcold/mainwindow/windowconfig.cpp
+new file mode 100644
+--- /dev/null	(date 1787157206359)
++++ b/src/app/keepcold/mainwindow/windowconfig.cpp	(date 1787157206359)
+@@ -0,0 +1,30 @@
++//
++// Created by KoTz on 18/08/2026.
++//
++
++// You may need to build the project (run Qt uic code generator) to get "ui_windowConfig.h" resolved
++
++#include "../../../../include/app/keepcold/mainwindow/windowconfig.h"
++
++#include "io/FileManager.h"
++#include "ui_windowConfig.h"
++
++windowConfig::windowConfig(QWidget* parent)
++    : QDialog(parent),
++      ui(new Ui::windowConfig)
++{
++    ui->setupUi(this);
++    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
++    setStyleSheet(FileManager::loadStyleSheet("keepcold\\resources\\Styles\\windowConfig\\dark\\window.qss",PATCH_TYPE_::FILE_styles));
++    setAttribute(Qt::WA_TranslucentBackground);
++}
++
++void windowConfig::on_btn_close_clicked()
++{
++   close();
++}
++
++windowConfig::~windowConfig()
++{
++    delete ui;
++}
+Index: src/app/keepcold/mainwindow/windowconfig.ui
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/keepcold/mainwindow/windowconfig.ui b/src/app/keepcold/mainwindow/windowconfig.ui
+new file mode 100644
+--- /dev/null	(date 1787089050792)
++++ b/src/app/keepcold/mainwindow/windowconfig.ui	(date 1787089050792)
+@@ -0,0 +1,771 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<ui version="4.0">
++ <class>windowConfig</class>
++ <widget class="QDialog" name="windowConfig">
++  <property name="geometry">
++   <rect>
++    <x>0</x>
++    <y>0</y>
++    <width>449</width>
++    <height>776</height>
++   </rect>
++  </property>
++  <property name="sizePolicy">
++   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
++    <horstretch>0</horstretch>
++    <verstretch>0</verstretch>
++   </sizepolicy>
++  </property>
++  <property name="windowTitle">
++   <string>windowConfig</string>
++  </property>
++  <layout class="QVBoxLayout" name="verticalLayout">
++   <property name="spacing">
++    <number>0</number>
++   </property>
++   <property name="leftMargin">
++    <number>0</number>
++   </property>
++   <property name="topMargin">
++    <number>0</number>
++   </property>
++   <property name="rightMargin">
++    <number>0</number>
++   </property>
++   <property name="bottomMargin">
++    <number>0</number>
++   </property>
++   <item>
++    <widget class="QFrame" name="frame">
++     <property name="maximumSize">
++      <size>
++       <width>16777215</width>
++       <height>50</height>
++      </size>
++     </property>
++     <property name="frameShape">
++      <enum>QFrame::Shape::NoFrame</enum>
++     </property>
++     <property name="frameShadow">
++      <enum>QFrame::Shadow::Raised</enum>
++     </property>
++     <layout class="QHBoxLayout" name="horizontalLayout">
++      <item>
++       <widget class="QLabel" name="label">
++        <property name="text">
++         <string>Configurações</string>
++        </property>
++       </widget>
++      </item>
++      <item alignment="Qt::AlignmentFlag::AlignRight">
++       <widget class="QPushButton" name="btn_close">
++        <property name="minimumSize">
++         <size>
++          <width>30</width>
++          <height>30</height>
++         </size>
++        </property>
++        <property name="maximumSize">
++         <size>
++          <width>30</width>
++          <height>30</height>
++         </size>
++        </property>
++        <property name="text">
++         <string>X</string>
++        </property>
++       </widget>
++      </item>
++     </layout>
++    </widget>
++   </item>
++   <item>
++    <widget class="QFrame" name="frame_2">
++     <property name="frameShape">
++      <enum>QFrame::Shape::NoFrame</enum>
++     </property>
++     <property name="frameShadow">
++      <enum>QFrame::Shadow::Raised</enum>
++     </property>
++     <layout class="QVBoxLayout" name="verticalLayout_3">
++      <item>
++       <widget class="QFrame" name="frame_4">
++        <property name="sizePolicy">
++         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
++          <horstretch>0</horstretch>
++          <verstretch>0</verstretch>
++         </sizepolicy>
++        </property>
++        <property name="minimumSize">
++         <size>
++          <width>0</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="maximumSize">
++         <size>
++          <width>16777215</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="frameShape">
++         <enum>QFrame::Shape::NoFrame</enum>
++        </property>
++        <property name="frameShadow">
++         <enum>QFrame::Shadow::Raised</enum>
++        </property>
++        <layout class="QHBoxLayout" name="horizontalLayout_2">
++         <item>
++          <widget class="QLabel" name="label_3">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>40</width>
++             <height>40</height>
++            </size>
++           </property>
++           <property name="text">
++            <string/>
++           </property>
++          </widget>
++         </item>
++         <item>
++          <widget class="QFrame" name="frame_9">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="frameShape">
++            <enum>QFrame::Shape::StyledPanel</enum>
++           </property>
++           <property name="frameShadow">
++            <enum>QFrame::Shadow::Raised</enum>
++           </property>
++           <layout class="QVBoxLayout" name="verticalLayout_4">
++            <item>
++             <widget class="QLabel" name="label_4">
++              <property name="text">
++               <string>Verificar atualizações</string>
++              </property>
++              <property name="alignment">
++               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
++              </property>
++             </widget>
++            </item>
++            <item>
++             <widget class="QLabel" name="label_5">
++              <property name="text">
++               <string>Versão instalada: v1.0</string>
++              </property>
++             </widget>
++            </item>
++           </layout>
++          </widget>
++         </item>
++         <item>
++          <widget class="QPushButton" name="btn_verficado_update">
++           <property name="maximumSize">
++            <size>
++             <width>95</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="text">
++            <string>Verificar</string>
++           </property>
++          </widget>
++         </item>
++        </layout>
++       </widget>
++      </item>
++      <item>
++       <widget class="QFrame" name="frame_5">
++        <property name="minimumSize">
++         <size>
++          <width>0</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="maximumSize">
++         <size>
++          <width>16777215</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="frameShape">
++         <enum>QFrame::Shape::NoFrame</enum>
++        </property>
++        <property name="frameShadow">
++         <enum>QFrame::Shadow::Raised</enum>
++        </property>
++        <layout class="QHBoxLayout" name="horizontalLayout_3">
++         <item>
++          <widget class="QLabel" name="label_6">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>40</width>
++             <height>40</height>
++            </size>
++           </property>
++           <property name="text">
++            <string/>
++           </property>
++          </widget>
++         </item>
++         <item>
++          <widget class="QFrame" name="frame_10">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="frameShape">
++            <enum>QFrame::Shape::StyledPanel</enum>
++           </property>
++           <property name="frameShadow">
++            <enum>QFrame::Shadow::Raised</enum>
++           </property>
++           <layout class="QVBoxLayout" name="verticalLayout_5">
++            <item>
++             <widget class="QLabel" name="label_7">
++              <property name="text">
++               <string>Bloqueio automático</string>
++              </property>
++              <property name="alignment">
++               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
++              </property>
++             </widget>
++            </item>
++            <item>
++             <widget class="QLabel" name="label_8">
++              <property name="text">
++               <string>Bloquear o cofre após inatividade</string>
++              </property>
++             </widget>
++            </item>
++           </layout>
++          </widget>
++         </item>
++         <item>
++          <widget class="QComboBox" name="comboTime">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>80</width>
++             <height>50</height>
++            </size>
++           </property>
++           <item>
++            <property name="text">
++             <string>1 min</string>
++            </property>
++           </item>
++           <item>
++            <property name="text">
++             <string>5 min</string>
++            </property>
++           </item>
++           <item>
++            <property name="text">
++             <string>15 min</string>
++            </property>
++           </item>
++           <item>
++            <property name="text">
++             <string>1 h</string>
++            </property>
++           </item>
++           <item>
++            <property name="text">
++             <string>Nunca</string>
++            </property>
++           </item>
++          </widget>
++         </item>
++        </layout>
++       </widget>
++      </item>
++      <item>
++       <widget class="QFrame" name="frame_6">
++        <property name="minimumSize">
++         <size>
++          <width>0</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="maximumSize">
++         <size>
++          <width>16777215</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="frameShape">
++         <enum>QFrame::Shape::NoFrame</enum>
++        </property>
++        <property name="frameShadow">
++         <enum>QFrame::Shadow::Raised</enum>
++        </property>
++        <layout class="QHBoxLayout" name="horizontalLayout_4">
++         <item>
++          <widget class="QLabel" name="label_9">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>40</width>
++             <height>40</height>
++            </size>
++           </property>
++           <property name="text">
++            <string/>
++           </property>
++          </widget>
++         </item>
++         <item>
++          <widget class="QFrame" name="frame_11">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="frameShape">
++            <enum>QFrame::Shape::StyledPanel</enum>
++           </property>
++           <property name="frameShadow">
++            <enum>QFrame::Shadow::Raised</enum>
++           </property>
++           <layout class="QVBoxLayout" name="verticalLayout_6">
++            <item>
++             <widget class="QLabel" name="label_10">
++              <property name="text">
++               <string>Modo escuro</string>
++              </property>
++              <property name="alignment">
++               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
++              </property>
++             </widget>
++            </item>
++            <item>
++             <widget class="QLabel" name="label_11">
++              <property name="text">
++               <string>Aparência da interface</string>
++              </property>
++             </widget>
++            </item>
++           </layout>
++          </widget>
++         </item>
++         <item>
++          <widget class="QCheckBox" name="check_mod">
++           <property name="text">
++            <string/>
++           </property>
++          </widget>
++         </item>
++        </layout>
++       </widget>
++      </item>
++      <item>
++       <widget class="QFrame" name="frame_8">
++        <property name="minimumSize">
++         <size>
++          <width>0</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="maximumSize">
++         <size>
++          <width>16777215</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="frameShape">
++         <enum>QFrame::Shape::NoFrame</enum>
++        </property>
++        <property name="frameShadow">
++         <enum>QFrame::Shadow::Raised</enum>
++        </property>
++        <layout class="QHBoxLayout" name="horizontalLayout_5">
++         <item>
++          <widget class="QLabel" name="label_12">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>40</width>
++             <height>40</height>
++            </size>
++           </property>
++           <property name="text">
++            <string/>
++           </property>
++          </widget>
++         </item>
++         <item>
++          <widget class="QFrame" name="frame_12">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="frameShape">
++            <enum>QFrame::Shape::StyledPanel</enum>
++           </property>
++           <property name="frameShadow">
++            <enum>QFrame::Shadow::Raised</enum>
++           </property>
++           <layout class="QVBoxLayout" name="verticalLayout_7">
++            <item>
++             <widget class="QLabel" name="label_13">
++              <property name="text">
++               <string>Alterar senha mestra</string>
++              </property>
++              <property name="alignment">
++               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
++              </property>
++             </widget>
++            </item>
++            <item>
++             <widget class="QLabel" name="label_14">
++              <property name="text">
++               <string>Re-criptografa todo o conteúdo do arquivo</string>
++              </property>
++             </widget>
++            </item>
++           </layout>
++          </widget>
++         </item>
++         <item>
++          <widget class="QPushButton" name="btn_alterar_passowrd">
++           <property name="minimumSize">
++            <size>
++             <width>0</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>16777215</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="text">
++            <string>Alterar</string>
++           </property>
++          </widget>
++         </item>
++        </layout>
++       </widget>
++      </item>
++      <item>
++       <widget class="QFrame" name="frame_7">
++        <property name="minimumSize">
++         <size>
++          <width>0</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="maximumSize">
++         <size>
++          <width>16777215</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="frameShape">
++         <enum>QFrame::Shape::NoFrame</enum>
++        </property>
++        <property name="frameShadow">
++         <enum>QFrame::Shadow::Raised</enum>
++        </property>
++        <layout class="QHBoxLayout" name="horizontalLayout_7">
++         <item>
++          <widget class="QLabel" name="label_18">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="minimumSize">
++            <size>
++             <width>40</width>
++             <height>40</height>
++            </size>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>40</width>
++             <height>40</height>
++            </size>
++           </property>
++           <property name="text">
++            <string/>
++           </property>
++          </widget>
++         </item>
++         <item>
++          <widget class="QFrame" name="frame_15">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="frameShape">
++            <enum>QFrame::Shape::StyledPanel</enum>
++           </property>
++           <property name="frameShadow">
++            <enum>QFrame::Shadow::Raised</enum>
++           </property>
++           <layout class="QVBoxLayout" name="verticalLayout_9">
++            <item>
++             <widget class="QLabel" name="label_19">
++              <property name="text">
++               <string>Importar e Exportar</string>
++              </property>
++             </widget>
++            </item>
++            <item>
++             <widget class="QLabel" name="label_20">
++              <property name="text">
++               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Backup ou mesclar cofre&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
++              </property>
++              <property name="alignment">
++               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
++              </property>
++             </widget>
++            </item>
++           </layout>
++          </widget>
++         </item>
++         <item>
++          <widget class="QPushButton" name="btn_exportar">
++           <property name="minimumSize">
++            <size>
++             <width>95</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>95</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="text">
++            <string>Exportar</string>
++           </property>
++          </widget>
++         </item>
++         <item>
++          <widget class="QPushButton" name="btn_importar">
++           <property name="minimumSize">
++            <size>
++             <width>95</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>95</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="text">
++            <string>Importar</string>
++           </property>
++          </widget>
++         </item>
++        </layout>
++       </widget>
++      </item>
++      <item>
++       <widget class="QFrame" name="frame_13">
++        <property name="minimumSize">
++         <size>
++          <width>0</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="maximumSize">
++         <size>
++          <width>16777215</width>
++          <height>100</height>
++         </size>
++        </property>
++        <property name="frameShape">
++         <enum>QFrame::Shape::NoFrame</enum>
++        </property>
++        <property name="frameShadow">
++         <enum>QFrame::Shadow::Raised</enum>
++        </property>
++        <layout class="QHBoxLayout" name="horizontalLayout_6">
++         <item>
++          <widget class="QLabel" name="label_17">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>40</width>
++             <height>40</height>
++            </size>
++           </property>
++           <property name="text">
++            <string/>
++           </property>
++          </widget>
++         </item>
++         <item>
++          <widget class="QFrame" name="frame_14">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="frameShape">
++            <enum>QFrame::Shape::StyledPanel</enum>
++           </property>
++           <property name="frameShadow">
++            <enum>QFrame::Shadow::Raised</enum>
++           </property>
++           <layout class="QVBoxLayout" name="verticalLayout_8">
++            <item>
++             <widget class="QLabel" name="label_15">
++              <property name="text">
++               <string>Sobre o app</string>
++              </property>
++              <property name="alignment">
++               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
++              </property>
++             </widget>
++            </item>
++            <item>
++             <widget class="QLabel" name="label_16">
++              <property name="text">
++               <string>Versão, licença e informações do cofre</string>
++              </property>
++             </widget>
++            </item>
++           </layout>
++          </widget>
++         </item>
++         <item>
++          <widget class="QPushButton" name="btn_ver">
++           <property name="sizePolicy">
++            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
++             <horstretch>0</horstretch>
++             <verstretch>0</verstretch>
++            </sizepolicy>
++           </property>
++           <property name="minimumSize">
++            <size>
++             <width>80</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="maximumSize">
++            <size>
++             <width>80</width>
++             <height>50</height>
++            </size>
++           </property>
++           <property name="text">
++            <string>Ver</string>
++           </property>
++          </widget>
++         </item>
++        </layout>
++       </widget>
++      </item>
++     </layout>
++    </widget>
++   </item>
++   <item>
++    <widget class="QFrame" name="frame_3">
++     <property name="maximumSize">
++      <size>
++       <width>16777215</width>
++       <height>80</height>
++      </size>
++     </property>
++     <property name="frameShape">
++      <enum>QFrame::Shape::NoFrame</enum>
++     </property>
++     <property name="frameShadow">
++      <enum>QFrame::Shadow::Raised</enum>
++     </property>
++     <layout class="QVBoxLayout" name="verticalLayout_2">
++      <item>
++       <widget class="QPushButton" name="btn_bloquear">
++        <property name="sizePolicy">
++         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
++          <horstretch>0</horstretch>
++          <verstretch>0</verstretch>
++         </sizepolicy>
++        </property>
++        <property name="minimumSize">
++         <size>
++          <width>0</width>
++          <height>40</height>
++         </size>
++        </property>
++        <property name="maximumSize">
++         <size>
++          <width>16777215</width>
++          <height>95</height>
++         </size>
++        </property>
++        <property name="text">
++         <string>Bloquear Cofre agora</string>
++        </property>
++       </widget>
++      </item>
++      <item alignment="Qt::AlignmentFlag::AlignHCenter">
++       <widget class="QLabel" name="label_2">
++        <property name="text">
++         <string>app senha · v1.0 · seu cofre nunca sai deste dispositivo</string>
++        </property>
++       </widget>
++      </item>
++     </layout>
++    </widget>
++   </item>
++  </layout>
++ </widget>
++ <resources/>
++ <connections/>
++</ui>
+Index: include/app/keepcold/mainwindow/windowconfig.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/app/keepcold/mainwindow/windowconfig.h b/include/app/keepcold/mainwindow/windowconfig.h
+new file mode 100644
+--- /dev/null	(date 1787157229649)
++++ b/include/app/keepcold/mainwindow/windowconfig.h	(date 1787157229649)
+@@ -0,0 +1,42 @@
++//
++// Created by KoTz on 18/08/2026.
++//
++
++#ifndef KEEPCOLD_WINDOWCONFIG_H
++#define KEEPCOLD_WINDOWCONFIG_H
++
++#include <QDialog>
++
++QT_BEGIN_NAMESPACE
++
++
++class ITEM
++{
++private :
++    int ide;
++    QString text;
++};
++
++namespace Ui
++{
++class windowConfig;
++}
++
++QT_END_NAMESPACE
++
++class windowConfig : public QDialog
++{
++    Q_OBJECT
++
++private slots:
++    void on_btn_close_clicked();
++
++public:
++    explicit windowConfig(QWidget* parent = nullptr);
++    ~windowConfig() override;
++
++private:
++    Ui::windowConfig* ui;
++};
++
++#endif  // KEEPCOLD_WINDOWCONFIG_H
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"BackendCodeEditorMiscSettings\">\r\n    <option name=\"/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue\" value=\"7\" type=\"long\" />\r\n    <option name=\"/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue\" value=\"true\" type=\"bool\" />\r\n    <option name=\"/Default/Housekeeping/LiveTemplatesHousekeeping/HotspotSessionHintIsShown/@EntryValue\" value=\"true\" type=\"bool\" />\r\n    <option name=\"/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue\" value=\"CppIncludesOrderOptions\" type=\"string\" />\r\n  </component>\r\n  <component name=\"CMakePresetLoader\">{\r\n  &quot;useNewFormat&quot;: true\r\n}</component>\r\n  <component name=\"CMakeProjectFlavorService\">\r\n    <option name=\"flavorId\" value=\"CMakePlainProjectFlavor\" />\r\n  </component>\r\n  <component name=\"CMakeReloadState\">\r\n    <option name=\"reloaded\" value=\"true\" />\r\n  </component>\r\n  <component name=\"CMakeRunConfigurationManager\">\r\n    <generated>\r\n      <config projectName=\"keepcold\" targetName=\"test_blur\" />\r\n      <config projectName=\"keepcold\" targetName=\"generate_zxcvbn_dict\" />\r\n      <config projectName=\"keepcold\" targetName=\"dict_generate\" />\r\n      <config projectName=\"keepcold\" targetName=\"keepcold\" />\r\n    </generated>\r\n  </component>\r\n  <component name=\"CMakeSettings\" AUTO_RELOAD=\"true\">\r\n    <configurations>\r\n      <configuration PROFILE_NAME=\"Debug\" ENABLED=\"true\" GENERATION_DIR=\"build\" CONFIG_NAME=\"Debug\" TOOLCHAIN_NAME=\"Default\" GENERATION_OPTIONS=\"-G Ninja -DCMAKE_PREFIX_PATH=/home/kotz/Qt/6.11.0/gcc_64 -DCMAKE_TOOLCHAIN_FILE=/home/kotz/vcpkg/scripts/buildsystems/vcpkg.cmake&quot;\" />\r\n    </configurations>\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"c587ffd9-613f-4201-a809-93f819d11e67\" name=\"Changes\" comment=\"24/07/2026 13:22\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/QtSettings.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/QtSettings.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/CMakeLists.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/CMakeLists.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/include/app/keepcold/mainwindow/windowitem.h\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/include/app/keepcold/mainwindow/windowitem.h\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/include/io/FileManager.h\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/include/io/FileManager.h\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.cpp\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.cpp\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/keepcold/mainwindow/windowitem.cpp\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/keepcold/mainwindow/windowitem.cpp\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/keepcold/mainwindow/windowitem.ui\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/keepcold/mainwindow/windowItem.ui\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/io/FileManager.cpp\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/io/FileManager.cpp\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/qt-widgets-toolkit/QtWidgetStoolkit.h\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/qt-widgets-toolkit/QtWidgetStoolkit.h\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ExecutionTargetManager\" SELECTED_TARGET=\"CMakeBuildProfile:Debug\" />\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"QssFile\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <excluded-from-favorite>\r\n      <branch-storage>\r\n        <map>\r\n          <entry type=\"REMOTE\">\r\n            <value>\r\n              <list>\r\n                <branch-info repo=\"$PROJECT_DIR$\" source=\"origin/master\" />\r\n              </list>\r\n            </value>\r\n          </entry>\r\n        </map>\r\n      </branch-storage>\r\n    </excluded-from-favorite>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"develop\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"ROOT_SYNC\" value=\"DONT_SYNC\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Kotz-dev&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"largeFiles\">\r\n      <LargeFiles>\r\n        <option name=\"unlockedFilePaths\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$/ui/mainwindow.ui\" />\r\n          </set>\r\n        </option>\r\n      </LargeFiles>\r\n    </option>\r\n    <option name=\"recentBranches\">\r\n      <RecentBranches>\r\n        <option name=\"branchesForRepo\">\r\n          <list>\r\n            <RecentBranchesForRepo>\r\n              <option name=\"branches\">\r\n                <list>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/ui-widgets\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1784057048\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"develop\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1784056655\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"master\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1784055458\" />\r\n                  </RecentBranch>\r\n                </list>\r\n              </option>\r\n              <option name=\"repositoryRootUrl\" value=\"file://$PROJECT_DIR$\" />\r\n            </RecentBranchesForRepo>\r\n          </list>\r\n        </option>\r\n      </RecentBranches>\r\n    </option>\r\n  </component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Kotz-dev/keepcold.git&quot;,\r\n    &quot;accountId&quot;: &quot;a557c641-d51d-42b4-b217-7ac7f3c9c5fd&quot;\r\n  }\r\n}</component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/include/app/keepcold/mainwindow/mainwindow.h\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/include/styles/LinePassword.h\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/include/styles/UIStyle.h\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/include/widgets/WindowPage.h\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.cpp\" root0=\"FORCE_HIGHLIGHTING\" />\r\n  </component>\r\n  <component name=\"MacroExpansionManager\">\r\n    <option name=\"directoryName\" value=\"wwWM5E29\" />\r\n  </component>\r\n  <component name=\"ProjectApplicationVersion\">\r\n    <option name=\"ide\" value=\"CLion\" />\r\n    <option name=\"majorVersion\" value=\"2026\" />\r\n    <option name=\"minorVersion\" value=\"1.4\" />\r\n    <option name=\"productBranch\" value=\"Classic\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 1,\r\n  &quot;fromUser&quot;: false\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3GVSQfItsj0tUuXQVGDJchvsZIz\" />\r\n  <component name=\"ProjectStatusUIService\">{\r\n  &quot;uiKindId&quot;: &quot;Widget&quot;\r\n}</component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"CMake Application.keepcold.executor\": \"Run\",\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.RadMigrateCodeStyle\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252\": \"true\",\r\n    \"RunOnceActivity.cidr.known.project.marker\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"RunOnceActivity.readMode.enableVisualFormatting\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"SONARLINT_PRECOMMIT_ANALYSIS\": \"true\",\r\n    \"cf.advertisement.text.overridden\": \"true\",\r\n    \"cf.first.check.clang-format\": \"false\",\r\n    \"cidr.known.project.marker\": \"true\",\r\n    \"codeWithMe.voiceChat.enabledByDefault\": \"false\",\r\n    \"com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1\": \"true\",\r\n    \"git-widget-placeholder\": \"feature/ui-widgets\",\r\n    \"git.auto.fetch.suggestion.counter\": \"2\",\r\n    \"junie.onboarding.icon.badge.shown\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"org.rust.first.attach.projects\": \"true\",\r\n    \"rearrange.code.on.save\": \"true\",\r\n    \"settings.editor.selected.configurable\": \"CMakeSettings\",\r\n    \"to.speed.mode.migration.done\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\KoTz\\CLionProjects\\keepcold\\resources\\Styles\\mainwindow\" />\r\n      <recent name=\"C:\\Users\\KoTz\\CLionProjects\\keepcold\\include\\app\\keepcold\\mainwindow\" />\r\n      <recent name=\"C:\\Users\\KoTz\\CLionProjects\\keepcold\\src\\app\\keepcold\\mainwindow\" />\r\n      <recent name=\"C:\\Users\\KoTz\\CLionProjects\\keepcold\\ui\" />\r\n      <recent name=\"C:\\Users\\KoTz\\CLionProjects\\keepcold\\src\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"CMake Application.keepcold\">\r\n    <configuration default=\"true\" type=\"CMakeRunConfiguration\" factoryName=\"Application\" REDIRECT_INPUT=\"false\" ELEVATE=\"false\" USE_EXTERNAL_CONSOLE=\"false\" EMULATE_TERMINAL=\"false\" PASS_PARENT_ENVS_2=\"true\">\r\n      <method v=\"2\">\r\n        <option name=\"com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"dict_generate\" type=\"CMakeRunConfiguration\" factoryName=\"Application\" REDIRECT_INPUT=\"false\" ELEVATE=\"false\" USE_EXTERNAL_CONSOLE=\"false\" EMULATE_TERMINAL=\"false\" PASS_PARENT_ENVS_2=\"true\" PROJECT_NAME=\"keepcold\" TARGET_NAME=\"dict_generate\" CONFIG_NAME=\"Debug\" RUN_TARGET_PROJECT_NAME=\"keepcold\" RUN_TARGET_NAME=\"dict_generate\">\r\n      <method v=\"2\">\r\n        <option name=\"com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"generate_zxcvbn_dict\" type=\"CMakeRunConfiguration\" factoryName=\"Application\" REDIRECT_INPUT=\"false\" ELEVATE=\"false\" USE_EXTERNAL_CONSOLE=\"false\" EMULATE_TERMINAL=\"false\" PASS_PARENT_ENVS_2=\"true\" PROJECT_NAME=\"keepcold\" TARGET_NAME=\"generate_zxcvbn_dict\" CONFIG_NAME=\"Debug\">\r\n      <method v=\"2\">\r\n        <option name=\"com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"keepcold\" type=\"CMakeRunConfiguration\" factoryName=\"Application\" REDIRECT_INPUT=\"false\" ELEVATE=\"false\" USE_EXTERNAL_CONSOLE=\"false\" EMULATE_TERMINAL=\"false\" PASS_PARENT_ENVS_2=\"true\" PROJECT_NAME=\"keepcold\" TARGET_NAME=\"keepcold\" CONFIG_NAME=\"Debug\" RUN_TARGET_PROJECT_NAME=\"keepcold\" RUN_TARGET_NAME=\"keepcold\">\r\n      <envs>\r\n        <env name=\"QT_QPA_PLATFORM_PLUGIN_PATH\" value=\"C:\\Qt\\6.9.1\\msvc2022_64\\plugins\\platforms\" />\r\n      </envs>\r\n      <method v=\"2\">\r\n        <option name=\"com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"test_blur\" type=\"CMakeRunConfiguration\" factoryName=\"Application\" REDIRECT_INPUT=\"false\" ELEVATE=\"false\" USE_EXTERNAL_CONSOLE=\"false\" EMULATE_TERMINAL=\"false\" PASS_PARENT_ENVS_2=\"true\" PROJECT_NAME=\"keepcold\" TARGET_NAME=\"test_blur\" CONFIG_NAME=\"Debug\" RUN_TARGET_PROJECT_NAME=\"keepcold\" RUN_TARGET_NAME=\"test_blur\">\r\n      <method v=\"2\">\r\n        <option name=\"com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"CMake Application.dict_generate\" />\r\n      <item itemvalue=\"CMake Application.generate_zxcvbn_dict\" />\r\n      <item itemvalue=\"CMake Application.keepcold\" />\r\n      <item itemvalue=\"CMake Application.test_blur\" />\r\n    </list>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"c587ffd9-613f-4201-a809-93f819d11e67\" name=\"Changes\" comment=\"\" />\r\n      <created>1784055232075</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1784055232075</updated>\r\n      <workItem from=\"1784055233208\" duration=\"6381000\" />\r\n      <workItem from=\"1784070904589\" duration=\"644000\" />\r\n      <workItem from=\"1784113459422\" duration=\"20990000\" />\r\n      <workItem from=\"1784204649754\" duration=\"21682000\" />\r\n      <workItem from=\"1784290047373\" duration=\"27817000\" />\r\n      <workItem from=\"1784371114401\" duration=\"11955000\" />\r\n      <workItem from=\"1784410183251\" duration=\"91000\" />\r\n      <workItem from=\"1784545422691\" duration=\"220000\" />\r\n      <workItem from=\"1784545904077\" duration=\"1464000\" />\r\n      <workItem from=\"1784547561675\" duration=\"94000\" />\r\n      <workItem from=\"1784551326600\" duration=\"2451000\" />\r\n      <workItem from=\"1784569672990\" duration=\"2015000\" />\r\n      <workItem from=\"1784637833695\" duration=\"24933000\" />\r\n      <workItem from=\"1784723028936\" duration=\"17867000\" />\r\n      <workItem from=\"1784754156912\" duration=\"3170000\" />\r\n      <workItem from=\"1784802317784\" duration=\"12150000\" />\r\n      <workItem from=\"1784822210724\" duration=\"9460000\" />\r\n      <workItem from=\"1784849688967\" duration=\"653000\" />\r\n      <workItem from=\"1784892203149\" duration=\"17357000\" />\r\n      <workItem from=\"1785274298576\" duration=\"2408000\" />\r\n      <workItem from=\"1785323842536\" duration=\"22304000\" />\r\n      <workItem from=\"1785408485386\" duration=\"24254000\" />\r\n      <workItem from=\"1785500617509\" duration=\"8614000\" />\r\n      <workItem from=\"1785512854588\" duration=\"20559000\" />\r\n      <workItem from=\"1785585264454\" duration=\"609000\" />\r\n      <workItem from=\"1785611805692\" duration=\"4033000\" />\r\n      <workItem from=\"1785760257259\" duration=\"12336000\" />\r\n      <workItem from=\"1786105479354\" duration=\"8580000\" />\r\n      <workItem from=\"1786193214643\" duration=\"13096000\" />\r\n      <workItem from=\"1786532663342\" duration=\"18707000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"14/07/2026\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1784055386783</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1784055386783</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"14/07/2026 16:18\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1784056699986</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1784056699986</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"14/07/2026 16:20\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1784056822718</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1784056822718</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"17/07/2026 18:22\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1784323389133</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1784323389133</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"24/07/2026 13:22\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1784910152127</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1784910152127</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"6\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"14/07/2026\" />\r\n    <MESSAGE value=\"14/07/2026 16:18\" />\r\n    <MESSAGE value=\"14/07/2026 16:20\" />\r\n    <MESSAGE value=\"17/07/2026 18:22\" />\r\n    <MESSAGE value=\"24/07/2026 13:22\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"24/07/2026 13:22\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"com.jetbrains.cidr.execution.debugger.OCBreakpointType\">\r\n          <url>file://$PROJECT_DIR$/src/styles/UIStyle.cpp</url>\r\n          <line>4</line>\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/.idea/workspace.xml	(date 1787183387941)
+@@ -4,7 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="BackendCodeEditorMiscSettings">
+-    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="7" type="long" />
++    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="3" type="long" />
+     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+     <option name="/Default/Housekeeping/LiveTemplatesHousekeeping/HotspotSessionHintIsShown/@EntryValue" value="true" type="bool" />
+     <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppIncludesOrderOptions" type="string" />
+@@ -20,6 +20,7 @@
+   </component>
+   <component name="CMakeRunConfigurationManager">
+     <generated>
++      <config projectName="keepcold" targetName="QtWidgetStoolkit" />
+       <config projectName="keepcold" targetName="test_blur" />
+       <config projectName="keepcold" targetName="generate_zxcvbn_dict" />
+       <config projectName="keepcold" targetName="dict_generate" />
+@@ -28,28 +29,52 @@
+   </component>
+   <component name="CMakeSettings" AUTO_RELOAD="true">
+     <configurations>
+-      <configuration PROFILE_NAME="Debug" ENABLED="true" GENERATION_DIR="build" CONFIG_NAME="Debug" TOOLCHAIN_NAME="Default" GENERATION_OPTIONS="-G Ninja -DCMAKE_PREFIX_PATH=/home/kotz/Qt/6.11.0/gcc_64 -DCMAKE_TOOLCHAIN_FILE=/home/kotz/vcpkg/scripts/buildsystems/vcpkg.cmake&quot;" />
++      <configuration PROFILE_NAME="Debug-Visual Studio" ENABLED="true" GENERATION_DIR="build" CONFIG_NAME="Debug" TOOLCHAIN_NAME="Visual Studio" GENERATION_OPTIONS="-G Ninja -DCMAKE_TOOLCHAIN_FILE=&quot;C:\Users\KoTz\vcpkg\scripts\buildsystems\vcpkg.cmake&quot; &quot;-DCMAKE_PREFIX_PATH=C:\Qt\6.9.1\msvc2022_64&quot;" />
+     </configurations>
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="c587ffd9-613f-4201-a809-93f819d11e67" name="Changes" comment="24/07/2026 13:22">
+-      <change beforePath="$PROJECT_DIR$/.idea/QtSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/QtSettings.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/include/app/keepcold/mainwindow/windowconfig.h" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/resources/Styles/windowConfig/dark/window.qss" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowconfig.cpp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowconfig.ui" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/CMakeLists.txt" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/include/QtWidgetStoolkit/Animation.h" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/include/QtWidgetStoolkit/Blur.h" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/include/QtWidgetStoolkit/Frame.h" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/include/QtWidgetStoolkit/ProgessBar.h" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/include/QtWidgetStoolkit/QtWidgetStoolkit.h" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/include/QtWidgetStoolkit/Signal.h" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/include/QtWidgetStoolkit/Splitter.h" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/include/QtWidgetStoolkit/Window.h" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/src/Animation.cpp" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/src/Blur.cpp" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/src/Frame.cpp" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/src/ProgessBar.cpp" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/src/Splitter.cpp" afterDir="false" />
++      <change afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/src/Window.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/include/app/keepcold/mainwindow/mainwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/app/keepcold/mainwindow/mainwindow.h" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/include/app/keepcold/mainwindow/windowitem.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/app/keepcold/mainwindow/windowitem.h" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/include/io/FileManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/io/FileManager.h" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.cpp" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowitem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowitem.cpp" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowitem.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowItem.ui" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/io/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/io/FileManager.cpp" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/qt-widgets-toolkit/QtWidgetStoolkit.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/qt-widgets-toolkit/QtWidgetStoolkit.h" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/qt-widgets-toolkit/QtWidgetStoolkit.cpp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/qt-widgets-toolkit/QtWidgetStoolkit.h" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/styles/UIStyle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/UIStyle.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/tests/test_widgets/test_blur.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_widgets/test_blur.cpp" afterDir="false" />
++      <change beforePath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/src/QtWidgetStoolkit.cpp" beforeDir="false" />
++      <change beforePath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/src/QtWidgetStoolkit.h" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
+-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
++  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug-Visual Studio" />
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+@@ -158,62 +183,62 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "CMake Application.keepcold.executor": "Run",
+-    "ModuleVcsDetector.initialDetectionPerformed": "true",
+-    "RunOnceActivity.RadMigrateCodeStyle": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+-    "RunOnceActivity.cidr.known.project.marker": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+-    "cf.advertisement.text.overridden": "true",
+-    "cf.first.check.clang-format": "false",
+-    "cidr.known.project.marker": "true",
+-    "codeWithMe.voiceChat.enabledByDefault": "false",
+-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+-    "git-widget-placeholder": "feature/ui-widgets",
+-    "git.auto.fetch.suggestion.counter": "2",
+-    "junie.onboarding.icon.badge.shown": "true",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "org.rust.first.attach.projects": "true",
+-    "rearrange.code.on.save": "true",
+-    "settings.editor.selected.configurable": "CMakeSettings",
+-    "to.speed.mode.migration.done": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;CMake Application.keepcold.executor&quot;: &quot;Run&quot;,
++    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
++    &quot;cf.advertisement.text.overridden&quot;: &quot;true&quot;,
++    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
++    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
++    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
++    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;feature/ui-widgets&quot;,
++    &quot;git.auto.fetch.suggestion.counter&quot;: &quot;2&quot;,
++    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
++    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
++    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+-      <recent name="C:\Users\KoTz\CLionProjects\keepcold\resources\Styles\mainwindow" />
+       <recent name="C:\Users\KoTz\CLionProjects\keepcold\include\app\keepcold\mainwindow" />
+       <recent name="C:\Users\KoTz\CLionProjects\keepcold\src\app\keepcold\mainwindow" />
++      <recent name="C:\Users\KoTz\CLionProjects\keepcold\resources\Styles\mainwindow" />
+       <recent name="C:\Users\KoTz\CLionProjects\keepcold\ui" />
+       <recent name="C:\Users\KoTz\CLionProjects\keepcold\src" />
+     </key>
+   </component>
+   <component name="RunManager" selected="CMake Application.keepcold">
+-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
++    <configuration name="QtWidgetStoolkit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="QtWidgetStoolkit" CONFIG_NAME="Debug-Visual Studio">
+       <method v="2">
+         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="dict_generate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="dict_generate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="keepcold" RUN_TARGET_NAME="dict_generate">
++    <configuration name="dict_generate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="dict_generate" CONFIG_NAME="Debug-Visual Studio" RUN_TARGET_PROJECT_NAME="keepcold" RUN_TARGET_NAME="dict_generate">
+       <method v="2">
+         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="generate_zxcvbn_dict" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="generate_zxcvbn_dict" CONFIG_NAME="Debug">
++    <configuration name="generate_zxcvbn_dict" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="generate_zxcvbn_dict" CONFIG_NAME="Debug-Visual Studio">
+       <method v="2">
+         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="keepcold" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="keepcold" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="keepcold" RUN_TARGET_NAME="keepcold">
++    <configuration name="keepcold" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="keepcold" CONFIG_NAME="Debug-Visual Studio" RUN_TARGET_PROJECT_NAME="keepcold" RUN_TARGET_NAME="keepcold">
+       <envs>
+         <env name="QT_QPA_PLATFORM_PLUGIN_PATH" value="C:\Qt\6.9.1\msvc2022_64\plugins\platforms" />
+       </envs>
+@@ -221,7 +246,7 @@
+         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="test_blur" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="test_blur" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="keepcold" RUN_TARGET_NAME="test_blur">
++    <configuration name="test_blur" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="test_blur" CONFIG_NAME="Debug-Visual Studio" RUN_TARGET_PROJECT_NAME="keepcold" RUN_TARGET_NAME="test_blur">
+       <method v="2">
+         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+       </method>
+@@ -231,6 +256,7 @@
+       <item itemvalue="CMake Application.generate_zxcvbn_dict" />
+       <item itemvalue="CMake Application.keepcold" />
+       <item itemvalue="CMake Application.test_blur" />
++      <item itemvalue="CMake Application.QtWidgetStoolkit" />
+     </list>
+   </component>
+   <component name="TaskManager">
+@@ -270,6 +296,8 @@
+       <workItem from="1786105479354" duration="8580000" />
+       <workItem from="1786193214643" duration="13096000" />
+       <workItem from="1786532663342" duration="18707000" />
++      <workItem from="1787084161968" duration="3754000" />
++      <workItem from="1787141192027" duration="2763000" />
+     </task>
+     <task id="LOCAL-00001" summary="14/07/2026">
+       <option name="closed" value="true" />
+Index: resources/Styles/windowConfig/dark/window.qss
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/resources/Styles/windowConfig/dark/window.qss b/resources/Styles/windowConfig/dark/window.qss
+new file mode 100644
+--- /dev/null	(date 1787088568774)
++++ b/resources/Styles/windowConfig/dark/window.qss	(date 1787088568774)
+@@ -0,0 +1,29 @@
++/*
++ * window - Qt Style Sheet
++ * Created: 18/08/2026
++ *
++ * QSS Toolkit Quick Tips:
++ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
++ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
++ * - Use the QSS Colors panel and editor context menu to save or insert colors
++ */
++
++/* Add your QSS styles here */
++
++
++#frame_4,#frame_5,#frame_6,#frame_8,#frame_7,#frame_13 {
++ background: #2c3760;
++     border: 1px solid rgba(255, 255, 255, 0.08);
++     border-radius: 10px;
++     padding: 16px;
++}
++
++QFrame {
++   background: #232c4d;
++}
++
++QDialog {
++ background: #232c4d;
++  border-radius: 16px;
++}
++
+Index: CMakeLists.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>cmake_minimum_required(VERSION 4.2)\r\nproject(keepcold)\r\n\r\nset(CMAKE_CXX_STANDARD 23)\r\nset(CMAKE_AUTOMOC ON)\r\nset(CMAKE_AUTORCC ON)\r\nset(CMAKE_AUTOUIC ON)\r\n\r\n\r\nfind_package(Qt6 COMPONENTS\r\n        Core\r\n        Gui\r\n        Widgets\r\n        Test\r\n        REQUIRED)\r\n\r\nfind_package(Boost REQUIRED COMPONENTS filesystem)\r\n\r\nadd_executable(keepcold\r\n        src/app/main.cpp\r\n        src/app/keepcold/mainwindow/mainwindow.cpp\r\n        include/app/keepcold/mainwindow/mainwindow.h\r\n        src/app/keepcold/mainwindow/mainwindow.ui\r\n        src/styles/UIStyle.cpp\r\n        include/styles/UIStyle.h\r\n        src/styles/RichText.cpp\r\n        include/styles/RichText.h\r\n        src/io/FileManager.cpp\r\n        include/io/FileManager.h\r\n        resources/Resource.qrc\r\n        src/core/third_party/zxcvbn/zxcvbn.c\r\n        src/core/third_party/zxcvbn/zxcvbn.h\r\n        src/core/PasswordStrength.cpp\r\n        include/core/PasswordStrength.h\r\n        src/styles/LinePassword.cpp\r\n        include/styles/LinePassword.h\r\n        src/widgets/WindowPage.cpp\r\n        include/widgets/WindowPage.h\r\n        include/memory/Memory.h\r\n        src/qt-widgets-toolkit/QtWidgetStoolkit.cpp\r\n        src/qt-widgets-toolkit/QtWidgetStoolkit.h\r\n        src/app/keepcold/mainwindow/windowitem.cpp\r\n        include/app/keepcold/mainwindow/windowitem.h\r\n        src/app/keepcold/mainwindow/windowItem.ui\r\n\r\n)\r\ntarget_include_directories(keepcold PRIVATE include)\r\nset_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS \"${CMAKE_SOURCE_DIR}/src/app/keepcold/mainwindow\")\r\ntarget_link_libraries(keepcold\r\n        Qt::Core\r\n        Qt::Gui\r\n        Qt::Widgets\r\n        Boost::filesystem\r\n)\r\n\r\ntarget_include_directories(keepcold PUBLIC\r\n        ${CMAKE_CURRENT_SOURCE_DIR}\r\n        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn\r\n        ${CMAKE_CURRENT_BINARY_DIR}\r\n)\r\n\r\n# dict-generate.cpp has its own main() and only exists to turn the zxcvbn word\r\n# lists into the dict-src.h that zxcvbn.c includes, so it's built as a\r\n# separate host tool rather than linked into keepcold.\r\nadd_executable(dict_generate src/core/third_party/zxcvbn/dict-generate.cpp)\r\n\r\nset(ZXCVBN_WORDLISTS\r\n        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-eng_wiki.txt\r\n        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-female.txt\r\n        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-male.txt\r\n        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-passwd.txt\r\n        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-surname.txt\r\n        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/third_party/zxcvbn/dict/words-tv_film.txt\r\n)\r\nset(ZXCVBN_DICT_SRC ${CMAKE_CURRENT_BINARY_DIR}/dict-src.h)\r\n\r\nadd_custom_command(\r\n        OUTPUT ${ZXCVBN_DICT_SRC}\r\n        COMMAND dict_generate ${ZXCVBN_WORDLISTS} -o ${ZXCVBN_DICT_SRC}\r\n        DEPENDS dict_generate ${ZXCVBN_WORDLISTS}\r\n        COMMENT \"Generating zxcvbn dictionary source (dict-src.h)\"\r\n)\r\nadd_custom_target(generate_zxcvbn_dict DEPENDS ${ZXCVBN_DICT_SRC})\r\nadd_dependencies(keepcold generate_zxcvbn_dict)\r\n\r\nenable_testing()\r\n\r\nadd_executable(test_blur\r\n        tests/test_widgets/test_blur.cpp\r\n        src/qt-widgets-toolkit/QtWidgetStoolkit.cpp\r\n        src/qt-widgets-toolkit/QtWidgetStoolkit.h\r\n)\r\ntarget_include_directories(test_blur PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})\r\ntarget_link_libraries(test_blur PRIVATE\r\n        Qt::Core\r\n        Qt::Gui\r\n        Qt::Widgets\r\n        Qt::Test\r\n)\r\nadd_test(NAME test_blur COMMAND test_blur)\r\n\r\n\r\nif (WIN32)\r\n    set(DEBUG_SUFFIX)\r\n    if (MSVC AND CMAKE_BUILD_TYPE MATCHES \"Debug\")\r\n        set(DEBUG_SUFFIX \"d\")\r\n    endif ()\r\n    get_filename_component(QT_INSTALL_PATH \"${Qt6_DIR}/../../..\" ABSOLUTE)\r\n    if (EXISTS \"${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll\")\r\n        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD\r\n                COMMAND ${CMAKE_COMMAND} -E make_directory\r\n                \"$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/\")\r\n        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD\r\n                COMMAND ${CMAKE_COMMAND} -E copy\r\n                \"${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll\"\r\n                \"$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/\")\r\n    endif ()\r\n    foreach (QT_LIB Core Gui Widgets)\r\n        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD\r\n                COMMAND ${CMAKE_COMMAND} -E copy\r\n                \"${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll\"\r\n                \"$<TARGET_FILE_DIR:${PROJECT_NAME}>\")\r\n    endforeach (QT_LIB)\r\nendif ()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	(revision 420657b66847be4c9c853e02bb5199196a0549dd)
++++ b/CMakeLists.txt	(date 1787086720779)
+@@ -14,8 +14,6 @@
+         Test
+         REQUIRED)
+ 
+-find_package(Boost REQUIRED COMPONENTS filesystem)
+-
+ add_executable(keepcold
+         src/app/main.cpp
+         src/app/keepcold/mainwindow/mainwindow.cpp
+@@ -37,20 +35,24 @@
+         src/widgets/WindowPage.cpp
+         include/widgets/WindowPage.h
+         include/memory/Memory.h
+-        src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
+-        src/qt-widgets-toolkit/QtWidgetStoolkit.h
+         src/app/keepcold/mainwindow/windowitem.cpp
+         include/app/keepcold/mainwindow/windowitem.h
+-        src/app/keepcold/mainwindow/windowItem.ui
++        src/app/keepcold/mainwindow/windowitem.ui
++        src/app/keepcold/mainwindow/windowconfig.cpp
++        include/app/keepcold/mainwindow/windowconfig.h
++        src/app/keepcold/mainwindow/windowconfig.ui
+ 
+ )
+ target_include_directories(keepcold PRIVATE include)
+ set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/app/keepcold/mainwindow")
++
++add_subdirectory("$ENV{USERPROFILE}/Documents/GitHub/qt-widgets-toolkit" qt-widgets-toolkit)
++
+ target_link_libraries(keepcold
+         Qt::Core
+         Qt::Gui
+         Qt::Widgets
+-        Boost::filesystem
++        QtWidgetStoolkit
+ )
+ 
+ target_include_directories(keepcold PUBLIC
+@@ -87,8 +89,6 @@
+ 
+ add_executable(test_blur
+         tests/test_widgets/test_blur.cpp
+-        src/qt-widgets-toolkit/QtWidgetStoolkit.cpp
+-        src/qt-widgets-toolkit/QtWidgetStoolkit.h
+ )
+ target_include_directories(test_blur PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})
+ target_link_libraries(test_blur PRIVATE
+@@ -96,6 +96,7 @@
+         Qt::Gui
+         Qt::Widgets
+         Qt::Test
++        QtWidgetStoolkit
+ )
+ add_test(NAME test_blur COMMAND test_blur)
+ 
