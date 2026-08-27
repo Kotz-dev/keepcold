@@ -6,8 +6,8 @@
 
 #include "app/keepcold/mainwindow/mainwindow.h"
 
-#include "app/keepcold/mainwindow/windowconfig.h"
-#include "app/keepcold/mainwindow/windowitem.h"
+#include "app/keepcold/windowConfig/windowconfig.h"
+#include "app/keepcold/windowItem/windowitem.h"
 #include "ui_mainwindow.h"
 
 #include <QtWidgetStoolkit/QtWidgetStoolkit.h>

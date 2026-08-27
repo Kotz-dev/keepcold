@@ -4,7 +4,7 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_windowItem.h" resolved
 
-#include "../../../../include/app/keepcold/mainwindow/windowitem.h"
+#include "../../../../include/app/keepcold/windowItem/windowitem.h"
 
 #include <QHBoxLayout>
 #include <QLabel>

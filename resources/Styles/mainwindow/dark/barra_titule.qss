@@ -10,7 +10,7 @@
 
 /* Add your QSS styles here */
 
-QFrame#barra_titule_{
+QFrame#barra_titule_,#barra_titule_config{
   border-top-left-radius: 13px;
   border-top-right-radius: 13px;
   border-bottom-left-radius: 0px;

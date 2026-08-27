@@ -29,7 +29,7 @@ class windowConfig : public QDialog
     Q_OBJECT
 
 private slots:
-    void on_btn_close_clicked();
+    void on_btn_fechar_clicked();
 
 public:
     explicit windowConfig(QWidget* parent = nullptr);

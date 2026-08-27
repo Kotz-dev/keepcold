@@ -35,16 +35,16 @@ add_executable(keepcold
         src/widgets/WindowPage.cpp
         include/widgets/WindowPage.h
         include/memory/Memory.h
-        src/app/keepcold/mainwindow/windowitem.cpp
-        include/app/keepcold/mainwindow/windowitem.h
-        src/app/keepcold/mainwindow/windowitem.ui
-        src/app/keepcold/mainwindow/windowconfig.cpp
-        include/app/keepcold/mainwindow/windowconfig.h
-        src/app/keepcold/mainwindow/windowconfig.ui
+        src/app/keepcold/windowItem/windowitem.cpp
+        include/app/keepcold/windowItem/windowitem.h
+        src/app/keepcold/windowItem/windowitem.ui
+        src/app/keepcold/windowConfig/windowconfig.cpp
+        include/app/keepcold/windowConfig/windowconfig.h
+        src/app/keepcold/windowConfig/windowconfig.ui
 
 )
 target_include_directories(keepcold PRIVATE include)
-set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/app/keepcold/mainwindow")
+set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/app/keepcold/mainwindow;${CMAKE_SOURCE_DIR}/src/app/keepcold/windowConfig;${CMAKE_SOURCE_DIR}/src/app/keepcold/windowItem")
 
 add_subdirectory("$ENV{USERPROFILE}/Documents/GitHub/qt-widgets-toolkit" qt-widgets-toolkit)
 

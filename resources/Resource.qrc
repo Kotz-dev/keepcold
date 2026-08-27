@@ -58,5 +58,15 @@
     <file>images/icons/pressed/logo_recuperacao.png</file>
     <file>images/icons/pressed/logo_terminal.png</file>
     <file>images/icons/pressed/logo_wifi.png</file>
+    <file>images/windowConfig/img_update.png</file>
+    <file>images/windowConfig/img_block.png</file>
+    <file>images/windowConfig/img_secure.png</file>
+    <file>images/windowConfig/app_key.png</file>
+    <file>images/windowConfig/img_download.png</file>
+    <file>images/windowConfig/app_sobre.png</file>
+    <file>images/windowConfig/switch_off.png</file>
+    <file>images/windowConfig/switch_on.png</file>
+    <file>images/windowConfig/app_idioma.png</file>
+    <file>images/windowConfig/update.png</file>
   </qresource>
 </RCC>

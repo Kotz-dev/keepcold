@@ -4,7 +4,7 @@
 
 // You may need to build the project (run Qt uic code generator) to get "ui_windowConfig.h" resolved
 
-#include "../../../../include/app/keepcold/mainwindow/windowconfig.h"
+#include "../../../../include/app/keepcold/windowConfig/windowconfig.h"
 
 #include "io/FileManager.h"
 #include "ui_windowConfig.h"
@@ -15,11 +15,11 @@ windowConfig::windowConfig(QWidget* parent)
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    setStyleSheet(FileManager::loadStyleSheet("keepcold\\resources\\Styles\\windowConfig\\dark\\window.qss",PATCH_TYPE_::FILE_styles));
+    setStyleSheet(FileManager::loadStyleSheet("keepcold\\resources\\Styles\\windowConfig\\dark\\WindowConfig.qss",PATCH_TYPE_::FILE_styles));
     setAttribute(Qt::WA_TranslucentBackground);
 }
 
-void windowConfig::on_btn_close_clicked()
+void windowConfig::on_btn_fechar_clicked()
 {
    close();
 }
