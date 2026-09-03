@@ -1,0 +1,31 @@
+/*
+ * page_create_new_cofre.qss - Qt Style Sheet
+ * Created: 15/07/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+
+QLabel {
+  font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  color: rgb(122, 133, 168);
+}
+#CreateVault_label_titulo {
+ font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+ color: rgb(232, 236, 247);
+}
+#CreateVault_label_extensao {
+  font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+  color: rgb(122, 133, 168);
+}
+#CreateVault_label_aviso {
+color: rgb(122, 133, 168);
+}
+QWidget {
+     background-color: #1a2138;
+     border-radius: 13px;
+ }

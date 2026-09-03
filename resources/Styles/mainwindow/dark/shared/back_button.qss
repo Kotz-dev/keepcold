@@ -1,0 +1,18 @@
+/*
+ * back_button - Qt Style Sheet
+ * Created: 29/07/2026
+ *
+ * Botao de "voltar" reaproveitado entre as paginas de criar/abrir cofre.
+ */
+
+#CreateVault_btn_voltar,
+#OpenVault_btn_voltar {
+    background-color: none;
+    border-radius: none;
+}
+#CreateVault_btn_voltar:hover,
+#OpenVault_btn_voltar:hover {
+    background-color: rgb(56, 67, 110);
+    border: none;
+    border-radius: 8px;
+}

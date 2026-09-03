@@ -1,0 +1,248 @@
+/*
+ * categoria - Qt Style Sheet
+ * Created: 29/07/2026
+ *
+ * Botoes do menu lateral de categorias (page_value_main).
+ */
+
+QPushButton#VaultMain_btn_cartao {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_cartao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_cartao:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_cartao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_cartao:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_cartao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_configuracao {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_configuracao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_configuracao:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_configuracao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_configuracao:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_configuracao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_documento {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_documento.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_documento:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_documento.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_documento:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_documento.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_favoritos {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_favorite.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_favoritos:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_favorite.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_favoritos:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_favorite.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_file {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_file.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_file:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_file.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_file:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_file.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_identidade {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_idadente.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_identidade:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_idadente.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_identidade:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_idadente.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_login {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_login.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_login:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_login.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_login:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_login.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_menu {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_menu.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_menu:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_menu.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_menu:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_menu.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_recuperacao {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_recuperacao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_recuperacao:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_recuperacao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_recuperacao:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_recuperacao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_terminal {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_terminal.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_terminal:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_terminal.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_terminal:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_terminal.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QPushButton#VaultMain_btn_wifi {
+    background: rgb(35, 44, 77);
+    background-image: url(:/images/icons/normal/logo_wifi.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: none;
+}
+QPushButton#VaultMain_btn_wifi:hover {
+    background: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/icons/normal/logo_wifi.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+QPushButton#VaultMain_btn_wifi:pressed {
+    background: rgba(107, 140, 255, 0.24);
+    background-image: url(:/images/icons/pressed/logo_wifi.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}

@@ -1,0 +1,81 @@
+/*
+ * page_valueMain - Qt Style Sheet
+ * Created: 21/07/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+
+
+
+QPushButton {
+    background-position: center;
+    background-repeat: no-repeat;
+    background: rgb(69, 81, 131);
+    border-radius: 20px;
+}
+QLineEdit#VaultMain_line_busca {
+    background-image: url(:/images/16x16/logo_search.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-color: rgb(56, 67, 110);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding-left: 30px;
+}
+
+QLineEdit#VaultMain_line_busca:focus{
+  border: 1px solid #6b8cff;
+}
+QStackedWidget#VaultMain_stack_item_paginas {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 13px;
+   background: rgb(26, 34, 64);
+   border-left: 1px solid rgb(73, 83, 123);
+}
+
+#VaultMain_listView,#VaultMain_frame_busca{
+  background-color:  #232c4d
+}
+
+#VaultMain_btn_add_item {
+  background: rgb(56, 67, 110);
+   background-image: url(:/images/18x18/logo_adicionar.png);
+   border: 1px solid rgba(255,255,255,0.08);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}
+#VaultMain_btn_add_item:hover{
+     background: #455183;
+     background-image: url(:/images/18x18/logo_adicionar.png);
+     border: 1px solid rgba(255,255,255,0.08);
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 20px;
+}
+#VaultMain_btn_add_item:pressed {
+    background: #455183;
+    padding-top: 9px;
+    padding-bottom: 7px;
+}
+
+QFrame#VaultMain_frame_busca {
+ background-color: #232c4d;
+ border-bottom: 1px solid rgba(255,255,255,0.08)
+}
+QFrame#VaultMain_frame_sidebar{
+border-top-left-radius: 0px;
+border-top-right-radius: 0px;
+border-bottom-left-radius: 13px;
+border-bottom-right-radius: 0px;
+background: rgb(35, 44, 77);
+border-right: 1px solid rgb(73, 83, 123);
+
+}

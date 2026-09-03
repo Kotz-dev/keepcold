@@ -1,0 +1,35 @@
+/*
+ * cta_button - Qt Style Sheet
+ * Created: 29/07/2026
+ *
+ * Botao de acao principal (criar / desbloquear cofre) reaproveitado
+ * entre as paginas de criar/abrir cofre.
+ */
+
+#CreateVault_btn_criar,
+#OpenVault_btn_desbloquear {
+    background-color: #5865f2;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 20px;
+}
+
+#CreateVault_btn_criar:hover,
+#OpenVault_btn_desbloquear:hover {
+    background-color: #6873f5;
+}
+
+#CreateVault_btn_criar:pressed,
+#OpenVault_btn_desbloquear:pressed {
+    background-color: #4a56d6;
+}
+
+#CreateVault_btn_criar:disabled,
+#OpenVault_btn_desbloquear:disabled {
+    background-color: #3a4368;
+    color: #7b839e;
+}

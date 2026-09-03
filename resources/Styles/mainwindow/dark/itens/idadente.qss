@@ -1,0 +1,28 @@
+/*
+ * itens/idadente - Qt Style Sheet
+ * Created: 24/07/2026
+ * Updated: 30/07/2026
+ *
+ * Estilo da pagina de detalhe "Identidade" (ui/mainwindow.ui,
+ * QWidget#identidade). Nome do arquivo usa "idadente" para bater com o
+ * nome ja estabelecido no codigo (btn_idadente / logo_idadente.png), mas
+ * os seletores abaixo seguem os widgets reais da pagina, que usam
+ * "identidade".
+ */
+
+QPushButton#btn_icone_identidade {
+    background-color: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/28x28/logo_idadente.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QLabel#label_identidade {
+    font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: rgb(56, 67, 110);
+    border-radius: 10px;
+    color: rgb(166, 176, 208);
+}

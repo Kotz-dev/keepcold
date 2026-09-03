@@ -1,0 +1,24 @@
+/*
+ * itens/cartao - Qt Style Sheet
+ * Created: 24/07/2026
+ * Updated: 30/07/2026
+ *
+ * Estilo da pagina de detalhe "Cartoes" (ui/mainwindow.ui, QWidget#cartoes).
+ */
+
+QPushButton#btn_icone_cartao {
+    background-color: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/28x28/logo_cartao.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+QLabel#label_categoria_cartao {
+    font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: rgb(56, 67, 110);
+    border-radius: 10px;
+    color: rgb(166, 176, 208);
+}

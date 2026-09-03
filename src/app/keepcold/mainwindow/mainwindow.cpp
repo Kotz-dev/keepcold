@@ -5,105 +5,175 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_mainwindow.h" resolved
 
 #include "app/keepcold/mainwindow/mainwindow.h"
-#include <widgets/PasswordLineEdit.h>
-#include <io/FileManger.h>
-#include <styles/UIStyle.h>
+
+#include <QFileDialog>
+
+#include "app/keepcold/windowConfig/windowconfig.h"
+#include "app/keepcold/windowItem/windowitem.h"
+#include "io/FileManager.h"
 #include "ui_mainwindow.h"
-#include <app/Animation/ProgressBar.h>
-#include "zxcvbn.h"
 
+#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
+#include <core/PasswordStrength.h>
+#include <ui_windowConfig.h>
 
-void mainwindow::Page(StackPage page) {
-    ui->stackedWidget->setCurrentIndex(static_cast<int>(page));
+void mainwindow::on_Welcome_btn_criar_cofre_clicked() {
+    ClearStrengthBar(ui->CreateVault_progressBar);
+    ui->pageCreateVault->setAttribute(Qt::WA_TranslucentBackground);
+    WindowPage::NavigetPage(StackPage::CreateVault);
 }
 
-void mainwindow::navigateTo(StackPage page, QWidget *frameToAnimate,
-                             const std::function<void()> &onShow) {
-    Page(page);
-    animateIn(frameToAnimate);
+void mainwindow::on_CreateVault_btn_voltar_clicked() {
+    ClearStrengthBar(ui->CreateVault_progressBar);
+    WindowPage::NavigetPage(StackPage::Welcome);
+}
 
-    if (onShow) {
-        onShow();
+
+void mainwindow::on_Welcome_btn_abrir_cofre_clicked() {
+
+    QFileInfo info(FileManager::OpenFileURL(this));
+    QDateTime now = info.lastModified();
+
+    if (info.exists() == false && now.isValid() == false) return;
+
+    ui->OpenVault_label_info_modificado->setText(info.fileName() + " · " + now.toString("dd/MM/yyyy HH:mm"));
+    WindowPage::NavigetPage(StackPage::OpenVault);
+}
+
+void mainwindow::on_OpenVault_btn_voltar_clicked() {
+    WindowPage::NavigetPage(StackPage::Welcome);
+
+}
+
+void mainwindow::on_OpenVault_btn_trocar_arquivo_clicked()
+{
+    WindowPage::NavigetPage(StackPage::Welcome);
+}
+
+void mainwindow::on_CreateVault_btn_criar_clicked()
+{
+    if (ui->CreateVault_line_nome_arquivo->text().isEmpty() == false)
+    {
+        auto getURL = QFileDialog::getSaveFileUrl(
+            this,
+            "Salvar os Arquivos",
+            QUrl::fromLocalFile(ui->CreateVault_line_nome_arquivo->text()),
+            "Vault files (*.vault)");
+
+        if (FileManager::CreateVaultFile(getURL))
+        {
+            WindowPage::NavigetPage(StackPage::VaultMain);
+        }
     }
 }
 
-
-void mainwindow::on_btn_create_cofre_clicked() {
-    navigateTo(StackPage::CreateVault, ui->frame_8, [this]() {
-        UIStyle::Page::PasswordField::show(ui->line_password_mestra, this, "page_create_new_cofre.qss");
-    });
+void mainwindow::showUI() {
+    ui->CreateVault_frame_forca_senha->show();
+    ui->CreateVault_progressBar->show();
 }
 
-void mainwindow::on_btn_back_clicked() {
-    navigateTo(StackPage::Welcome, ui->frame_3, [this]() {
-        UIStyle::Page::Welcome::show(ui, this);
-    });
-}
-
-void mainwindow::on_btn_open_cofre_clicked() {
-    navigateTo(StackPage::OpenVault, ui->frame_10, [this]() {
-        UIStyle::Page::PasswordField::show(ui->line_passowrd_open_cofre, this, "page_open_exist_cofre.qss");
-    });
-}
-
-void mainwindow::on_back_open_cofre_clicked() {
-    navigateTo(StackPage::Welcome, ui->frame_8, [this]() {
-        setStyleSheet(FileManger::loadStyleSheet(
-            "keepcold\\resources\\Styles\\dark\\page_welcome.qss",
-            PATCH_TYPE_::FILE_styles
-        ));
-    });
-}
-
-int teste(int value,QString & text);
-
-int teste (int value,QString & text) {
-    text = "";
-    if (value < 20) {text = "Muito fraca"; return 1;} // muito fraca
-    if (value < 36) {text = "Fraca"; return 2;} // fraca/regular
-    if (value < 60) {text = "Boa"; return 3;} // boa
-    if (value < 80) {text = "Forte"; return 4;} // forte
-     text = "Excelente";
-    return 5;
-}
-
-void mainwindow::on_line_password_mestra_textEdited(const QString &arg1) {
-    ui->frame_14->show();
-    ui->progressBar->show();
-
-    auto value = ZxcvbnMatch(arg1.toStdString().c_str(), nullptr, nullptr);
-    QString text;
-    strengthBar->setSegments(5);
-    strengthBar->setRange(0, 5);
-    strengthBar->setTextVisible(false);
-    strengthBar->setValue(teste(value,text));
-    strengthBar->setFixedHeight(7);
-
-
-    ui->label_forca_senha->setText(text);
-
-
-    QLayout *existingLayout = ui->progressBar->layout();
-    if (existingLayout == nullptr) {
-        existingLayout = new QVBoxLayout(ui->progressBar);
-        existingLayout->setContentsMargins(0, 0, 0, 0);
+void mainwindow::ClearStrengthBar(QProgressBar *widget) {
+    if (widget != nullptr) {
+        widget->setValue(0);
+        widget->hide();
+        ui->CreateVault_progressBar->hide();
+        ui->CreateVault_frame_forca_senha->hide();
+        ui->CreateVault_label_forca_senha_valor->clear();
+        return;
     }
-    existingLayout->addWidget(strengthBar);
-    if (arg1.isEmpty()) {
-        strengthBar->setValue(0);
-        ui->frame_14->hide();
-        ui->label_forca_senha->clear();
-        ui->progressBar->hide();
-    }
-
-
-
 }
 
-mainwindow::mainwindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::mainwindow) {
+void mainwindow::on_btn_max_window_clicked() {
+    QtToolkit::Window::Maximizer obj;
+    obj.toggle(this);
+}
+void mainwindow::on_btn_min_window_clicked() {
+    showMinimized();
+}
+void mainwindow::on_btn_close_window_clicked() {
+    close();
+}
+
+
+void mainwindow::on_VaultMain_btn_documento_clicked() {
+   ui->VaultMain_stack_item_paginas->setCurrentIndex(3);
+}
+
+
+// Desgin QProcesdar
+void mainwindow::setupStrengthBar(int value)
+{
+
+    if (ui->CreateVault_line_senha_mestra->text().isEmpty())
+    {
+        ClearStrengthBar(ui->CreateVault_progressBar);
+    }
+    QtToolkit::ProgessBar::SegmentedProgressBar::render(value, ui->CreateVault_progressBar);
+}
+
+void mainwindow::on_VaultMain_btn_configuracao_clicked()
+{
+   windowConfig *janela = new windowConfig(this);
+    auto blur =  QtToolkit::Blur::render(this,4);
+    janela->move(this->geometry().center() - QPoint(janela->width() / 2, janela->height() / 2));
+    janela->exec();
+    if (blur != nullptr && janela->isVisible() == false)
+    {
+        delete janela;
+        delete blur;
+    }
+}
+
+void mainwindow::on_CreateVault_line_confirmar_senha_textEdited(const QString& arg1)
+{
+    if (arg1.isEmpty() == true)
+    {
+        ui->CreateVault_label_erro_senha->hide();
+        ui->CreateVault_line_confirmar_senha->setStyleSheet("border: 1px solid #3a4368");
+        return;
+    }
+    if (!PasswordStrength::PassowrdIguais(arg1))
+    {
+        ui->CreateVault_label_erro_senha->setStyleSheet("color: rgb(239, 107, 107);");
+        ui->CreateVault_line_confirmar_senha->setStyleSheet("border: 1px solid #ef6b6b;");
+        ui->CreateVault_label_erro_senha->show();
+    }
+    else
+    {
+        ui->CreateVault_label_erro_senha->hide();
+    }
+}
+// Line Passowrd
+void mainwindow::on_CreateVault_line_senha_mestra_textEdited(const QString& arg1)
+{
+    showUI();
+    QString text = arg1;
+    setupStrengthBar(PasswordStrength::evaluate(text));
+    ui->CreateVault_label_forca_senha_valor->setText(text);
+}
+
+void mainwindow::on_VaultMain_btn_add_item_clicked()
+{
+    windowItem *WindowItem = new windowItem(this);
+    auto blur =  QtToolkit::Blur::render(this,4);
+    WindowItem->move(QtToolkit::geometry::centeredPosition(this,WindowItem));
+    WindowItem->exec();
+    if (blur != nullptr && WindowItem->isVisible() == false)
+    {
+        delete WindowItem;
+        delete blur;
+    }
+
+}
+mainwindow::mainwindow(QWidget* parent)
+    : QMainWindow(parent),
+      ui(new Ui::mainwindow)
+{
     ui->setupUi(this);
-     UIStyle::Page::Welcome::show(ui,this);
-    ui->frame_14->hide();
+    WindowPage::__init__(ui, this);
+   // ui->VaultMain_stack_item_paginas->setCurrentIndex(6);
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+    QtToolkit::Window::Dragger::attach(this);
 }
-
 mainwindow::~mainwindow() { delete ui; }

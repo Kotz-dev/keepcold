@@ -1,0 +1,85 @@
+/*
+ * windowItem - Qt Style Sheet
+ * Created: 31/07/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+
+QDialog {
+  border-radius: 16px;
+}
+
+#photo {
+ background-image: url(:/images/20x20/logo_upload.png);
+ background-position: center;
+   background-repeat: no-repeat;
+}
+
+#stack_file {
+   background: #232c4d;
+}
+#frame_2 {
+  background: rgb(69, 81, 131);
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+#btn_close {
+  background: rgb(69, 81, 131);
+  background-image: url(:/images/46x35/close_window.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 15px;
+}
+#btn_close:hover{
+     background: #464F74;
+      background-image: url(:/images/46x35/close_window.png);
+      border: 1px solid rgba(255,255,255,0.08);
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 15px;
+}
+#btn_close:pressed {
+    background: #455183;
+    padding-top: 9px;
+    padding-bottom: 7px;
+    border-radius: 15px;
+
+}
+
+
+QPushButton {
+  background: rgb(56, 67, 110);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  color: rgb(232, 236, 247);
+  padding-left: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  spacing: 8px;
+}
+QPushButton:hover {
+  background: rgb(69, 81, 131);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+#frame_barra_titule {
+
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+   background: #232c4d;
+   border: 1px solid rgba(255, 255, 255, 0.14);
+}
+#frame_2{
+   background-color: #232c4d;
+}

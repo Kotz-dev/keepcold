@@ -1,0 +1,32 @@
+/*
+ * itens/notas - Qt Style Sheet
+ * Created: 24/07/2026
+ *
+ * Estilo do item de lista da categoria "Notas".
+ * Nao existe icone dedicado para notas no Resource.qrc ainda,
+ * entao reaproveita logo_documento.png (o mais proximo semanticamente).
+ * Troque para :/images/icons/normal/logo_notas.png quando o icone existir.
+ */
+
+QTextEdit,QLineEdit {
+    background-color: rgb(56, 67, 110);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding-left: 10px;
+}
+QTextEdit,QLineEdit:hover {
+ border: 1px solid #6b8cff;
+}
+
+#label_categoria_nota{
+   background-color: rgb(56, 67, 110);
+   border-radius: 10px;
+   color: rgb(166, 176, 208);
+}
+
+#btn_icone_note {
+   background-color: rgba(107, 140, 255, 0.14);
+    background-image: url(:/images/28x28/note.png);
+     background-position: center;
+     background-repeat: no-repeat;
+}

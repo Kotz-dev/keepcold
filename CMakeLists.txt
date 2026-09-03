@@ -11,36 +11,52 @@ find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
+        Test
         REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 add_executable(keepcold
         src/app/main.cpp
         src/app/keepcold/mainwindow/mainwindow.cpp
-        src/include/app/keepcold/mainwindow/mainwindow.h
-        ui/mainwindow.ui
-        src/widgets/PasswordLineEdit.cpp
-        src/include/widgets/PasswordLineEdit.h
+        include/app/keepcold/mainwindow/mainwindow.h
+        src/app/keepcold/mainwindow/mainwindow.ui
         src/styles/UIStyle.cpp
-        src/include/styles/UIStyle.h
+        include/styles/UIStyle.h
         src/styles/RichText.cpp
-        src/include/styles/RichText.h
-        src/io/FileManger.cpp
-        src/include/io/FileManger.h
-        src/app/Animation/Animation.cpp
-        src/include/app/Animation/Animation.h
+        include/styles/RichText.h
+        src/io/FileManager.cpp
+        include/io/FileManager.h
         resources/Resource.qrc
-        src/app/Animation/ProgressBar.cpp
-        src/include/app/Animation/ProgressBar.h
         src/core/third_party/zxcvbn/zxcvbn.c
         src/core/third_party/zxcvbn/zxcvbn.h
+        src/core/PasswordStrength.cpp
+        include/core/PasswordStrength.h
+        src/styles/LinePassword.cpp
+        include/styles/LinePassword.h
+        src/widgets/WindowPage.cpp
+        include/widgets/WindowPage.h
+        include/memory/Memory.h
+        src/app/keepcold/windowItem/windowitem.cpp
+        include/app/keepcold/windowItem/windowitem.h
+        src/app/keepcold/windowItem/windowitem.ui
+        src/app/keepcold/windowConfig/windowconfig.cpp
+        include/app/keepcold/windowConfig/windowconfig.h
+        src/app/keepcold/windowConfig/windowconfig.ui
+        src/core/item.cpp
+        src/core/item.h
 
 )
-target_include_directories(keepcold PRIVATE src/include)
-set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/ui")
+target_include_directories(keepcold PRIVATE include)
+set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/app/keepcold/mainwindow;${CMAKE_SOURCE_DIR}/src/app/keepcold/windowConfig;${CMAKE_SOURCE_DIR}/src/app/keepcold/windowItem")
+
+add_subdirectory("$ENV{USERPROFILE}/Documents/GitHub/qt-widgets-toolkit" qt-widgets-toolkit)
+
 target_link_libraries(keepcold
         Qt::Core
         Qt::Gui
         Qt::Widgets
+        QtWidgetStoolkit
+        nlohmann_json::nlohmann_json
 )
 
 target_include_directories(keepcold PUBLIC
@@ -72,6 +88,35 @@ add_custom_command(
 )
 add_custom_target(generate_zxcvbn_dict DEPENDS ${ZXCVBN_DICT_SRC})
 add_dependencies(keepcold generate_zxcvbn_dict)
+
+enable_testing()
+
+add_executable(test_blur
+        tests/test_widgets/test_blur.cpp
+)
+target_include_directories(test_blur PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_blur PRIVATE
+        Qt::Core
+        Qt::Gui
+        Qt::Widgets
+        Qt::Test
+        QtWidgetStoolkit
+)
+add_test(NAME test_blur COMMAND test_blur)
+
+add_executable(test_filemanager
+        tests/test_io/test_filemanager.cpp
+        src/io/FileManager.cpp
+        include/io/FileManager.h
+)
+target_include_directories(test_filemanager PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_filemanager PRIVATE
+        Qt::Core
+        Qt::Gui
+        Qt::Widgets
+        Qt::Test
+)
+add_test(NAME test_filemanager COMMAND test_filemanager)
 
 
 if (WIN32)

@@ -13,3 +13,6 @@ ui_*.h
 Makefile*
 *build-*
 *.autosave
+
+# Personal dotfiles repo (own git history, not part of this project)
+/dotfiles/
