@@ -11,7 +11,20 @@
 /* Add your QSS styles here */
 
 
+
 #centralwidget {
       background-color: #1a2138;
      border-radius: 12px;
     }
+
+
+#OpenVault_btn_trocar_arquivo {
+   background-color: none;
+      border-radius: none;
+}
+
+#OpenVault_btn_trocar_arquivo:hover {
+    background-color: rgb(56, 67, 110);
+     border: none;
+     border-radius: 8px;
+}

@@ -10,7 +10,7 @@
 
 /* Add your QSS styles here */
 
-QFrame#barra_titule_,#barra_titule_config{
+QFrame#frame_barra_titulo,#barra_titule_config{
   border-top-left-radius: 13px;
   border-top-right-radius: 13px;
   border-bottom-left-radius: 0px;
@@ -20,7 +20,7 @@ QFrame#barra_titule_,#barra_titule_config{
 }
 
 
-#Logo_Kep {
+#label_logo_icone {
 background-image: url(:/images/16x16/logo_keepcold_.png);
 background-position: center;
 background-repeat: repeat;

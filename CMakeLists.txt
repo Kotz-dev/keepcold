@@ -13,6 +13,7 @@ find_package(Qt6 COMPONENTS
         Widgets
         Test
         REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 add_executable(keepcold
         src/app/main.cpp
@@ -41,6 +42,8 @@ add_executable(keepcold
         src/app/keepcold/windowConfig/windowconfig.cpp
         include/app/keepcold/windowConfig/windowconfig.h
         src/app/keepcold/windowConfig/windowconfig.ui
+        src/core/item.cpp
+        src/core/item.h
 
 )
 target_include_directories(keepcold PRIVATE include)
@@ -53,6 +56,7 @@ target_link_libraries(keepcold
         Qt::Gui
         Qt::Widgets
         QtWidgetStoolkit
+        nlohmann_json::nlohmann_json
 )
 
 target_include_directories(keepcold PUBLIC
@@ -99,6 +103,20 @@ target_link_libraries(test_blur PRIVATE
         QtWidgetStoolkit
 )
 add_test(NAME test_blur COMMAND test_blur)
+
+add_executable(test_filemanager
+        tests/test_io/test_filemanager.cpp
+        src/io/FileManager.cpp
+        include/io/FileManager.h
+)
+target_include_directories(test_filemanager PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(test_filemanager PRIVATE
+        Qt::Core
+        Qt::Gui
+        Qt::Widgets
+        Qt::Test
+)
+add_test(NAME test_filemanager COMMAND test_filemanager)
 
 
 if (WIN32)

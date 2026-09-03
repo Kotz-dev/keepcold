@@ -5,7 +5,7 @@
  * Campo de busca (page_value_main).
  */
 
-QLineEdit#line_search {
+QLineEdit#VaultMain_line_busca {
     background-image: url(:/images/16x16/logo_search.png);
     background-position: left center;
     background-repeat: no-repeat;
@@ -15,6 +15,6 @@ QLineEdit#line_search {
     padding-left: 30px;
 }
 
-QLineEdit#line_search:focus{
+QLineEdit#VaultMain_line_busca:focus{
   border: 1px solid #6b8cff;
 }

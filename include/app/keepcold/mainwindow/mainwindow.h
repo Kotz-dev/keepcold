@@ -17,23 +17,35 @@ QT_END_NAMESPACE
 class mainwindow : public QMainWindow {
     Q_OBJECT
 private slots:
-    void on_btn_create_cofre_clicked();
-    void on_btn_create_cofre_cp_clicked();
-    void on_btn_back_clicked();
-    void on_btn_open_cofre_clicked();
-    void on_back_open_cofre_clicked();
-    void on_line_password_mestra_textEdited(const QString &arg1);
-    void on_line_cfr_passaword_mestra_textEdited(const QString &arg1);
 
     void on_btn_max_window_clicked();
     void on_btn_min_window_clicked();
     void on_btn_close_window_clicked();
 
-    void on_btn_documento_clicked();
 
-    void on_btn_add_item_clicked();
+    // WELCOME
 
-    void on_btn_configuracao_clicked();
+    void on_Welcome_btn_criar_cofre_clicked();
+    void on_Welcome_btn_abrir_cofre_clicked();
+
+
+    // CREATE VAULT
+
+    void on_CreateVault_btn_criar_clicked();
+    void on_CreateVault_btn_voltar_clicked();;
+    void on_CreateVault_line_senha_mestra_textEdited(const QString &arg1);
+    void on_CreateVault_line_confirmar_senha_textEdited(const QString &arg1);
+
+     // OPEN VAULT
+    void on_OpenVault_btn_voltar_clicked();
+    void on_OpenVault_btn_trocar_arquivo_clicked();
+
+
+    // VAULT MAIN
+
+    void on_VaultMain_btn_documento_clicked();
+    void on_VaultMain_btn_add_item_clicked();
+    void on_VaultMain_btn_configuracao_clicked();
 
 
 

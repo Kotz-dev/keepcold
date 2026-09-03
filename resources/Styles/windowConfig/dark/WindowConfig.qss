@@ -192,33 +192,33 @@ QCheckBox::indicator:disabled {
     border-image: url(:/images/windowConfig/switch_off.png) 0 0 0 0 stretch stretch;
 }
 
-#lbl_icon_update {
+#label_icon_update {
   background-image: url(:/images/windowConfig/img_update.png);
   background-repeat: no-repeat;
 }
 
-#lbl_icon_bloqueio_auto {
+#label_icon_bloqueio_auto {
   background-image: url(:/images/windowConfig/img_block.png);
     background-repeat: no-repeat;
 }
-#lbl_icon_modo_escuro {
+#label_icon_modo_escuro {
   background-image: url(:/images/windowConfig/img_secure.png);
      background-repeat: no-repeat;
 }
 
-#lbl_icon_senha_mestra {
+#label_icon_senha_mestra {
 background-image: url(:/images/windowConfig/app_key.png);
      background-repeat: no-repeat;
 }
-#lbl_icon_import_export {
+#label_icon_import_export {
 background-image: url(:/images/windowConfig/img_download.png);
      background-repeat: no-repeat;
 }
-#lbl_icon_sobre {
+#label_icon_sobre {
 background-image: url(:/images/windowConfig/app_sobre.png);
      background-repeat: no-repeat;
 }
-#lbl_icon_idioma {
+#label_icon_idioma {
  background-image: url(:/images/windowConfig/app_idioma.png);
  background-repeat: no-repeat;
 }

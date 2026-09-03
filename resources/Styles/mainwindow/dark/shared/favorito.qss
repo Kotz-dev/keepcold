@@ -11,9 +11,9 @@
 /* Add your QSS styles here */
 
 #btn_favorito_login_item,
-#btn_favorito_note_,
+#btn_favorito_nota_item,
 #btn_favorito_wifi_item,
-#btn_favorito_recuperacao,
+#btn_favorito_recuperacao_item,
 #btn_favorito_key_item,
 #btn_favorito_file_item,
 #btn_favorito_identidade_item,
@@ -24,9 +24,9 @@
 }
 
 #btn_favorito_login_item:hover,
-#btn_favorito_note_:hover,
+#btn_favorito_nota_item:hover,
 #btn_favorito_wifi_item:hover,
-#btn_favorito_recuperacao:hover,
+#btn_favorito_recuperacao_item:hover,
 #btn_favorito_key_item:hover,
 #btn_favorito_file_item:hover,
 #btn_favorito_identidade_item:hover,

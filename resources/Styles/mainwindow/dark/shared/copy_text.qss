@@ -6,17 +6,17 @@
  */
 
 #btn_copy_text_wifi,
-#btn_copy_text_wifi_2,
+#btn_copy_senha_wifi,
 #btn_copy_text_key,
 #btn_copy_text_login,
-#btn_copy_text_login_2,
-#btn_copy_text_login_3,
-#btn_copy_text_login_4,
-#btn_copy_text_identidade,
-#btn_copy_text_identidade_2,
-#btn_copy_text_identidade_3,
-#btn_copy_text_cartao,
-#btn_copy_text_cartao_2 {
+#btn_copy_senha_login,
+#btn_copy_2fa_login,
+#btn_copy_codigo_recuperacao_login,
+#btn_copy_cpf_identidade,
+#btn_copy_rg_identidade,
+#btn_copy_cnh_identidade,
+#btn_copy_numero_cartao,
+#btn_copy_cvv_cartao {
     background-image: url(:/images/15x15/logo_copiar.png);
     background-position: center;
     background-repeat: no-repeat;

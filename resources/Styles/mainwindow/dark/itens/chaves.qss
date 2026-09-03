@@ -21,7 +21,7 @@ QTextEdit {
     padding-left: 10px;
 }
 
-#label_key {
+#label_categoria_chaves {
 font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
     font-size: 12px;
     font-weight: bold;

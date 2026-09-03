@@ -5,13 +5,13 @@
  * Botao de "voltar" reaproveitado entre as paginas de criar/abrir cofre.
  */
 
-#btn_back,
-#back_open_cofre {
+#CreateVault_btn_voltar,
+#OpenVault_btn_voltar {
     background-color: none;
     border-radius: none;
 }
-#btn_back:hover,
-#back_open_cofre:hover {
+#CreateVault_btn_voltar:hover,
+#OpenVault_btn_voltar:hover {
     background-color: rgb(56, 67, 110);
     border: none;
     border-radius: 8px;

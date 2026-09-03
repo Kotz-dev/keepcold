@@ -3,13 +3,10 @@
  * Created: 24/07/2026
  * Updated: 30/07/2026
  *
- * Estilo da pagina de detalhe "Cartoes" (ui/mainwindow.ui,
- * QWidget#cartoes). O icone e o label de atualizacao ficaram com nomes
- * "identidade_2" no .ui (copia/cola do Qt Designer a partir da pagina
- * Identidade), entao os seletores abaixo seguem esses nomes reais.
+ * Estilo da pagina de detalhe "Cartoes" (ui/mainwindow.ui, QWidget#cartoes).
  */
 
-QPushButton#btn_icone_identidade_2 {
+QPushButton#btn_icone_cartao {
     background-color: rgba(107, 140, 255, 0.14);
     background-image: url(:/images/28x28/logo_cartao.png);
     background-repeat: no-repeat;
@@ -17,7 +14,7 @@ QPushButton#btn_icone_identidade_2 {
     border-radius: 10px;
 }
 
-QLabel#label_cartao {
+QLabel#label_categoria_cartao {
     font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
     font-size: 12px;
     font-weight: bold;

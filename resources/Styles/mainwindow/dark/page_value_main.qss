@@ -18,7 +18,7 @@ QPushButton {
     background: rgb(69, 81, 131);
     border-radius: 20px;
 }
-QLineEdit#line_search {
+QLineEdit#VaultMain_line_busca {
     background-image: url(:/images/16x16/logo_search.png);
     background-position: left center;
     background-repeat: no-repeat;
@@ -28,10 +28,10 @@ QLineEdit#line_search {
     padding-left: 30px;
 }
 
-QLineEdit#line_search:focus{
+QLineEdit#VaultMain_line_busca:focus{
   border: 1px solid #6b8cff;
 }
-QStackedWidget#stackedWidget_2 {
+QStackedWidget#VaultMain_stack_item_paginas {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
@@ -40,11 +40,11 @@ QStackedWidget#stackedWidget_2 {
    border-left: 1px solid rgb(73, 83, 123);
 }
 
-#listView,#frame_19{
+#VaultMain_listView,#VaultMain_frame_busca{
   background-color:  #232c4d
 }
 
-#btn_add_item {
+#VaultMain_btn_add_item {
   background: rgb(56, 67, 110);
    background-image: url(:/images/18x18/logo_adicionar.png);
    border: 1px solid rgba(255,255,255,0.08);
@@ -52,7 +52,7 @@ QStackedWidget#stackedWidget_2 {
     background-repeat: no-repeat;
     border-radius: 20px;
 }
-#btn_add_item:hover{
+#VaultMain_btn_add_item:hover{
      background: #455183;
      background-image: url(:/images/18x18/logo_adicionar.png);
      border: 1px solid rgba(255,255,255,0.08);
@@ -60,17 +60,17 @@ QStackedWidget#stackedWidget_2 {
       background-repeat: no-repeat;
       border-radius: 20px;
 }
-#btn_add_item:pressed {
+#VaultMain_btn_add_item:pressed {
     background: #455183;
     padding-top: 9px;
     padding-bottom: 7px;
 }
 
-QFrame#frame_19 {
+QFrame#VaultMain_frame_busca {
  background-color: #232c4d;
  border-bottom: 1px solid rgba(255,255,255,0.08)
 }
-QFrame#Frame_item{
+QFrame#VaultMain_frame_sidebar{
 border-top-left-radius: 0px;
 border-top-right-radius: 0px;
 border-bottom-left-radius: 13px;

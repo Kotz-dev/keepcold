@@ -25,9 +25,9 @@ void WindowPage::__init__(Ui::mainwindow* ui,QWidget *ptn)
     {
        ui_mainwindow = ui;
        parent = ptn;
-        ui->label_erro_senha->hide();
+        ui->CreateVault_label_erro_senha->hide();
         NavigetPage(StackPage::Welcome);
-        ui->barra_titule_->setStyleSheet(
+        ui->frame_barra_titulo->setStyleSheet(
             FileManager::loadStyleSheet(
                 "keepcold\\resources\\Styles\\mainwindow\\dark\\barra_titule.qss", PATCH_TYPE_::FILE_styles));
     }

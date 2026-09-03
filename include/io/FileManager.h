@@ -17,7 +17,12 @@ enum PATCH_TYPE_ {
 class FileManager {
 
 public :
+    static void CreateFile(QString name);
+    static bool CreateVaultFile(const QUrl &url);
+
+
     static QString loadStyleSheet(std::string name, PATCH_TYPE_ type);
+    static QString OpenFileURL(QWidget *parent);
     static QString formattedFileSize(const QUrl &fileUrl);
 };
 

@@ -11,9 +11,9 @@
 /* Add your QSS styles here */
 
 #btn_remover_login_item,
-#btn_remover_note_,
+#btn_remover_nota_item,
 #btn_remover_wifi_item,
-#btn_remover_recuperacao,
+#btn_remover_recuperacao_item,
 #btn_remover_key_item,
 #btn_remover_identidade_item,
 #btn_remover_cartao_item {
@@ -23,9 +23,9 @@
 }
 
 #btn_remover_login_item:hover,
-#btn_remover_note_:hover,
+#btn_remover_nota_item:hover,
 #btn_remover_wifi_item:hover,
-#btn_remover_recuperacao:hover,
+#btn_remover_recuperacao_item:hover,
 #btn_remover_key_item:hover,
 #btn_remover_file_item:hover,
 #btn_remover_identidade_item:hover,

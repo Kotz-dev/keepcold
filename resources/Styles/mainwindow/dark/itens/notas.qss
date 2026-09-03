@@ -18,7 +18,7 @@ QTextEdit,QLineEdit:hover {
  border: 1px solid #6b8cff;
 }
 
-#label_login_2{
+#label_categoria_nota{
    background-color: rgb(56, 67, 110);
    border-radius: 10px;
    color: rgb(166, 176, 208);

@@ -24,7 +24,7 @@ QUrl loadFile();
 QUrl loadFile()
 {
     return QFileDialog::getOpenFileUrl(
-         nullptr, ("Selecionar arquivo"), QUrl(), ("Todos os arquivos (*)"));
+         nullptr, ("Selecionar arquivo"), QUrl(), ("Vault files (*.vault)"));
 }
 
 
@@ -156,7 +156,7 @@ void windowItem::getfile(QUrl file)
 
 void windowItem::on_btn_download_file_clicked()
 {
-    ///qDebug () << QFileDialog::getSaveFileUrl(this,"teste",QUrl("/home/kotz/Área de trabalho/data.vx"));
+    //qDebug () << QFileDialog::getSaveFileUrl(this,"teste",QUrl("/home/kotz/Área de trabalho/data.vx"));
 }
 
 void windowItem::btn_upload_clicked()

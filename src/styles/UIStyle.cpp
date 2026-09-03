@@ -55,10 +55,10 @@ void UIStyle::Styles_Page::WELCOME::apply(QString fileName) {
     QString text = "";
     text = RichText::cardDescription(
         "Criar novo cofre", "Defina uma senha mestra e escolha onde salvar seu arquivo.");
-    UIStyle::CardButton::apply(mainwindow->btn_create_cofre, text);
+    UIStyle::CardButton::apply(mainwindow->Welcome_btn_criar_cofre, text);
     text = RichText::cardDescription(
         "Abrir cofre existente", "Selecione um arquivo\t\t .vault e digite a senha.");
-    UIStyle::CardButton::apply(mainwindow->btn_open_cofre, text);
+    UIStyle::CardButton::apply(mainwindow->Welcome_btn_abrir_cofre, text);
 
     parent->setStyleSheet(
         FileManager::loadStyleSheet(
@@ -76,7 +76,7 @@ void UIStyle::Styles_Page::CREATE_NEW_COFRE::apply()
     auto mainwindow = WindowPage::getMainWindow();
     auto parent = WindowPage::getParent();
 
-    Pw = new LinePassword(mainwindow->line_password_mestra);
+    Pw = new LinePassword(mainwindow->CreateVault_line_senha_mestra);
 
    auto style = FileManager::loadStyleSheet(
          "keepcold\\resources\\Styles\\mainwindow\\dark\\page_create_new_cofre.qss", PATCH_TYPE_::FILE_styles)
@@ -89,17 +89,20 @@ void UIStyle::Styles_Page::CREATE_NEW_COFRE::apply()
 
      Pw->setupPasswordVisibilityToggle();
      parent->setStyleSheet(style);
-     QtToolkit::Animation::fadeSlideIn(mainwindow->frame_8);
+     QtToolkit::Animation::fadeSlideIn(mainwindow->CreateVault_frame_form);
 }
 
 void UIStyle::Styles_Page::OPEN_COFRE::apply()
 {
     safeDelete(Pw);
 
+
     auto mainwindow = WindowPage::getMainWindow();
     auto parent = WindowPage::getParent();
 
-    Pw = new LinePassword(mainwindow->line_passowrd_open_cofre);
+
+
+    Pw = new LinePassword(mainwindow->OpenVault_line_senha_mestra);
     Pw->setupPasswordVisibilityToggle();
 
     parent->setStyleSheet(
@@ -116,7 +119,7 @@ void UIStyle::Styles_Page::OPEN_COFRE::apply()
             "keepcold\\resources\\Styles\\mainwindow\\dark\\shared\\cta_button.qss",
             PATCH_TYPE_::FILE_styles));
 
-    QtToolkit::Animation::fadeSlideIn(mainwindow->frame_13);
+    QtToolkit::Animation::fadeSlideIn(mainwindow->OpenVault_frame_form);
 }
 
 void applyItemStyles(Ui_mainwindow *mainwindow);
@@ -161,7 +164,7 @@ void UIStyle::Styles_Page::VALUE_MAIN::apply()
     auto mainwindow = WindowPage::getMainWindow();
     auto parent = WindowPage::getParent();
 
-    mainwindow->stackedWidget_2->setStyleSheet(
+    mainwindow->VaultMain_stack_item_paginas->setStyleSheet(
         FileManager::loadStyleSheet(
             "keepcold\\resources\\Styles\\mainwindow\\dark\\page_value_main\\stackwidget.qss",
             PATCH_TYPE_::FILE_styles)

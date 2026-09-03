@@ -6,8 +6,8 @@
  * entre as paginas de criar/abrir cofre.
  */
 
-#btn_create_cofre_cp,
-#btn_unlock_cofre {
+#CreateVault_btn_criar,
+#OpenVault_btn_desbloquear {
     background-color: #5865f2;
     color: #ffffff;
     border: none;
@@ -18,18 +18,18 @@
     min-height: 20px;
 }
 
-#btn_create_cofre_cp:hover,
-#btn_unlock_cofre:hover {
+#CreateVault_btn_criar:hover,
+#OpenVault_btn_desbloquear:hover {
     background-color: #6873f5;
 }
 
-#btn_create_cofre_cp:pressed,
-#btn_unlock_cofre:pressed {
+#CreateVault_btn_criar:pressed,
+#OpenVault_btn_desbloquear:pressed {
     background-color: #4a56d6;
 }
 
-#btn_create_cofre_cp:disabled,
-#btn_unlock_cofre:disabled {
+#CreateVault_btn_criar:disabled,
+#OpenVault_btn_desbloquear:disabled {
     background-color: #3a4368;
     color: #7b839e;
 }

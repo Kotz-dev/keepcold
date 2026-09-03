@@ -24,6 +24,7 @@
       <config projectName="keepcold" targetName="test_blur" />
       <config projectName="keepcold" targetName="generate_zxcvbn_dict" />
       <config projectName="keepcold" targetName="dict_generate" />
+      <config projectName="keepcold" targetName="test_filemanager" />
       <config projectName="keepcold" targetName="keepcold" />
     </generated>
   </component>
@@ -33,22 +34,40 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c587ffd9-613f-4201-a809-93f819d11e67" name="Changes" comment="25/08/26">
-      <change afterPath="$PROJECT_DIR$/resources/Styles/windowConfig/dark/WindowConfig.qss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/keepcold/windowConfig/windowconfig.ui" afterDir="false" />
+    <list default="true" id="c587ffd9-613f-4201-a809-93f819d11e67" name="Changes" comment="27/08/2026 04:55">
+      <change afterPath="$PROJECT_DIR$/src/core/item.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/item.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/app/keepcold/mainwindow/windowconfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/app/keepcold/windowConfig/windowconfig.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/app/keepcold/mainwindow/windowitem.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/app/keepcold/windowItem/windowitem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/Resource.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Resource.qrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/app/keepcold/mainwindow/mainwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/app/keepcold/mainwindow/mainwindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/io/FileManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/io/FileManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/barra_titule.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/barra_titule.qss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/Styles/windowConfig/dark/window.qss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/56x56/note.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/cartao.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/cartao.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/chaves.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/chaves.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/file.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/file.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/notas.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/notas.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/recuperacao.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/recuperacao.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/wifi.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/itens/wifi.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_create_new_cofre.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_create_new_cofre.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_open_exist_cofre.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_open_exist_cofre.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_value_main.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_value_main.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_value_main/categoria.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_value_main/categoria.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_value_main/line_search.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_value_main/line_search.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_welcome.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/page_welcome.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/back_button.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/back_button.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/copy_text.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/copy_text.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/cta_button.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/cta_button.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/favorito.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/favorito.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/remover.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/remover.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/toggle_password.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/mainwindow/dark/shared/toggle_password.qss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Styles/windowConfig/dark/WindowConfig.qss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/Styles/windowConfig/dark/WindowConfig.qss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowItem.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/windowItem/windowitem.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowconfig.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/windowConfig/windowconfig.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowconfig.ui" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/windowitem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/windowItem/windowitem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/mainwindow/mainwindow.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/keepcold/windowConfig/windowconfig.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/windowConfig/windowconfig.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/keepcold/windowItem/windowitem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/keepcold/windowItem/windowitem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/io/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/io/FileManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/UIStyle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/UIStyle.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/widgets/WindowPage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets/WindowPage.cpp" afterDir="false" />
       <change beforePath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/README.md" beforeDir="false" afterPath="$USER_HOME$/Documents/GitHub/qt-widgets-toolkit/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -197,11 +216,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\KoTz\CLionProjects\keepcold\src\core\openVault" />
       <recent name="C:\Users\KoTz\CLionProjects\keepcold\src\app\keepcold\windowConfig" />
       <recent name="C:\Users\KoTz\CLionProjects\keepcold\include\app\keepcold\mainwindow" />
       <recent name="C:\Users\KoTz\CLionProjects\keepcold\src\app\keepcold\mainwindow" />
       <recent name="C:\Users\KoTz\CLionProjects\keepcold\resources\Styles\mainwindow" />
-      <recent name="C:\Users\KoTz\CLionProjects\keepcold\ui" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.keepcold">
@@ -233,12 +252,18 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="test_filemanager" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="keepcold" TARGET_NAME="test_filemanager" CONFIG_NAME="Debug-Visual Studio" RUN_TARGET_PROJECT_NAME="keepcold" RUN_TARGET_NAME="test_filemanager">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="CMake Application.QtWidgetStoolkit" />
       <item itemvalue="CMake Application.dict_generate" />
       <item itemvalue="CMake Application.generate_zxcvbn_dict" />
       <item itemvalue="CMake Application.keepcold" />
       <item itemvalue="CMake Application.test_blur" />
-      <item itemvalue="CMake Application.QtWidgetStoolkit" />
+      <item itemvalue="CMake Application.test_filemanager" />
     </list>
   </component>
   <component name="TaskManager">
@@ -282,6 +307,11 @@
       <workItem from="1787141192027" duration="2763000" />
       <workItem from="1787646716064" duration="27595000" />
       <workItem from="1787774840111" duration="5179000" />
+      <workItem from="1787817104093" duration="853000" />
+      <workItem from="1788292306263" duration="547000" />
+      <workItem from="1788295209435" duration="3000" />
+      <workItem from="1788295303122" duration="1192000" />
+      <workItem from="1788296528535" duration="15739000" />
     </task>
     <task id="LOCAL-00001" summary="14/07/2026">
       <option name="closed" value="true" />
@@ -331,7 +361,23 @@
       <option name="project" value="LOCAL" />
       <updated>1787646909460</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="27/08/2026 04:55">
+      <option name="closed" value="true" />
+      <created>1787817324878</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1787817324878</updated>
+    </task>
+    <task id="LOCAL-00008" summary="27/08/2026 04:55">
+      <option name="closed" value="true" />
+      <created>1787817334723</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1787817334723</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,7 +401,8 @@
     <MESSAGE value="17/07/2026 18:22" />
     <MESSAGE value="24/07/2026 13:22" />
     <MESSAGE value="25/08/26" />
-    <option name="LAST_COMMIT_MESSAGE" value="25/08/26" />
+    <MESSAGE value="27/08/2026 04:55" />
+    <option name="LAST_COMMIT_MESSAGE" value="27/08/2026 04:55" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

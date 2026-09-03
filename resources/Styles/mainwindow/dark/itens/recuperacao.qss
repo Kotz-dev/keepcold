@@ -13,7 +13,7 @@ QPushButton#btn_icone_recuperacao {
     background-position: center;
     border-radius: 10px;
 }
-#label_recuperacao{
+#label_categoria_recuperacao{
       font-size: 10px;
       font-weight: bold;
       background-color: rgb(56, 67, 110);
@@ -33,10 +33,10 @@ QLabel#label_recuperacao_subtitulo {
     font-size: 12px;
 }
 
-QPushButton#btn_favorito_recuperacao {
+QPushButton#btn_favorito_recuperacao_item {
     border-radius: 20px;
 }
 
-QPushButton#btn_remover_recuperacao {
+QPushButton#btn_remover_recuperacao_item {
     border-radius: 20px;
 }

@@ -34,7 +34,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="barra_titule_">
+     <widget class="QFrame" name="frame_barra_titulo">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -70,7 +70,7 @@
         <number>0</number>
        </property>
        <item alignment="Qt::AlignmentFlag::AlignLeft">
-        <widget class="QFrame" name="frame_17">
+        <widget class="QFrame" name="frame_logo">
          <property name="frameShape">
           <enum>QFrame::Shape::StyledPanel</enum>
          </property>
@@ -94,7 +94,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="Logo_Kep">
+           <widget class="QLabel" name="label_logo_icone">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -116,7 +116,7 @@
            </widget>
           </item>
           <item alignment="Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter">
-           <widget class="QLabel" name="label_17">
+           <widget class="QLabel" name="label_logo_nome">
             <property name="styleSheet">
              <string notr="true">color: rgb(166, 176, 208);
 font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, &quot;Inter&quot;, sans-serif;</string>
@@ -133,7 +133,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
         </widget>
        </item>
        <item alignment="Qt::AlignmentFlag::AlignRight">
-        <widget class="QFrame" name="frame_16">
+        <widget class="QFrame" name="frame_janela_controles">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -231,12 +231,12 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageOpenVault">
        <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
-         <widget class="QFrame" name="frame_12">
+         <widget class="QFrame" name="OpenVault_frame_topo">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -258,7 +258,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_10">
+         <widget class="QFrame" name="OpenVault_frame_conteudo">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -301,7 +301,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </spacer>
            </item>
            <item>
-            <widget class="QFrame" name="frame_13">
+            <widget class="QFrame" name="OpenVault_frame_form">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -322,7 +322,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item alignment="Qt::AlignmentFlag::AlignLeft">
-               <widget class="QPushButton" name="back_open_cofre">
+               <widget class="QPushButton" name="OpenVault_btn_voltar">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -341,7 +341,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_12">
+               <widget class="QLabel" name="OpenVault_label_logo">
                 <property name="text">
                  <string/>
                 </property>
@@ -354,7 +354,13 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_13">
+               <widget class="QLabel" name="OpenVault_label_titulo">
+                <property name="font">
+                 <font>
+                  <pointsize>15</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
                  <string>Abrir cofre</string>
                 </property>
@@ -364,7 +370,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_info_modicado">
+               <widget class="QLabel" name="OpenVault_label_info_modificado">
                 <property name="text">
                  <string>cofre-pessoal.vault · modificado há 2h</string>
                 </property>
@@ -374,14 +380,14 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_15">
+               <widget class="QLabel" name="OpenVault_label_senha_mestra">
                 <property name="text">
                  <string>Senha mestra</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="line_passowrd_open_cofre">
+               <widget class="QLineEdit" name="OpenVault_line_senha_mestra">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -397,14 +403,14 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_dica">
+               <widget class="QLabel" name="OpenVault_label_dica">
                 <property name="text">
                  <string>Dica: café da manhã com a vó</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_unlock_cofre">
+               <widget class="QPushButton" name="OpenVault_btn_desbloquear">
                 <property name="minimumSize">
                  <size>
                   <width>400</width>
@@ -420,6 +426,59 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <property name="text">
                  <string>Desbloquar cofre</string>
                 </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="OpenVault_frame_rodape">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Shape::NoFrame</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_49">
+                 <item>
+                  <widget class="QPushButton" name="OpenVault_btn_trocar_arquivo">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Abrir outro arquivo</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="OpenVault_label_dica_erro">
+                   <property name="styleSheet">
+                    <string notr="true">color: #7A85A8;</string>
+                   </property>
+                   <property name="text">
+                    <string>Tente &quot;errado&quot; para ver erro</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
@@ -442,7 +501,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_11">
+         <widget class="QFrame" name="OpenVault_frame_base">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -489,7 +548,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
          <number>0</number>
         </property>
         <item>
-         <widget class="QFrame" name="Frame_item">
+         <widget class="QFrame" name="VaultMain_frame_sidebar">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -516,7 +575,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             <number>20</number>
            </property>
            <item>
-            <widget class="QPushButton" name="btn_menu">
+            <widget class="QPushButton" name="VaultMain_btn_menu">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -529,7 +588,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_favorite">
+            <widget class="QPushButton" name="VaultMain_btn_favoritos">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -542,7 +601,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_login">
+            <widget class="QPushButton" name="VaultMain_btn_login">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -555,7 +614,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_cartao">
+            <widget class="QPushButton" name="VaultMain_btn_cartao">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -568,7 +627,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_documento">
+            <widget class="QPushButton" name="VaultMain_btn_documento">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -581,7 +640,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_idadente">
+            <widget class="QPushButton" name="VaultMain_btn_identidade">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -594,7 +653,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_terminal">
+            <widget class="QPushButton" name="VaultMain_btn_terminal">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -607,7 +666,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_wifi">
+            <widget class="QPushButton" name="VaultMain_btn_wifi">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -620,7 +679,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_recuperacao">
+            <widget class="QPushButton" name="VaultMain_btn_recuperacao">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -633,7 +692,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_file">
+            <widget class="QPushButton" name="VaultMain_btn_file">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -646,7 +705,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item alignment="Qt::AlignmentFlag::AlignBottom">
-            <widget class="QFrame" name="frame_25">
+            <widget class="QFrame" name="VaultMain_frame_divisor_sidebar">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>10</horstretch>
@@ -677,7 +736,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item alignment="Qt::AlignmentFlag::AlignBottom">
-            <widget class="QPushButton" name="btn_configuracao">
+            <widget class="QPushButton" name="VaultMain_btn_configuracao">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -693,7 +752,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_18">
+         <widget class="QFrame" name="VaultMain_frame_lista_itens">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -729,7 +788,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             <number>0</number>
            </property>
            <item>
-            <widget class="QFrame" name="frame_19">
+            <widget class="QFrame" name="VaultMain_frame_busca">
              <property name="maximumSize">
               <size>
                <width>16777215</width>
@@ -744,7 +803,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <item>
-               <widget class="QLineEdit" name="line_search">
+               <widget class="QLineEdit" name="VaultMain_line_busca">
                 <property name="minimumSize">
                  <size>
                   <width>190</width>
@@ -766,7 +825,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_add_item">
+               <widget class="QPushButton" name="VaultMain_btn_add_item">
                 <property name="minimumSize">
                  <size>
                   <width>40</width>
@@ -788,7 +847,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QListView" name="listView">
+            <widget class="QListView" name="VaultMain_listView">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -804,7 +863,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
          </widget>
         </item>
         <item>
-         <widget class="QStackedWidget" name="stackedWidget_2">
+         <widget class="QStackedWidget" name="VaultMain_stack_item_paginas">
           <property name="currentIndex">
            <number>1</number>
           </property>
@@ -826,7 +885,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              <number>0</number>
             </property>
             <item>
-             <widget class="QFrame" name="frame_20">
+             <widget class="QFrame" name="frame_header_login">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -856,7 +915,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>0</number>
                </property>
                <item>
-                <widget class="QFrame" name="frame_23">
+                <widget class="QFrame" name="frame_header_conteudo_login">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -898,7 +957,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      <number>6</number>
                     </property>
                     <item row="1" column="1" alignment="Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_login">
+                     <widget class="QLabel" name="label_categoria_login">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                         <horstretch>0</horstretch>
@@ -962,7 +1021,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="1" column="2" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_19">
+                     <widget class="QLabel" name="label_atualizado_login">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -986,7 +1045,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="0" column="1" colspan="2" alignment="Qt::AlignmentFlag::AlignBottom">
-                     <widget class="QLabel" name="label_name_logins">
+                     <widget class="QLabel" name="label_nome_login">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -1017,7 +1076,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_24">
+                <widget class="QFrame" name="frame_acoes_login">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -1101,7 +1160,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_21">
+             <widget class="QFrame" name="frame_body_login">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -1122,7 +1181,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>15</number>
                </property>
                <item>
-                <widget class="Line" name="line">
+                <widget class="Line" name="divisor_login">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -1140,7 +1199,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <number>6</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_20">
+                  <widget class="QLabel" name="label_nome_campo_login">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1170,7 +1229,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_11">
                  <item>
-                  <widget class="QLabel" name="label_21">
+                  <widget class="QLabel" name="label_email_login">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -1225,7 +1284,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_14">
                  <item>
-                  <widget class="QLabel" name="label_22">
+                  <widget class="QLabel" name="label_senha_login">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -1248,7 +1307,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="line_passoword_logins">
+                  <widget class="QLineEdit" name="line_senha_login">
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
@@ -1264,7 +1323,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_login">
+                  <widget class="QPushButton" name="btn_toggle_senha_login">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -1283,7 +1342,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_login_2">
+                  <widget class="QPushButton" name="btn_copy_senha_login">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -1304,7 +1363,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </layout>
                </item>
                <item>
-                <widget class="QFrame" name="frame_26">
+                <widget class="QFrame" name="frame_forca_senha_login">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1357,7 +1416,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_27">
+                <widget class="QFrame" name="frame_forca_label_login">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1400,7 +1459,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                    </spacer>
                   </item>
                   <item alignment="Qt::AlignmentFlag::AlignTop">
-                   <widget class="QLabel" name="label_18">
+                   <widget class="QLabel" name="label_forca_senha_titulo_login">
                     <property name="styleSheet">
                      <string notr="true">color: rgb(166, 176, 208);</string>
                     </property>
@@ -1410,7 +1469,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                    </widget>
                   </item>
                   <item alignment="Qt::AlignmentFlag::AlignRight">
-                   <widget class="QLabel" name="label_26">
+                   <widget class="QLabel" name="label_forca_senha_valor_login">
                     <property name="text">
                      <string>Excelente</string>
                     </property>
@@ -1422,7 +1481,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_15">
                  <item>
-                  <widget class="QLabel" name="label_23">
+                  <widget class="QLabel" name="label_2fa_login">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -1463,7 +1522,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_login_2">
+                  <widget class="QPushButton" name="btn_toggle_2fa_login">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -1482,7 +1541,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_login_3">
+                  <widget class="QPushButton" name="btn_copy_2fa_login">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -1505,7 +1564,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_16">
                  <item>
-                  <widget class="QLabel" name="label_24">
+                  <widget class="QLabel" name="label_url_login">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -1547,7 +1606,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_17">
                  <item>
-                  <widget class="QLabel" name="label_25">
+                  <widget class="QLabel" name="label_codigo_recuperacao_login">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -1579,7 +1638,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_login_3">
+                  <widget class="QPushButton" name="btn_toggle_codigo_recuperacao_login">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -1598,7 +1657,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_login_4">
+                  <widget class="QPushButton" name="btn_copy_codigo_recuperacao_login">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -1622,7 +1681,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_22">
+             <widget class="QFrame" name="frame_footer_login">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -1657,7 +1716,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              <number>0</number>
             </property>
             <item>
-             <widget class="QFrame" name="frame_33">
+             <widget class="QFrame" name="frame_header_wifi">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -1687,7 +1746,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>0</number>
                </property>
                <item>
-                <widget class="QFrame" name="frame_34">
+                <widget class="QFrame" name="frame_header_conteudo_wifi">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -1729,7 +1788,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      <number>6</number>
                     </property>
                     <item row="1" column="1" alignment="Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_wifi">
+                     <widget class="QLabel" name="label_categoria_wifi">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                         <horstretch>0</horstretch>
@@ -1817,7 +1876,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="0" column="1" colspan="2" alignment="Qt::AlignmentFlag::AlignBottom">
-                     <widget class="QLabel" name="label_name_wifi">
+                     <widget class="QLabel" name="label_nome_wifi">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -1848,7 +1907,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_35">
+                <widget class="QFrame" name="frame_acoes_wifi">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -1932,7 +1991,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_37">
+             <widget class="QFrame" name="frame_body_wifi">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -1953,7 +2012,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>15</number>
                </property>
                <item>
-                <widget class="Line" name="line_3">
+                <widget class="Line" name="divisor_wifi">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -1971,7 +2030,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <number>6</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_28">
+                  <widget class="QLabel" name="label_nome_campo_wifi">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -2001,7 +2060,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_25">
                  <item>
-                  <widget class="QLabel" name="label_31">
+                  <widget class="QLabel" name="label_ssid_wifi">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -2056,7 +2115,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_26">
                  <item>
-                  <widget class="QLabel" name="label_32">
+                  <widget class="QLabel" name="label_senha_wifi">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -2079,7 +2138,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="line_passoword_wifi">
+                  <widget class="QLineEdit" name="line_senha_wifi">
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
@@ -2092,7 +2151,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_wifi">
+                  <widget class="QPushButton" name="btn_toggle_senha_wifi">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -2111,7 +2170,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_wifi_2">
+                  <widget class="QPushButton" name="btn_copy_senha_wifi">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -2134,7 +2193,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_30">
                  <item>
-                  <widget class="QLabel" name="label_36">
+                  <widget class="QLabel" name="label_tipo_wifi">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -2177,7 +2236,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_36">
+             <widget class="QFrame" name="frame_footer_wifi">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -2197,7 +2256,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
           <widget class="QWidget" name="recuperacao">
            <layout class="QVBoxLayout" name="verticalLayout_26">
             <item>
-             <widget class="QFrame" name="frame_45">
+             <widget class="QFrame" name="frame_header_recuperacao">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -2227,7 +2286,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>0</number>
                </property>
                <item>
-                <widget class="QFrame" name="frame_46">
+                <widget class="QFrame" name="frame_header_conteudo_recuperacao">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -2256,7 +2315,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      <number>6</number>
                     </property>
                     <item row="1" column="2" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_note_update_2">
+                     <widget class="QLabel" name="label_atualizado_recuperacao">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -2280,7 +2339,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="0" column="1" colspan="2" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignBottom">
-                     <widget class="QLabel" name="label_name_note_2">
+                     <widget class="QLabel" name="label_nome_recuperacao">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -2352,7 +2411,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="1" column="1" alignment="Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_recuperacao">
+                     <widget class="QLabel" name="label_categoria_recuperacao">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                         <horstretch>0</horstretch>
@@ -2407,7 +2466,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_47">
+                <widget class="QFrame" name="frame_acoes_recuperacao">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -2444,7 +2503,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                    </spacer>
                   </item>
                   <item alignment="Qt::AlignmentFlag::AlignRight">
-                   <widget class="QPushButton" name="btn_favorito_recuperacao">
+                   <widget class="QPushButton" name="btn_favorito_recuperacao_item">
                     <property name="minimumSize">
                      <size>
                       <width>40</width>
@@ -2463,7 +2522,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                    </widget>
                   </item>
                   <item alignment="Qt::AlignmentFlag::AlignRight">
-                   <widget class="QPushButton" name="btn_remover_recuperacao">
+                   <widget class="QPushButton" name="btn_remover_recuperacao_item">
                     <property name="minimumSize">
                      <size>
                       <width>40</width>
@@ -2488,7 +2547,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_43">
+             <widget class="QFrame" name="frame_body_recuperacao">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -2515,7 +2574,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>15</number>
                </property>
                <item>
-                <widget class="Line" name="line_5">
+                <widget class="Line" name="divisor_recuperacao">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -2533,7 +2592,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <number>6</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_38">
+                  <widget class="QLabel" name="label_nome_campo_recuperacao">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -2566,7 +2625,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <enum>QLayout::SizeConstraint::SetFixedSize</enum>
                  </property>
                  <item alignment="Qt::AlignmentFlag::AlignTop">
-                  <widget class="QLabel" name="label_39">
+                  <widget class="QLabel" name="label_codigos_recuperacao">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -2618,7 +2677,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_44">
+             <widget class="QFrame" name="frame_footer_recuperacao">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -2650,7 +2709,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
           <widget class="QWidget" name="chaves">
            <layout class="QVBoxLayout" name="verticalLayout_23">
             <item>
-             <widget class="QFrame" name="frame_38">
+             <widget class="QFrame" name="frame_header_chaves">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -2680,7 +2739,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>0</number>
                </property>
                <item>
-                <widget class="QFrame" name="frame_39">
+                <widget class="QFrame" name="frame_header_conteudo_chaves">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -2722,7 +2781,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      <number>6</number>
                     </property>
                     <item row="1" column="1" alignment="Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_key">
+                     <widget class="QLabel" name="label_categoria_chaves">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                         <horstretch>0</horstretch>
@@ -2810,7 +2869,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="0" column="1" colspan="2" alignment="Qt::AlignmentFlag::AlignBottom">
-                     <widget class="QLabel" name="label_name_wifi_2">
+                     <widget class="QLabel" name="label_nome_chaves">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -2841,7 +2900,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_40">
+                <widget class="QFrame" name="frame_acoes_chaves">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -2925,7 +2984,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_42">
+             <widget class="QFrame" name="frame_body_chaves">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -2946,7 +3005,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>15</number>
                </property>
                <item>
-                <widget class="Line" name="line_4">
+                <widget class="Line" name="divisor_chaves">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -2964,7 +3023,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <number>6</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_33">
+                  <widget class="QLabel" name="label_nome_campo_chaves">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -2994,7 +3053,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_29">
                  <item>
-                  <widget class="QLabel" name="label_34">
+                  <widget class="QLabel" name="label_servico_chaves">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3030,7 +3089,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_31">
                  <item>
-                  <widget class="QLabel" name="label_35">
+                  <widget class="QLabel" name="label_chave_valor_label">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3053,7 +3112,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="line_passoword_key">
+                  <widget class="QLineEdit" name="line_chave_valor">
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
@@ -3066,7 +3125,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_key">
+                  <widget class="QPushButton" name="btn_toggle_chave_valor">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -3108,7 +3167,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_32">
                  <item>
-                  <widget class="QLabel" name="label_37">
+                  <widget class="QLabel" name="label_notas_chaves">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -3130,7 +3189,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QTextEdit" name="textEdit_key">
+                  <widget class="QTextEdit" name="textEdit_notas_chaves">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3151,7 +3210,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_41">
+             <widget class="QFrame" name="frame_footer_chaves">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -3172,7 +3231,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
           <widget class="QWidget" name="identidade">
            <layout class="QVBoxLayout" name="verticalLayout_29">
             <item>
-             <widget class="QFrame" name="frame_50">
+             <widget class="QFrame" name="frame_header_identidade">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -3202,7 +3261,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>0</number>
                </property>
                <item>
-                <widget class="QFrame" name="frame_51">
+                <widget class="QFrame" name="frame_header_conteudo_identidade">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -3363,7 +3422,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_52">
+                <widget class="QFrame" name="frame_acoes_identidade">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -3447,7 +3506,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_49">
+             <widget class="QFrame" name="frame_body_identidade">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -3468,7 +3527,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>15</number>
                </property>
                <item>
-                <widget class="Line" name="line_6">
+                <widget class="Line" name="divisor_identidade">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -3486,7 +3545,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <number>6</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_40">
+                  <widget class="QLabel" name="label_nome_identidade">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -3516,7 +3575,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_36">
                  <item>
-                  <widget class="QLabel" name="label_41">
+                  <widget class="QLabel" name="label_nome_completo_identidade">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3552,7 +3611,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_37">
                  <item>
-                  <widget class="QLabel" name="label_42">
+                  <widget class="QLabel" name="label_cpf_identidade">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3575,7 +3634,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="line_cpf_name_identidade">
+                  <widget class="QLineEdit" name="line_cpf_identidade">
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
@@ -3588,7 +3647,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_identidade">
+                  <widget class="QPushButton" name="btn_toggle_cpf_identidade">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -3607,7 +3666,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_identidade">
+                  <widget class="QPushButton" name="btn_copy_cpf_identidade">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -3630,7 +3689,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_38">
                  <item>
-                  <widget class="QLabel" name="label_43">
+                  <widget class="QLabel" name="label_rg_identidade">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3665,7 +3724,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_identidade_2">
+                  <widget class="QPushButton" name="btn_toggle_rg_identidade">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -3684,7 +3743,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_identidade_2">
+                  <widget class="QPushButton" name="btn_copy_rg_identidade">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -3707,7 +3766,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_41">
                  <item>
-                  <widget class="QLabel" name="label_16">
+                  <widget class="QLabel" name="label_cnh_identidade">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -3739,7 +3798,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_identidade_3">
+                  <widget class="QPushButton" name="btn_toggle_cnh_identidade">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -3758,7 +3817,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_identidade_3">
+                  <widget class="QPushButton" name="btn_copy_cnh_identidade">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -3782,7 +3841,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_48">
+             <widget class="QFrame" name="frame_footer_identidade">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -3802,7 +3861,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
           <widget class="QWidget" name="cartoes">
            <layout class="QVBoxLayout" name="verticalLayout_32">
             <item>
-             <widget class="QFrame" name="frame_54">
+             <widget class="QFrame" name="frame_header_cartao">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -3832,7 +3891,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>0</number>
                </property>
                <item>
-                <widget class="QFrame" name="frame_55">
+                <widget class="QFrame" name="frame_header_conteudo_cartao">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -3874,7 +3933,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      <number>6</number>
                     </property>
                     <item row="1" column="1" alignment="Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_cartao">
+                     <widget class="QLabel" name="label_categoria_cartao">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                         <horstretch>0</horstretch>
@@ -3907,7 +3966,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="0" column="0" rowspan="2">
-                     <widget class="QPushButton" name="btn_icone_identidade_2">
+                     <widget class="QPushButton" name="btn_icone_cartao">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -3938,7 +3997,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="1" column="2" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_identidade_update_2">
+                     <widget class="QLabel" name="label_atualizado_cartao">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -3993,7 +4052,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_56">
+                <widget class="QFrame" name="frame_acoes_cartao">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -4077,7 +4136,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_53">
+             <widget class="QFrame" name="frame_body_cartao">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -4098,7 +4157,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>15</number>
                </property>
                <item>
-                <widget class="Line" name="line_7">
+                <widget class="Line" name="divisor_cartao">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -4116,7 +4175,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <number>6</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_44">
+                  <widget class="QLabel" name="label_nome_campo_cartao">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -4146,7 +4205,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_42">
                  <item>
-                  <widget class="QLabel" name="label_45">
+                  <widget class="QLabel" name="label_titular_cartao">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -4188,7 +4247,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_43">
                  <item>
-                  <widget class="QLabel" name="label_46">
+                  <widget class="QLabel" name="label_numero_cartao">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -4224,7 +4283,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_cartao">
+                  <widget class="QPushButton" name="btn_toggle_numero_cartao">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -4243,7 +4302,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_cartao">
+                  <widget class="QPushButton" name="btn_copy_numero_cartao">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -4266,7 +4325,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_44">
                  <item>
-                  <widget class="QLabel" name="label_47">
+                  <widget class="QLabel" name="label_validade_cartao">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -4311,7 +4370,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_45">
                  <item>
-                  <widget class="QLabel" name="label_27">
+                  <widget class="QLabel" name="label_cvv_cartao">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -4346,7 +4405,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_oculta_passoword_cartao_2">
+                  <widget class="QPushButton" name="btn_toggle_cvv_cartao">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -4365,7 +4424,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btn_copy_text_cartao_2">
+                  <widget class="QPushButton" name="btn_copy_cvv_cartao">
                    <property name="minimumSize">
                     <size>
                      <width>40</width>
@@ -4388,7 +4447,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_48">
                  <item>
-                  <widget class="QLabel" name="label_48">
+                  <widget class="QLabel" name="label_bandeira_cartao">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -4431,7 +4490,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_57">
+             <widget class="QFrame" name="frame_footer_cartao">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -4463,7 +4522,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              <number>0</number>
             </property>
             <item>
-             <widget class="QFrame" name="frame_29">
+             <widget class="QFrame" name="frame_header_nota">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -4493,7 +4552,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>0</number>
                </property>
                <item>
-                <widget class="QFrame" name="frame_30">
+                <widget class="QFrame" name="frame_header_conteudo_nota">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -4618,7 +4677,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                      </widget>
                     </item>
                     <item row="1" column="1" alignment="Qt::AlignmentFlag::AlignTop">
-                     <widget class="QLabel" name="label_login_2">
+                     <widget class="QLabel" name="label_categoria_nota">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                         <horstretch>0</horstretch>
@@ -4672,7 +4731,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_31">
+                <widget class="QFrame" name="frame_acoes_nota">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -4709,7 +4768,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                    </spacer>
                   </item>
                   <item alignment="Qt::AlignmentFlag::AlignRight">
-                   <widget class="QPushButton" name="btn_favorito_note_">
+                   <widget class="QPushButton" name="btn_favorito_nota_item">
                     <property name="minimumSize">
                      <size>
                       <width>40</width>
@@ -4728,7 +4787,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                    </widget>
                   </item>
                   <item alignment="Qt::AlignmentFlag::AlignRight">
-                   <widget class="QPushButton" name="btn_remover_note_">
+                   <widget class="QPushButton" name="btn_remover_nota_item">
                     <property name="minimumSize">
                      <size>
                       <width>40</width>
@@ -4753,7 +4812,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_32">
+             <widget class="QFrame" name="frame_body_nota">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -4780,7 +4839,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                 <number>15</number>
                </property>
                <item>
-                <widget class="Line" name="line_2">
+                <widget class="Line" name="divisor_nota">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -4798,7 +4857,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <number>6</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_29">
+                  <widget class="QLabel" name="label_nome_campo_nota">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -4831,7 +4890,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                   <enum>QLayout::SizeConstraint::SetFixedSize</enum>
                  </property>
                  <item alignment="Qt::AlignmentFlag::AlignTop">
-                  <widget class="QLabel" name="label_30">
+                  <widget class="QLabel" name="label_conteudo_nota">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -4883,7 +4942,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_28">
+             <widget class="QFrame" name="frame_footer_nota">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -4919,7 +4978,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
       <widget class="QWidget" name="pageWelcome">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QFrame" name="frame">
+         <widget class="QFrame" name="Welcome_frame_topo">
           <property name="frameShape">
            <enum>QFrame::Shape::NoFrame</enum>
           </property>
@@ -4929,7 +4988,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_9">
+         <widget class="QFrame" name="Welcome_frame_hero">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -4965,7 +5024,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="label_11">
+            <widget class="QLabel" name="Welcome_label_logo">
              <property name="text">
               <string/>
              </property>
@@ -4997,7 +5056,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </spacer>
            </item>
            <item alignment="Qt::AlignmentFlag::AlignBottom">
-            <widget class="QLabel" name="label_10">
+            <widget class="QLabel" name="Welcome_label_descricao">
              <property name="font">
               <font>
                <family>ui-monospace</family>
@@ -5020,7 +5079,7 @@ color: rgb(122, 133, 168);</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_3">
+         <widget class="QFrame" name="Welcome_frame_botoes">
           <property name="frameShape">
            <enum>QFrame::Shape::NoFrame</enum>
           </property>
@@ -5031,7 +5090,7 @@ color: rgb(122, 133, 168);</string>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QPushButton" name="btn_create_cofre">
+              <widget class="QPushButton" name="Welcome_btn_criar_cofre">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -5058,7 +5117,7 @@ color: rgb(122, 133, 168);</string>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btn_open_cofre">
+              <widget class="QPushButton" name="Welcome_btn_abrir_cofre">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -5082,7 +5141,7 @@ color: rgb(122, 133, 168);</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_2">
+         <widget class="QFrame" name="Welcome_frame_rodape">
           <property name="frameShape">
            <enum>QFrame::Shape::NoFrame</enum>
           </property>
@@ -5091,7 +5150,7 @@ color: rgb(122, 133, 168);</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QFrame" name="frame_4">
+            <widget class="QFrame" name="Welcome_frame_selo_seguranca">
              <property name="frameShape">
               <enum>QFrame::Shape::NoFrame</enum>
              </property>
@@ -5100,7 +5159,7 @@ color: rgb(122, 133, 168);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item alignment="Qt::AlignmentFlag::AlignTop">
-               <widget class="QLabel" name="label">
+               <widget class="QLabel" name="Welcome_label_selo_seguranca">
                 <property name="text">
                  <string>Criptografia AES-256 · zero-knowledge · sem conexão</string>
                 </property>
@@ -5151,7 +5210,7 @@ color: rgb(122, 133, 168);</string>
          <number>0</number>
         </property>
         <item>
-         <widget class="QFrame" name="frame_5">
+         <widget class="QFrame" name="CreateVault_frame_topo">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -5167,7 +5226,7 @@ color: rgb(122, 133, 168);</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_7">
+         <widget class="QFrame" name="CreateVault_frame_conteudo">
           <property name="frameShape">
            <enum>QFrame::Shape::NoFrame</enum>
           </property>
@@ -5192,7 +5251,7 @@ color: rgb(122, 133, 168);</string>
             </spacer>
            </item>
            <item>
-            <widget class="QFrame" name="frame_8">
+            <widget class="QFrame" name="CreateVault_frame_form">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -5219,7 +5278,7 @@ color: rgb(122, 133, 168);</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_5">
               <item alignment="Qt::AlignmentFlag::AlignLeft">
-               <widget class="QPushButton" name="btn_back">
+               <widget class="QPushButton" name="CreateVault_btn_voltar">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -5251,7 +5310,7 @@ color: rgb(122, 133, 168);</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_9">
+               <widget class="QLabel" name="CreateVault_label_logo">
                 <property name="text">
                  <string/>
                 </property>
@@ -5264,7 +5323,7 @@ color: rgb(122, 133, 168);</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_8">
+               <widget class="QLabel" name="CreateVault_label_titulo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -5286,7 +5345,7 @@ color: rgb(122, 133, 168);</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_7">
+               <widget class="QLabel" name="CreateVault_label_aviso">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -5305,7 +5364,7 @@ o conteúdo é perdido.</string>
               <item>
                <layout class="QGridLayout" name="gridLayout">
                 <item row="0" column="0">
-                 <widget class="QLabel" name="label_2">
+                 <widget class="QLabel" name="CreateVault_label_nome_arquivo">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
@@ -5317,7 +5376,7 @@ o conteúdo é perdido.</string>
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QLineEdit" name="line_name_arquivo">
+                 <widget class="QLineEdit" name="CreateVault_line_nome_arquivo">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -5330,7 +5389,7 @@ o conteúdo é perdido.</string>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QLabel" name="label_6">
+                 <widget class="QLabel" name="CreateVault_label_extensao">
                   <property name="text">
                    <string>.vault</string>
                   </property>
@@ -5344,7 +5403,7 @@ o conteúdo é perdido.</string>
                  <number>5</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_3">
+                 <widget class="QLabel" name="CreateVault_label_senha_mestra">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
@@ -5357,7 +5416,7 @@ o conteúdo é perdido.</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="line_password_mestra">
+                 <widget class="QLineEdit" name="CreateVault_line_senha_mestra">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -5373,7 +5432,7 @@ o conteúdo é perdido.</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QProgressBar" name="progressBar">
+                 <widget class="QProgressBar" name="CreateVault_progressBar">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -5409,7 +5468,7 @@ o conteúdo é perdido.</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QFrame" name="frame_14">
+                 <widget class="QFrame" name="CreateVault_frame_forca_senha">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -5433,7 +5492,7 @@ o conteúdo é perdido.</string>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_7">
                    <item alignment="Qt::AlignmentFlag::AlignTop">
-                    <widget class="QLabel" name="label_14">
+                    <widget class="QLabel" name="CreateVault_label_forca_senha_titulo">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                        <horstretch>0</horstretch>
@@ -5465,7 +5524,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                     </widget>
                    </item>
                    <item alignment="Qt::AlignmentFlag::AlignTop">
-                    <widget class="QLabel" name="label_forca_senha">
+                    <widget class="QLabel" name="CreateVault_label_forca_senha_valor">
                      <property name="font">
                       <font>
                        <family>Segoe UI Variable Text</family>
@@ -5487,7 +5546,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_4">
+                 <widget class="QLabel" name="CreateVault_label_confirmar_senha">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
@@ -5499,7 +5558,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="line_cfr_passaword_mestra">
+                 <widget class="QLineEdit" name="CreateVault_line_confirmar_senha">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -5515,7 +5574,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_erro_senha">
+                 <widget class="QLabel" name="CreateVault_label_erro_senha">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -5534,7 +5593,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_5">
+                 <widget class="QLabel" name="CreateVault_label_dica">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -5552,7 +5611,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="line_dica">
+                 <widget class="QLineEdit" name="CreateVault_line_dica">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -5581,7 +5640,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btn_create_cofre_cp">
+                 <widget class="QPushButton" name="CreateVault_btn_criar">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -5635,7 +5694,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_6">
+         <widget class="QFrame" name="CreateVault_frame_base">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
             <horstretch>0</horstretch>
@@ -5657,8 +5716,6 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="../resources/Resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

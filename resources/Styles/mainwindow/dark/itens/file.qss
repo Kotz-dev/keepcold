@@ -4,7 +4,7 @@
  *
  * Estilo do item de lista da categoria "Arquivos".
  * Nome do arquivo usa "file" para bater com o nome ja
- * estabelecido no codigo (btn_file / logo_file.png).
+ * estabelecido no codigo (VaultMain_btn_file / logo_file.png).
  */
 
 QFrame#frame_file_item {

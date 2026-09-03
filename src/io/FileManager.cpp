@@ -8,6 +8,49 @@
 #include <QLocale>
 #include <filesystem>
 #include <QFileInfo>
+#include <fstream>
+#include <QFileDialog>
+
+QString FileManager::OpenFileURL(QWidget *parent)
+{
+    QString URL = "";
+
+    if (parent != nullptr)
+    {
+        auto getURL = QFileDialog::getOpenFileUrl(
+                parent, "Abrir arquivos Existentes", QUrl(), "Vault files (*.vault)");
+
+        URL = getURL.toLocalFile();
+        return URL;
+    }
+        return URL;
+    }
+
+
+void FileManager::CreateFile(QString name)
+{
+    if (name.isEmpty() == false)
+    {
+        std::fstream file(name.toStdString(), std::ios::out);
+        qDebug () << name.toStdString();
+        if (file.fail())
+        {
+            qDebug() << "Falha ao criar arquivo:";
+        }
+        file.close();
+    }
+}
+
+
+/// criar os arquivos vault
+bool FileManager::CreateVaultFile(const QUrl &url)
+{
+    if (url.isEmpty())
+        return false;
+
+    CreateFile(url.toLocalFile());
+    return true;
+}
 
 QString FileManager::formattedFileSize(const QUrl &fileUrl)
 {

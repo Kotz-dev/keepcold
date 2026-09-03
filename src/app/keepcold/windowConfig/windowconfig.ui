@@ -51,7 +51,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="lbl_titulo_config">
+       <widget class="QLabel" name="label_titulo_config">
         <property name="text">
          <string>Configurações</string>
         </property>
@@ -179,7 +179,7 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
-              <widget class="QLabel" name="lbl_icon_update">
+              <widget class="QLabel" name="label_icon_update">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -207,7 +207,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lbl_update">
+              <widget class="QLabel" name="label_update">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -264,7 +264,7 @@ Versão instalada: v1.0</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
              <item alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter">
-              <widget class="QLabel" name="lbl_icon_bloqueio_auto">
+              <widget class="QLabel" name="label_icon_bloqueio_auto">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -292,7 +292,7 @@ Versão instalada: v1.0</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lbl_bloqueio_auto">
+              <widget class="QLabel" name="label_bloqueio_auto">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -377,7 +377,7 @@ Bloquear o cofre após inatividade</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <item alignment="Qt::AlignmentFlag::AlignVCenter">
-              <widget class="QLabel" name="lbl_icon_modo_escuro">
+              <widget class="QLabel" name="label_icon_modo_escuro">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -405,7 +405,7 @@ Bloquear o cofre após inatividade</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lbl_modo_escuro">
+              <widget class="QLabel" name="label_modo_escuro">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -462,7 +462,7 @@ Aparência da interface</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_14">
              <item>
-              <widget class="QLabel" name="lbl_icon_idioma">
+              <widget class="QLabel" name="label_icon_idioma">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -481,7 +481,7 @@ Aparência da interface</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lbl_idioma">
+              <widget class="QLabel" name="label_idioma">
                <property name="text">
                 <string>Idioma
 Idioma da interface</string>
@@ -545,7 +545,7 @@ Idioma da interface</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_11">
              <item>
-              <widget class="QLabel" name="lbl_icon_senha_mestra">
+              <widget class="QLabel" name="label_icon_senha_mestra">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -573,7 +573,7 @@ Idioma da interface</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lbl_senha_mestra">
+              <widget class="QLabel" name="label_senha_mestra">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -636,7 +636,7 @@ Re-criptografa todo o conteúdo do arquivo</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_12">
              <item>
-              <widget class="QLabel" name="lbl_icon_import_export">
+              <widget class="QLabel" name="label_icon_import_export">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -664,7 +664,7 @@ Re-criptografa todo o conteúdo do arquivo</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lbl_import_export">
+              <widget class="QLabel" name="label_import_export">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -750,7 +750,7 @@ Backup ou mesclar cofre</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_13">
              <item>
-              <widget class="QLabel" name="lbl_icon_sobre">
+              <widget class="QLabel" name="label_icon_sobre">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -778,7 +778,7 @@ Backup ou mesclar cofre</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lbl_sobre">
+              <widget class="QLabel" name="label_sobre">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -867,7 +867,7 @@ Versão, licença e informações do cofre</string>
        </widget>
       </item>
       <item alignment="Qt::AlignmentFlag::AlignHCenter">
-       <widget class="QLabel" name="lbl_rodape">
+       <widget class="QLabel" name="label_rodape">
         <property name="text">
          <string>app senha · v1.0 · seu cofre nunca sai deste dispositivo</string>
         </property>
