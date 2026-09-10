@@ -2,12 +2,12 @@
 // Created by KoTz on 18/08/2026.
 //
 
-// You may need to build the project (run Qt uic code generator) to get "ui_windowConfig.h" resolved
+// You may need to build the project (run Qt uic code generator) to get "ui_windowconfig.h" resolved
 
 #include "../../../../include/app/keepcold/windowConfig/windowconfig.h"
 
 #include "io/FileManager.h"
-#include "ui_windowConfig.h"
+#include "ui_windowconfig.h"
 
 windowConfig::windowConfig(QWidget* parent)
     : QDialog(parent),

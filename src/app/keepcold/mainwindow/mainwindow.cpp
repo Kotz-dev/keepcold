@@ -15,7 +15,7 @@
 
 #include <QtWidgetStoolkit/QtWidgetStoolkit.h>
 #include <core/PasswordStrength.h>
-#include <ui_windowConfig.h>
+#include <ui_windowconfig.h>
 
 void mainwindow::on_Welcome_btn_criar_cofre_clicked() {
     ClearStrengthBar(ui->CreateVault_progressBar);
@@ -84,8 +84,7 @@ void mainwindow::ClearStrengthBar(QProgressBar *widget) {
 }
 
 void mainwindow::on_btn_max_window_clicked() {
-    QtToolkit::Window::Maximizer obj;
-    obj.toggle(this);
+    QtToolkit::Window::Maximizer::toggle(this);
 }
 void mainwindow::on_btn_min_window_clicked() {
     showMinimized();
@@ -103,7 +102,6 @@ void mainwindow::on_VaultMain_btn_documento_clicked() {
 // Desgin QProcesdar
 void mainwindow::setupStrengthBar(int value)
 {
-
     if (ui->CreateVault_line_senha_mestra->text().isEmpty())
     {
         ClearStrengthBar(ui->CreateVault_progressBar);
@@ -113,7 +111,7 @@ void mainwindow::setupStrengthBar(int value)
 
 void mainwindow::on_VaultMain_btn_configuracao_clicked()
 {
-   windowConfig *janela = new windowConfig(this);
+    windowConfig *janela = new windowConfig(this);
     auto blur =  QtToolkit::Blur::render(this,4);
     janela->move(this->geometry().center() - QPoint(janela->width() / 2, janela->height() / 2));
     janela->exec();

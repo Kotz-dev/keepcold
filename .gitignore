@@ -16,3 +16,6 @@ Makefile*
 
 # Personal dotfiles repo (own git history, not part of this project)
 /dotfiles/
+
+# Per-machine IDE state (CMake toolchain/Qt/vcpkg paths differ per OS)
+.idea/workspace.xml

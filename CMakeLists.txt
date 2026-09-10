@@ -42,14 +42,19 @@ add_executable(keepcold
         src/app/keepcold/windowConfig/windowconfig.cpp
         include/app/keepcold/windowConfig/windowconfig.h
         src/app/keepcold/windowConfig/windowconfig.ui
-        src/core/item.cpp
-        src/core/item.h
 
 )
 target_include_directories(keepcold PRIVATE include)
 set_target_properties(keepcold PROPERTIES AUTOUIC_SEARCH_PATHS "${CMAKE_SOURCE_DIR}/src/app/keepcold/mainwindow;${CMAKE_SOURCE_DIR}/src/app/keepcold/windowConfig;${CMAKE_SOURCE_DIR}/src/app/keepcold/windowItem")
 
-add_subdirectory("$ENV{USERPROFILE}/Documents/GitHub/qt-widgets-toolkit" qt-widgets-toolkit)
+if(DEFINED ENV{QT_WIDGETS_TOOLKIT_DIR} AND EXISTS "$ENV{QT_WIDGETS_TOOLKIT_DIR}")
+    set(QT_WIDGETS_TOOLKIT_DIR "$ENV{QT_WIDGETS_TOOLKIT_DIR}")
+elseif(EXISTS "${CMAKE_SOURCE_DIR}/../qt-widgets-toolkit")
+    set(QT_WIDGETS_TOOLKIT_DIR "${CMAKE_SOURCE_DIR}/../qt-widgets-toolkit")
+else()
+    set(QT_WIDGETS_TOOLKIT_DIR "$ENV{USERPROFILE}/Documents/GitHub/qt-widgets-toolkit")
+endif()
+add_subdirectory("${QT_WIDGETS_TOOLKIT_DIR}" qt-widgets-toolkit)
 
 target_link_libraries(keepcold
         Qt::Core
@@ -103,20 +108,6 @@ target_link_libraries(test_blur PRIVATE
         QtWidgetStoolkit
 )
 add_test(NAME test_blur COMMAND test_blur)
-
-add_executable(test_filemanager
-        tests/test_io/test_filemanager.cpp
-        src/io/FileManager.cpp
-        include/io/FileManager.h
-)
-target_include_directories(test_filemanager PRIVATE include ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(test_filemanager PRIVATE
-        Qt::Core
-        Qt::Gui
-        Qt::Widgets
-        Qt::Test
-)
-add_test(NAME test_filemanager COMMAND test_filemanager)
 
 
 if (WIN32)

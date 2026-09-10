@@ -2,7 +2,7 @@
 // Created by KoTz on 30/07/2026.
 //
 
-// You may need to build the project (run Qt uic code generator) to get "ui_windowItem.h" resolved
+// You may need to build the project (run Qt uic code generator) to get "ui_windowitem.h" resolved
 
 #include "../../../../include/app/keepcold/windowItem/windowitem.h"
 
@@ -12,7 +12,7 @@
 #include <vector>
 
 #include <QtWidgetStoolkit/QtWidgetStoolkit.h>
-#include "ui_windowItem.h"
+#include "ui_windowitem.h"
 
 #include <io/FileManager.h>
 #include <QLineEdit>
