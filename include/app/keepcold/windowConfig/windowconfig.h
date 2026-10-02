@@ -9,14 +9,6 @@
 
 QT_BEGIN_NAMESPACE
 
-
-class ITEM
-{
-private :
-    int ide;
-    QString text;
-};
-
 namespace Ui
 {
 class windowConfig;

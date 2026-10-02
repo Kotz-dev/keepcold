@@ -8,6 +8,8 @@
 #include <QMainWindow>
 #include <widgets/WindowPage.h>
 
+class QListWidgetItem;
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class mainwindow;
@@ -46,6 +48,7 @@ private slots:
     void on_VaultMain_btn_documento_clicked();
     void on_VaultMain_btn_add_item_clicked();
     void on_VaultMain_btn_configuracao_clicked();
+    void on_OpenVault_btn_desbloquear_clicked();
 
 
 
@@ -53,6 +56,8 @@ private :
     void ClearStrengthBar(QProgressBar *widget);
      void setupStrengthBar(int value);
     void showUI();
+    void atualizarLista();
+    void itemClicado(QListWidgetItem *linha);
 public:
     explicit mainwindow(QWidget *parent = nullptr);
     ~mainwindow() override;

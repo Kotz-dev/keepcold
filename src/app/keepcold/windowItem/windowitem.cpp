@@ -6,19 +6,29 @@
 
 #include "../../../../include/app/keepcold/windowItem/windowitem.h"
 
+#include <QDebug>
+#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <QVBoxLayout>
 #include <vector>
 
-#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
+#include "item/Note.h"
+#include "item/arquivo.h"
+#include "item/cartao.h"
+#include "item/identidade.h"
+#include "item/key.h"
+#include "item/logins.h"
+#include "item/recuperacao.h"
+#include "item/wifi.h"
+#include "src/io/json_.h"
+#include "src/item/itens.h"
 #include "ui_windowitem.h"
 
+#include <QtWidgetStoolkit/QtWidgetStoolkit.h>
 #include <io/FileManager.h>
-#include <QLineEdit>
-
-#include <QFileDialog>
-
+#include <magic_enum/magic_enum.hpp>
 
 QUrl loadFile();
 QUrl loadFile()
@@ -47,6 +57,7 @@ void windowItem::setupButtonCards()
 {
     for (const auto& group : itemGroups_)
     {
+
         QPushButton* button = group.btnCard;
         if (button == nullptr)
             continue;
@@ -95,12 +106,12 @@ void windowItem::init_()
                 connect(btn, &QPushButton::clicked, this, &windowItem::onMenuButtonClicked);
         }
 
-        connect(group.obj.lineName, &QLineEdit::textChanged, this, &windowItem::teste);
+        connect(group.obj.lineName, &QLineEdit::textChanged, this, &windowItem::atualizarEstadoBotaoSalvar);
     }
 
 }
 
-void windowItem::teste()
+void windowItem::atualizarEstadoBotaoSalvar()
 {
     auto* line = QtToolkit::Signal::getObjet<QLineEdit>(sender());
     if (line == nullptr)
@@ -203,8 +214,10 @@ void windowItem::onMenuButtonClicked()
     if (btn == nullptr)
         return;
 
+
     for (const auto& group : itemGroups_)
     {
+
         if (btn == group.btnCancelar)
         {
             close();
@@ -232,6 +245,9 @@ void windowItem::onMenuButtonClicked()
 
         if (btn == group.btnSalvar)
         {
+            adicionarItem(group.pageIndex);
+            json_::writeFileToJson(itens::todos,FileManager::Local_usado);
+            close();
             return;
         }
 
@@ -244,6 +260,92 @@ void windowItem::onMenuButtonClicked()
             ui->stackedWidget->setCurrentIndex(group.pageIndex);
             return;
         }
+    }
+}
+
+void windowItem::adicionarItem(int pageIndex)
+{
+    switch (pageIndex)
+    {
+    case LOGINS:
+    {
+        auto novo = std::make_unique<logins>();
+        novo->setNome(ui->line_nome_item_logins->text());
+        novo->setEmail(ui->lineEdit_2->text());
+        novo->setPassword(ui->lineEdit_3->text());
+        novo->set2fa(ui->lineEdit_4->text());
+        novo->setURL(ui->lineEdit_5->text());
+        novo->setCodigoRecuperacao(ui->lineEdit_6->text());
+        itens::todos.push_back(std::move(novo));
+        break;
+    }
+    case NOTE:
+    {
+        auto novo = std::make_unique<Note>();
+        novo->setNome(ui->line_nome_item_note->text());
+        novo->setConteudo(ui->textEdit_note->toPlainText());
+        itens::todos.push_back(std::move(novo));
+        break;
+    }
+    case KEYS:
+    {
+        auto novo = std::make_unique<key>();
+        novo->setNome(ui->line_nome_item_key->text());
+        novo->setServico(ui->line_service_key->text());
+        novo->setChave(ui->line_key_ItemKey->text());
+        novo->setNote(ui->text_note_key->toPlainText());
+        itens::todos.push_back(std::move(novo));
+        break;
+    }
+    case RECUPERACAO:
+    {
+        auto novo = std::make_unique<recuperacao>();
+        novo->setNome(ui->line_nome_item_recuperacao->text());
+        novo->setCodigos(ui->textEdit_key_recuperacao->toPlainText());
+        itens::todos.push_back(std::move(novo));
+        break;
+    }
+    case CARTAO:
+    {
+        auto novo = std::make_unique<cartao>();
+        novo->setNome(ui->line_nome_item_cartao->text());
+        novo->setTitular(ui->line_titular_cartao->text());
+        novo->setNumero(ui->line_numero_cartao->text());
+        novo->setValidade(ui->line_validade_cartao->text());
+        novo->setCvv(ui->line_cvv_cartao->text());
+        novo->setBandeira(ui->line_bandeira_cartao->text());
+        itens::todos.push_back(std::move(novo));
+        break;
+    }
+    case IDENTIDADE:
+    {
+        auto novo = std::make_unique<identidade>();
+        novo->setNome(ui->line_nome_item_identidade->text());
+        novo->setNomeChars(ui->line_name_identidade_2->text());
+        novo->setCPF(ui->line_cpf_identidade->text());
+        novo->setRG(ui->line_rg_identidade->text());
+        novo->setCNH(ui->line_cnh_identidade->text());
+        itens::todos.push_back(std::move(novo));
+        break;
+    }
+    case WIFI:
+    {
+        auto novo = std::make_unique<wifi>();
+        novo->setNome(ui->line_nome_item_wifi->text());
+        novo->setRedeSsid(ui->line_rede_ssid_wifi->text());
+        novo->setSenha(ui->line_passowrd_wifi->text());
+        novo->setTipo(ui->line_type_wifi->text());
+        itens::todos.push_back(std::move(novo));
+        break;
+    }
+    case FILE_PAGE:
+    {
+        auto novo = std::make_unique<arquivo>();
+        novo->setNome(ui->line_nome_item_file->text());
+        novo->setNotas(ui->textEdit_files->toPlainText());
+        itens::todos.push_back(std::move(novo));
+        break;
+    }
     }
 }
 

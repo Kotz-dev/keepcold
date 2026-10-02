@@ -13,7 +13,8 @@ find_package(Qt6 COMPONENTS
         Widgets
         Test
         REQUIRED)
-find_package(nlohmann_json CONFIG REQUIRED)
+
+find_package(magic_enum CONFIG REQUIRED)
 
 add_executable(keepcold
         src/app/main.cpp
@@ -35,6 +36,8 @@ add_executable(keepcold
         include/styles/LinePassword.h
         src/widgets/WindowPage.cpp
         include/widgets/WindowPage.h
+        src/widgets/ItemCard.cpp
+        include/widgets/ItemCard.h
         include/memory/Memory.h
         src/app/keepcold/windowItem/windowitem.cpp
         include/app/keepcold/windowItem/windowitem.h
@@ -42,6 +45,28 @@ add_executable(keepcold
         src/app/keepcold/windowConfig/windowconfig.cpp
         include/app/keepcold/windowConfig/windowconfig.h
         src/app/keepcold/windowConfig/windowconfig.ui
+        src/item/Item.cpp
+        include/item/Item.h
+        src/item/logins.cpp
+        include/item/logins.h
+        src/item/Note.cpp
+        include/item/Note.h
+        src/item/key.cpp
+        include/item/key.h
+        src/item/recuperacao.cpp
+        include/item/recuperacao.h
+        src/item/cartao.cpp
+        include/item/cartao.h
+        src/item/identidade.cpp
+        include/item/identidade.h
+        src/item/wifi.cpp
+        include/item/wifi.h
+        src/item/arquivo.cpp
+        include/item/arquivo.h
+        src/item/itens.cpp
+        src/item/itens.h
+        src/io/json_.cpp
+        src/io/json_.h
 
 )
 target_include_directories(keepcold PRIVATE include)
@@ -61,7 +86,7 @@ target_link_libraries(keepcold
         Qt::Gui
         Qt::Widgets
         QtWidgetStoolkit
-        nlohmann_json::nlohmann_json
+        magic_enum::magic_enum
 )
 
 target_include_directories(keepcold PUBLIC
@@ -115,20 +140,37 @@ if (WIN32)
     if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")
         set(DEBUG_SUFFIX "d")
     endif ()
-    get_filename_component(QT_INSTALL_PATH "${Qt6_DIR}/../../.." ABSOLUTE)
-    if (EXISTS "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll")
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E make_directory
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy
-                "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll"
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
+    if (VCPKG_TOOLCHAIN)
+        # vcpkg's Qt port lays out the triplet root two levels above Qt6_DIR
+        # (.../installed/<triplet>/share/Qt6), with a further "debug/" split
+        # for debug binaries and plugins nested under "<root>/Qt6/plugins".
+        get_filename_component(QT_TRIPLET_ROOT "${Qt6_DIR}/../.." ABSOLUTE)
+        if (DEBUG_SUFFIX)
+            set(QT_TRIPLET_ROOT "${QT_TRIPLET_ROOT}/debug")
+        endif ()
+        set(QT_PLUGINS_DIR "${QT_TRIPLET_ROOT}/Qt6/plugins")
+    else ()
+        get_filename_component(QT_INSTALL_PATH "${Qt6_DIR}/../../.." ABSOLUTE)
+        set(QT_PLUGINS_DIR "${QT_INSTALL_PATH}/plugins")
     endif ()
-    foreach (QT_LIB Core Gui Widgets)
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy
-                "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-    endforeach (QT_LIB)
+    if (EXISTS "${QT_PLUGINS_DIR}")
+        # Point Qt straight at the plugin tree via qt.conf instead of copying
+        # individual plugin DLLs: Qt's default runtime search only checks
+        # "<exe_dir>/platforms/", not "<exe_dir>/plugins/platforms/", so a
+        # hand-copied plugin would never actually be found without this.
+        file(GENERATE OUTPUT "$<TARGET_FILE_DIR:${PROJECT_NAME}>/qt.conf" CONTENT
+"[Paths]
+Plugins = ${QT_PLUGINS_DIR}
+")
+    endif ()
+    if (NOT VCPKG_TOOLCHAIN)
+        # Under vcpkg, Qt6Core/Gui/Widgets are already deployed next to the
+        # executable by vcpkg's own applocal.ps1 post-build step.
+        foreach (QT_LIB Core Gui Widgets)
+            add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy
+                    "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
+                    "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+        endforeach (QT_LIB)
+    endif ()
 endif ()

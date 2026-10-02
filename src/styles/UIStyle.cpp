@@ -187,5 +187,5 @@ void UIStyle::Styles_Page::VALUE_MAIN::apply()
       applyItemStyles(mainwindow);
 
     QtToolkit::Animation::fadeSlideIn(mainwindow->pageVaultMain);
-    QtToolkit::ProgessBar::SegmentedProgressBar::render(4,mainwindow->progressBar_2);
+    QtToolkit::ProgessBar::SegmentedProgressBar::applyProgressBar(4,mainwindow->progressBar_2);
 }

@@ -9,6 +9,7 @@
 #include <QLineEdit>
 #include <QSize>
 #include <QString>
+#include <QUrl>
 #include <vector>
 
 QT_BEGIN_NAMESPACE
@@ -73,7 +74,7 @@ private slots:
 
     void init_ ();
 
-    void teste();
+    void atualizarEstadoBotaoSalvar();
 
     void btn_upload_clicked();
 
@@ -82,6 +83,10 @@ private slots:
     void getfile(QUrl file);
 
     void on_btn_trocar_file_clicked();
+
+
+    void adicionarItem(int pageIndex);
+
 
 
 public:

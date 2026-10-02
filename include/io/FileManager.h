@@ -17,6 +17,7 @@ enum PATCH_TYPE_ {
 class FileManager {
 
 public :
+    static QString Local_usado;
     static void CreateFile(QString name);
     static bool CreateVaultFile(const QUrl &url);
 

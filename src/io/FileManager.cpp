@@ -10,6 +10,10 @@
 #include <QFileInfo>
 #include <fstream>
 #include <QFileDialog>
+#include <QUrl>
+
+
+QString FileManager::Local_usado;
 
 QString FileManager::OpenFileURL(QWidget *parent)
 {
@@ -32,7 +36,6 @@ void FileManager::CreateFile(QString name)
     if (name.isEmpty() == false)
     {
         std::fstream file(name.toStdString(), std::ios::out);
-        qDebug () << name.toStdString();
         if (file.fail())
         {
             qDebug() << "Falha ao criar arquivo:";

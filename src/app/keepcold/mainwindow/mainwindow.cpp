@@ -11,6 +11,9 @@
 #include "app/keepcold/windowConfig/windowconfig.h"
 #include "app/keepcold/windowItem/windowitem.h"
 #include "io/FileManager.h"
+#include "item/logins.h"
+#include "src/item/itens.h"
+#include "widgets/ItemCard.h"
 #include "ui_mainwindow.h"
 
 #include <QtWidgetStoolkit/QtWidgetStoolkit.h>
@@ -31,11 +34,13 @@ void mainwindow::on_CreateVault_btn_voltar_clicked() {
 
 void mainwindow::on_Welcome_btn_abrir_cofre_clicked() {
 
-    QFileInfo info(FileManager::OpenFileURL(this));
+    const QString path = FileManager::OpenFileURL(this);
+    QFileInfo info(path);
     QDateTime now = info.lastModified();
 
     if (info.exists() == false && now.isValid() == false) return;
 
+    FileManager::Local_usado = path;
     ui->OpenVault_label_info_modificado->setText(info.fileName() + " · " + now.toString("dd/MM/yyyy HH:mm"));
     WindowPage::NavigetPage(StackPage::OpenVault);
 }
@@ -43,6 +48,11 @@ void mainwindow::on_Welcome_btn_abrir_cofre_clicked() {
 void mainwindow::on_OpenVault_btn_voltar_clicked() {
     WindowPage::NavigetPage(StackPage::Welcome);
 
+}
+
+void mainwindow::on_OpenVault_btn_desbloquear_clicked()
+{
+    WindowPage::NavigetPage(StackPage::VaultMain              );
 }
 
 void mainwindow::on_OpenVault_btn_trocar_arquivo_clicked()
@@ -60,8 +70,10 @@ void mainwindow::on_CreateVault_btn_criar_clicked()
             QUrl::fromLocalFile(ui->CreateVault_line_nome_arquivo->text()),
             "Vault files (*.vault)");
 
+
         if (FileManager::CreateVaultFile(getURL))
         {
+            FileManager::Local_usado = getURL.toLocalFile();
             WindowPage::NavigetPage(StackPage::VaultMain);
         }
     }
@@ -106,13 +118,13 @@ void mainwindow::setupStrengthBar(int value)
     {
         ClearStrengthBar(ui->CreateVault_progressBar);
     }
-    QtToolkit::ProgessBar::SegmentedProgressBar::render(value, ui->CreateVault_progressBar);
+    QtToolkit::ProgessBar::SegmentedProgressBar::applyProgressBar(value, ui->CreateVault_progressBar);
 }
 
 void mainwindow::on_VaultMain_btn_configuracao_clicked()
 {
     windowConfig *janela = new windowConfig(this);
-    auto blur =  QtToolkit::Blur::render(this,4);
+    auto blur =  QtToolkit::Blur::applyBlur(this,4);
     janela->move(this->geometry().center() - QPoint(janela->width() / 2, janela->height() / 2));
     janela->exec();
     if (blur != nullptr && janela->isVisible() == false)
@@ -153,15 +165,51 @@ void mainwindow::on_CreateVault_line_senha_mestra_textEdited(const QString& arg1
 void mainwindow::on_VaultMain_btn_add_item_clicked()
 {
     windowItem *WindowItem = new windowItem(this);
-    auto blur =  QtToolkit::Blur::render(this,4);
+    auto blur =  QtToolkit::Blur::applyBlur(this,4);
     WindowItem->move(QtToolkit::geometry::centeredPosition(this,WindowItem));
     WindowItem->exec();
+    atualizarLista();
     if (blur != nullptr && WindowItem->isVisible() == false)
     {
         delete WindowItem;
         delete blur;
     }
 
+}
+
+void mainwindow::atualizarLista()
+{
+    ui->VaultMain_listView->clear();
+
+    for (const auto &item : itens::todos)
+    {
+        auto *linha = new QListWidgetItem(ui->VaultMain_listView);
+        auto *card  = new ItemCard(*item);
+
+
+
+        linha->setSizeHint(card->sizeHint());
+        linha->setData(Qt::UserRole, item->getId());
+        card->setStyleSheet("background: #2c3760; border: 1px solid transparent;border-radius: 10px;");
+        ui->VaultMain_listView->setSpacing(2);
+        card->setFixedSize(280,55);
+        ui->VaultMain_listView->setItemWidget(linha, card);
+    }
+}
+
+void mainwindow::itemClicado(QListWidgetItem *linha)
+{
+    const QString id = linha->data(Qt::UserRole).toString();
+
+    for (const auto &item : itens::todos)
+    {
+        if (item->getId() == id)
+        {
+            qDebug() << "itemClicado" << id;
+           /// ui->VaultMain_stack_item_paginas->setCurrentIndex(0);
+            return;
+        }
+    }
 }
 mainwindow::mainwindow(QWidget* parent)
     : QMainWindow(parent),
@@ -173,5 +221,7 @@ mainwindow::mainwindow(QWidget* parent)
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     QtToolkit::Window::Dragger::attach(this);
+
+    connect(ui->VaultMain_listView, &QListWidget::itemClicked, this, &mainwindow::itemClicado);
 }
 mainwindow::~mainwindow() { delete ui; }

@@ -231,7 +231,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="pageOpenVault">
        <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -847,7 +847,7 @@ font-family: &quot;Segoe UI Variable Text&quot;, &quot;Segoe UI&quot;, -apple-sy
             </widget>
            </item>
            <item>
-            <widget class="QListView" name="VaultMain_listView">
+            <widget class="QListWidget" name="VaultMain_listView">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -5161,7 +5161,7 @@ color: rgb(122, 133, 168);</string>
               <item alignment="Qt::AlignmentFlag::AlignTop">
                <widget class="QLabel" name="Welcome_label_selo_seguranca">
                 <property name="text">
-                 <string>Criptografia AES-256 · zero-knowledge · sem conexão</string>
+                 <string>Criptografia AES-256 · sem conexão</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignmentFlag::AlignCenter</set>
