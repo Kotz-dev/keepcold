@@ -6,25 +6,30 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QSaveFile>
 
-bool json_::writeFileToJson(const std::vector<std::unique_ptr<Item>> &obj, const QString &URL)
+void json_::writeFileToJson(const std::vector<std::unique_ptr<Item>> &obj, const QString &URL)
 {
-
+    if (URL.isEmpty())
+    {
+        return;
+    }
+    try
+    {
+        QFile file(URL);
         nlohmann::json json = nlohmann::json::array();
-
         for (const auto &item : obj)
         {
             json.push_back(item->toJson());
         }
-
-        QFile file(URL);
         if (file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false)
         {
             throw;
-            return false;
         }
-
         file.write(QByteArray::fromStdString(json.dump(4)));
+        file.close();
+    }catch (nlohmann::json::exception &e)
+    {
 
-    return true;
+    }
 }

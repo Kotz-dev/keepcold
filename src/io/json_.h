@@ -17,7 +17,7 @@
 class json_
 {
 public :
-    static bool writeFileToJson(const std::vector<std::unique_ptr<Item>> &obj, const QString &URL);
+    static void writeFileToJson(const std::vector<std::unique_ptr<Item>> &obj, const QString &URL);
 };
 
 #endif  // KEEPCOLD_JSON__H

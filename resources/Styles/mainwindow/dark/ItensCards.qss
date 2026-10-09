@@ -1,0 +1,22 @@
+/*
+ * ItensCards - Qt Style Sheet
+ * Created: 07/10/2026
+ *
+ * QSS Toolkit Quick Tips:
+ * - Press Ctrl+Space (Cmd+Space) for intelligent auto-completion
+ * - Use Ctrl+/ (Cmd+/) to comment/uncomment code blocks
+ * - Use the QSS Colors panel and editor context menu to save or insert colors
+ */
+
+/* Add your QSS styles here */
+
+#itemCard {
+background: #2c3760;
+border: 1px solid transparent;
+border-radius: 10px;
+}
+#itemCard:hover {
+background: #38436e;
+border: 1px solid transparent;
+border-radius: 10px;
+}

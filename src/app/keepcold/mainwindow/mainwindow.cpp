@@ -187,12 +187,11 @@ void mainwindow::atualizarLista()
         auto *card  = new ItemCard(*item);
 
 
-
-        linha->setSizeHint(card->sizeHint());
+        card->setStyleSheet(
+             FileManager::loadStyleSheet("resources/Styles/mainwindow/dark/ItensCards.qss",FILE_styles));
+        linha->setSizeHint(QSize(100,55));
         linha->setData(Qt::UserRole, item->getId());
-        card->setStyleSheet("background: #2c3760; border: 1px solid transparent;border-radius: 10px;");
         ui->VaultMain_listView->setSpacing(2);
-        card->setFixedSize(280,55);
         ui->VaultMain_listView->setItemWidget(linha, card);
     }
 }
