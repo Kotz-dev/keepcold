@@ -11,7 +11,13 @@
 #include "app/keepcold/windowConfig/windowconfig.h"
 #include "app/keepcold/windowItem/windowitem.h"
 #include "io/FileManager.h"
+#include "item/Note.h"
+#include "item/cartao.h"
+#include "item/identidade.h"
+#include "item/key.h"
 #include "item/logins.h"
+#include "item/recuperacao.h"
+#include "item/wifi.h"
 #include "src/item/itens.h"
 #include "widgets/ItemCard.h"
 #include "ui_mainwindow.h"
@@ -41,7 +47,8 @@ void mainwindow::on_Welcome_btn_abrir_cofre_clicked() {
     if (info.exists() == false && now.isValid() == false) return;
 
     FileManager::Local_usado = path;
-    ui->OpenVault_label_info_modificado->setText(info.fileName() + " · " + now.toString("dd/MM/yyyy HH:mm"));
+    ui->OpenVault_label_info_modificado->setText(
+        info.fileName() + " · " + now.toString("dd/MM/yyyy HH:mm"));
     WindowPage::NavigetPage(StackPage::OpenVault);
 }
 
@@ -177,6 +184,108 @@ void mainwindow::on_VaultMain_btn_add_item_clicked()
 
 }
 
+static void preencherLogins(Ui::mainwindow *ui, const logins &item)
+{
+    ui->line_name_login->setText(item.getNome());
+    ui->line_email_logins->setText(item.getEmail());
+    ui->line_senha_login->setText(item.getPassword());
+    ui->line_2FA_logins->setText(item.get2fa());
+    ui->line_URL_logins->setText(item.getURL());
+    ui->line_codigo_recuperacao_logins->setText(item.getCodigoRecuperacao());
+}
+
+static void preencherWifi(Ui::mainwindow *ui, const wifi &item)
+{
+    ui->line_name_wifi->setText(item.getNome());
+    ui->line_rede_ssid_wifi->setText(item.getRedeSsid());
+    ui->line_senha_wifi->setText(item.getSenha());
+    ui->line_type_wifi->setText(item.getTipo());
+}
+
+static void preencherRecuperacao(Ui::mainwindow *ui, const recuperacao &item)
+{
+    ui->line_nome_recuperacao->setText(item.getNome());
+    ui->textEdit_recuperacao->setPlainText(item.getCodigos());
+}
+
+static void preencherKey(Ui::mainwindow *ui, const key &item)
+{
+    ui->line_name_key->setText(item.getNome());
+    ui->line_service_key->setText(item.getServico());
+    ui->line_chave_valor->setText(item.getChave());
+    ui->textEdit_notas_chaves->setPlainText(item.getNote());
+}
+
+static void preencherIdentidade(Ui::mainwindow *ui, const identidade &item)
+{
+    ui->line_name_identidade->setText(item.getNome());
+    ui->line_name_identidade_1->setText(item.getNomeChars());
+    ui->line_cpf_identidade->setText(item.getCPF());
+    ui->line_rg_identidade->setText(item.getRG());
+    ui->line_cnh_identidade->setText(item.getCNH());
+}
+
+static void preencherCartao(Ui::mainwindow *ui, const cartao &item)
+{
+    ui->line_name_cartao->setText(item.getNome());
+    ui->line_titular_cartao->setText(item.getTitular());
+    ui->line_number_cartao->setText(item.getNumero());
+    ui->line_validade_cartao->setText(item.getValidade());
+    ui->line_cvv_cartao->setText(item.getCvv());
+    ui->line_bandeira_cartao->setText(item.getBandeira());
+}
+
+static void preencherNote(Ui::mainwindow *ui, const Note &item)
+{
+    ui->line_nome_note->setText(item.getNome());
+    ui->textEdit_note_conteudo->setPlainText(item.getConteudo());
+}
+
+// Preenche a pagina da categoria do item e devolve ela (nullptr se nao tiver pagina)
+QWidget *mainwindow::getPageItem(const Item &item)
+{
+    const QString cat = item.categoria();
+
+    if (cat == "logins")
+    {
+        preencherLogins(ui, static_cast<const logins &>(item));
+        return ui->logins;
+    }
+    if (cat == "wifi")
+    {
+        preencherWifi(ui, static_cast<const wifi &>(item));
+        return ui->Wifi;
+    }
+    if (cat == "recuperacao")
+    {
+        preencherRecuperacao(ui, static_cast<const recuperacao &>(item));
+        return ui->recuperacao;
+    }
+    if (cat == "key")
+    {
+        preencherKey(ui, static_cast<const key &>(item));
+        return ui->chaves;
+    }
+    if (cat == "identidade")
+    {
+        preencherIdentidade(ui, static_cast<const identidade &>(item));
+        return ui->identidade;
+    }
+    if (cat == "cartao")
+    {
+        preencherCartao(ui, static_cast<const cartao &>(item));
+        return ui->cartoes;
+    }
+    if (cat == "note")
+    {
+        preencherNote(ui, static_cast<const Note &>(item));
+        return ui->notas;
+    }
+    if (cat == "arquivo") return ui->file;   // pagina ainda sem campos no .ui
+
+    return nullptr;
+}
+
 void mainwindow::atualizarLista()
 {
     ui->VaultMain_listView->clear();
@@ -202,12 +311,11 @@ void mainwindow::itemClicado(QListWidgetItem *linha)
 
     for (const auto &item : itens::todos)
     {
-        if (item->getId() == id)
-        {
-            qDebug() << "itemClicado" << id;
-           /// ui->VaultMain_stack_item_paginas->setCurrentIndex(0);
-            return;
-        }
+        if (item->getId() != id) continue;
+
+        if (QWidget *pagina = getPageItem(*item))
+            ui->VaultMain_stack_item_paginas->setCurrentWidget(pagina);
+        return;
     }
 }
 mainwindow::mainwindow(QWidget* parent)
@@ -216,11 +324,9 @@ mainwindow::mainwindow(QWidget* parent)
 {
     ui->setupUi(this);
     WindowPage::__init__(ui, this);
-   // ui->VaultMain_stack_item_paginas->setCurrentIndex(6);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     QtToolkit::Window::Dragger::attach(this);
-
     connect(ui->VaultMain_listView, &QListWidget::itemClicked, this, &mainwindow::itemClicado);
 }
 mainwindow::~mainwindow() { delete ui; }

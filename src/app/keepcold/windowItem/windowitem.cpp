@@ -138,7 +138,10 @@ windowItem::windowItem(QWidget* parent)
     applyItemStyle();
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     QtToolkit::Animation::fadeSlideIn(ui->page_itens,100,50);
-    setStyleSheet(FileManager::loadStyleSheet("keepcold\\resources\\Styles\\windowItem\\dark\\windowItem.qss", PATCH_TYPE_::FILE_styles));
+    setStyleSheet(
+        FileManager::loadStyleSheet(
+            "keepcold\\resources\\Styles\\windowItem\\dark\\windowItem.qss",
+            PATCH_TYPE_::FILE_styles));
     setAttribute(Qt::WA_TranslucentBackground);
     setupButtonCards();
     ui->logo_item->hide();

@@ -6,6 +6,9 @@
 #define KEEPCOLD_MAINWINDOW_H
 
 #include <QMainWindow>
+
+#include "item/Item.h"
+
 #include <widgets/WindowPage.h>
 
 class QListWidgetItem;
@@ -53,6 +56,7 @@ private slots:
 
 
 private :
+    QWidget *getPageItem(const Item &item);
     void ClearStrengthBar(QProgressBar *widget);
      void setupStrengthBar(int value);
     void showUI();
